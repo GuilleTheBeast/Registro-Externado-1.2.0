@@ -1,0 +1,74 @@
+.banner {
+  padding-left: 20px;
+  padding-right: 20px;
+
+}
+
+.pwd-icon {
+  color: gray;
+  position:absolute;
+  bottom: 30%;
+  right: 5%;
+}
+
+.pwd-icon:hover {
+  filter: brightness(1.2);
+}
+
+.botonlogin {
+  background-color: #008000;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 10px;
+
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.botonlogin:hover {
+  color: #ffff80;
+}
+
+.passwordfield {
+  padding-bottom: 15px;
+}
+
+.logincontainer {
+  min-width: 300px; /* Ajusta este valor según tus necesidades */
+  margin: 0 auto; /* Para centrar horizontalmente */
+}
+
+
+
+/* Estilos para pantallas más pequeñas, como celulares */
+@media (max-width: 576px) {
+  .logincontainer {
+    max-width: 100%; /* Hace que el contenedor ocupe todo el ancho disponible */
+    padding: 0 10px; /* Añade un poco de espacio a los lados */
+  }
+}
+
+/* Estilos para pantallas medianas */
+@media (min-width: 577px) and (max-width: 991px) {
+  .logincontainer {
+    max-width: 80%; /* Reduce el ancho del contenedor para pantallas medianas */
+  }
+}
+
+/* Estilos para pantallas más pequeñas, como celulares */
+@media (max-width: 576px) {
+  .banner {
+    width: 100%; /* Hace que el banner ocupe todo el ancho disponible */
+    height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
+
+    
+  }
+}
+
+/* Estilos para pantallas medianas */

@@ -1,0 +1,102 @@
+/* EncabezadoAdmin.css */
+.sidebar-admin {
+  background-color: #1d5632; /* Color de fondo oscuro */
+  width: 250px; /* Ancho del sidebar */
+  height: 100vh; /* Altura completa */
+  position: fixed; /* Fijo en la pantalla */
+  top: 0;
+  left: 0;
+  overflow-x: hidden; /* Ocultar desbordamiento horizontal */
+  transition: 0.5s; /* Animación suave al mostrar/ocultar */
+}
+
+.logo-admin {
+  padding: 15px;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.logout-button {
+  background-color: transparent; /* Fondo transparente */
+  color: #ffffff; /* Color de texto blanco */
+  /* otros estilos si son necesarios */
+}
+
+.nav-admin {
+  display: flex;
+  flex-direction: column; /* Elementos en columna */
+  padding-left: 0;
+}
+
+.nav-link-admin {
+  color: #ffffff; /* Color de texto blanco */
+  padding: 15px 20px; /* Espaciado */
+  text-decoration: none; /* Sin subrayado */
+  display: block; /* Hacer que los enlaces ocupen toda la línea */
+  transition: 0.3s; /* Animación suave para color de fondo */
+}
+
+.nav-link-admin:hover,
+.nav-link-admin.active {
+  background-color: #3e8e41; /* Color de fondo más claro para hover/activo */
+  color: #ffffff; /* Color de texto blanco */
+  font-weight: bold;
+}
+
+.nav-link-admin,
+.logout-button {
+  color: #ffffff; /* Color de texto blanco */
+  padding: 15px 20px; /* Espaciado */
+  text-decoration: none; /* Sin subrayado */
+  display: block; /* Hacer que los enlaces ocupen toda la línea */
+  transition: 0.3s; /* Animación suave para color de fondo */
+  text-align: left;
+  border: none;
+  font-weight: normal;
+}
+
+.nav-link-admin:hover,
+.logout-button:hover {
+  background-color: #3e8e41; /* Color de fondo más claro para hover */
+  color: #ffffff; /* Color de texto blanco */
+  font-weight: bold;
+}
+
+/* Estilos para ajustar la vista en dispositivos más pequeños */
+@media (max-width: 768px) {
+  .sidebar-admin {
+    width: 100%; /* El sidebar toma toda la anchura */
+    height: auto; /* Altura automática */
+    position: relative; /* Posición relativa */
+  }
+  .nav-admin {
+    flex-direction: row; /* Elementos en fila */
+  }
+  .nav-link-admin {
+    padding: 10px; /* Espaciado más pequeño */
+    text-align: center; /* Texto centrado */
+  }
+}
+
+/* EncabezadoAdmin.css */
+.logo-container-admin {
+  display: flex; /* Utiliza flexbox para centrar la imagen del logo */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  padding: 20px; /* Espaciado alrededor del logo */
+}
+
+.logo-admin {
+  max-width: 100%; /* Asegúrate de que el logo no sobrepase el ancho del sidebar */
+  height: auto; /* Mantén la proporción del logo */
+}
+
+/* Oculta el logo en dispositivos móviles */
+@media (max-width: 768px) {
+  .logo-container-admin {
+    display: none;
+  }
+}
+
+/* El resto de tus estilos... */

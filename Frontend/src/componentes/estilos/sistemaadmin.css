@@ -1,0 +1,218 @@
+/* sistemaadmin.css */
+.system-parameters-container {
+  margin-left: 250px; /* Ajustar según el ancho de tu sidebar */
+  padding: 20px;
+  max-width: 1000px; /* Hacer el contenedor más estrecho */
+  position: relative; /* Esto es necesario para que funcione position: absolute del botón */
+}
+
+.system-parameters-container h2 {
+  margin-bottom: 20px;
+}
+
+.parameters-form {
+  background-color: #fff;
+  padding: 20px;
+  padding-bottom: 20px; /* Aumenta el padding inferior para dar espacio al botón */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.form-row:last-child {
+  justify-content: flex-end; /* Alinea el botón a la derecha */
+}
+
+.texto-indicaciones {
+  font-size: 0.8em;
+  color: black;
+}
+
+.texto-indicaciones.error {
+  color: #cb4335 !important;
+  font-weight: normal !important;
+}
+
+.form-spacer {
+  flex: 1;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.button-row {
+  justify-content: flex-end; /* Alinea el botón "Guardar cambios" a la derecha */
+}
+
+.form-group.button-group {
+  /* Alinea los botones a la derecha */
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-group {
+  flex: 1;
+  margin-bottom: 20px; /* Restaurar margen inferior para los form-group */
+}
+
+.form-group label {
+  margin-right: 10px;
+}
+
+.form-group input[type="text"],
+.form-group select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%; /* Asegura que el input y select ocupen todo el espacio disponible */
+}
+
+.form-group button {
+  padding: 8px 15px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  margin-top: 30px; /* Restablecer cualquier ajuste anterior y alinear al centro */
+  margin-bottom: auto;
+}
+
+.form-group button:hover {
+  background-color: #45a049;
+}
+
+/* Restaurar estilos para el botón Guardar cambios */
+.save-changes-btn {
+  /* Tamaño de padding igual que otros botones */
+  padding: 8px 15px;
+  /* Color de fondo igual que otros botones */
+  background-color: #4caf50;
+  /* Color de texto igual que otros botones */
+  color: white;
+  /* Sin borde, igual que otros botones */
+  border: none;
+  /* Radio de borde igual que otros botones */
+  border-radius: 4px;
+  /* Tamaño de fuente especificado */
+  font-size: 16px;
+  /* Cursor de tipo pointer como en otros botones */
+  cursor: pointer;
+  margin-top: 20px; /* Esto alineará el botón con la parte superior de los select/input */
+  margin-right: 0; /* Alinea con el borde derecho del formulario */
+  position: relative; /* No necesitas posición absoluta si está dentro del flow normal */
+  right: 20px;
+  align-self: flex-end; /* Alinea el botón a la derecha */
+}
+
+.btn-modal-guardar {
+  background-color: #4caf50 !important;
+  color: white !important;
+  border: none;
+  border-radius: 4px !important;
+}
+
+.btn-modal-guardar:hover {
+  background-color: #45a049;
+  font-weight: bold;
+  color: #fff;
+}
+
+.btn-modal-cancelar {
+  background-color: #c63637 !important;
+  color: white !important;
+  border: none;
+  border-radius: 4px !important;
+}
+
+.btn-modal-cancelar:hover {
+  background-color: #c63637;
+  font-weight: bold;
+  color: #fff;
+}
+
+.save-changes-btn:hover {
+  background-color: #45a049; /* Efecto hover igual que otros botones */
+}
+.modal-header,
+.modal-footer {
+  background-color: #f7f7f7; /* Cambia el color de fondo si es necesario */
+}
+
+.modal-footer button {
+  margin: 0 5px; /* Asegura que hay espacio entre los botones */
+}
+
+.table {
+  margin-top: 15px; /* Espacio encima de la tabla */
+}
+
+/* Estilos para la paginación */
+.pagination {
+  justify-content: center; /* Centrar la paginación */
+  margin-top: 15px; /* Espacio encima de la paginación */
+}
+
+.search-input {
+  padding-right: 30px; /* Espacio para el ícono de búsqueda */
+  width: 100%; /* El ancho del input debe ser 100% para llenar su contenedor */
+}
+
+/* Estilos para el contenedor del campo de búsqueda */
+.position-relative {
+  position: relative;
+}
+
+/* Estilos para el campo de búsqueda */
+.position-relative {
+  width: 70%; /* Ajusta el ancho del contenedor al mismo valor que el input */
+  max-width: 300px; /* O el ancho máximo que prefieras */
+}
+
+/* Estilos para el ícono de búsqueda */
+.icon-search {
+  position: absolute;
+  top: 50%; /* Centrar verticalmente */
+  right: 10px; /* Espaciado desde el borde derecho del input */
+  transform: translateY(-50%); /* Ajuste fino para centrar exactamente */
+  color: #495057; /* Color del ícono, puede ser cualquier color que prefieras */
+  z-index: 10;
+  pointer-events: none; /* Hace que el ícono no sea "clickeable" */
+}
+
+@media (max-width: 768px) {
+  .system-parameters-container {
+    margin-left: 0;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-group {
+    width: 100%; /* Asegura que el grupo de formulario use toda la anchura disponible */
+  }
+
+  .form-group button-group {
+    order: 3; /* Mueve los botones al final en dispositivos móviles */
+    margin-bottom: 10px; /* Añadir margen inferior en dispositivos móviles */
+  }
+
+  .form-group button {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .save-changes-btn {
+    /* El botón ocupa toda la anchura */
+    width: 100%;
+    right: 0px;
+    /* Espacio sobre el botón */
+    margin-top: 10px;
+  }
+}

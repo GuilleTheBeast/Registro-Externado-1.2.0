@@ -1,0 +1,16 @@
+/* Footer.css */
+
+.footer-container {
+  background-color: #008000;
+  color: white;
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.footer-content {
+  max-width: 800px; /* Ajusta el ancho según sea necesario */
+  margin: 0 auto;
+}

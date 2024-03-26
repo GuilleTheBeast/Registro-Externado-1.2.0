@@ -1,0 +1,80 @@
+.container {
+  max-width: 1000px;
+  margin: auto;
+}
+/* Estilos para el formulario */
+.form-group {
+  margin-top: 0px; /* Asegúrate de que haya espacio en la parte superior */
+}
+
+/* Asegúrate de que la primera Form.Group de cada fila no tenga margen superior */
+.row:first-child .form-group {
+  margin-top: 0;
+}
+/* Estilos generales para mobile */
+/* Estilos generales para mobile */
+@media (max-width: 768px) {
+  .form-group {
+    margin-top: 0px; /* Aumenta el espacio en la parte superior en dispositivos móviles */
+  }
+
+  .form-group:first-child {
+    margin-top: 0; /* El primer Form.Group no debería tener margen superior */
+  }
+
+  .form-label {
+    display: block; /* Asegúrate de que los labels sean bloques para alinearlos correctamente */
+  }
+
+  .form-control,
+  .form-check,
+  .btn {
+    width: 100%; /* Ajusta la anchura en dispositivos móviles */
+    margin-bottom: 10px; /* Espacio después de cada control de formulario */
+  }
+
+  .text-end {
+    text-align: start; /* Alineación del texto para acciones */
+  }
+}
+@media (max-width: 768px) {
+  #apellidos-label,
+  #fechaNacimiento-label,
+  #nacionalidad-label,
+  #numeroCelular-label,
+  #correoElectronico-label {
+    margin-top: 0px !important; /* Espacio adicional arriba de estos labels específicos */
+  }
+}
+@media (max-width: 576px) {
+  #apellidos-label,
+  #fechaNacimiento-label,
+  #nacionalidad-label,
+  #numeroCelular-label,
+  #correoElectronico-label {
+    margin-top: 5px !important; /* Espacio adicional arriba de estos labels específicos */
+  }
+}
+
+@media (max-width: 576px) {
+  .btn-info {
+    width: 100%;
+    margin-top: 10px !important;
+  }
+}
+/* Ajustes para la subdivisión en la primera columna */
+@media (max-width: 576px) {
+  .row > [class^="col-"],
+  .row > [class*=" col-"] {
+    padding-left: 10;
+    padding-right: 10;
+  }
+}
+@media (max-width: 576px) {
+  .btn-modal-cancelar,
+  .btn-modal-ver-representantes,
+  .btn-modal-guardar {
+    width: 100%; /* Hace que el botón ocupe el ancho completo */
+    margin-bottom: 10px; /* Añade espacio entre los botones */
+  }
+}

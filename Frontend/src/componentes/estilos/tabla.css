@@ -1,0 +1,16 @@
+.custom-table thead {
+  background-color: grey; /* Fondo gris para el encabezado */
+  color: white; /* Texto blanco para el encabezado */
+}
+
+.custom-table tbody tr {
+  background-color: #fff; /* Fondo blanco para todas las filas del cuerpo */
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f2f2f2 !important; /* Color gris claro al hacer hover en una fila */
+}
+
+.center-vertically {
+  vertical-align: middle;
+}

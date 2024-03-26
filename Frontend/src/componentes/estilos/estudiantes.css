@@ -1,0 +1,39 @@
+.icon-search-user {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* O ajusta este valor para que el ícono esté más cerca del borde del input */
+  transform: translateY(-50%);
+  color: #495057;
+  pointer-events: none;
+}
+
+.search-input-user {
+  padding-right: 30px; /* Espacio para el ícono de búsqueda */
+  width: 100%; /* Se ajustará al ancho de su contenedor .search-group */
+}
+
+/* Estilos para la tabla */
+.table {
+  margin-top: 20px;
+}
+
+/* Estilos para el botón de editar (lápiz) */
+.bi-pencil-square {
+  font-size: 1.2rem;
+  color: #000;
+}
+
+/* Estilos para la paginación */
+.pagination {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.search-group {
+  position: relative;
+}
+
+/* usuarios.css */
+.acciones-column {
+  width: 80px; /* O cualquier otro valor que prefieras */
+}

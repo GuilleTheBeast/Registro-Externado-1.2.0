@@ -1,0 +1,205 @@
+.banner {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.botonlogin {
+  background-color: #008000;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 10px;
+
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.botonlogin:hover {
+  color: #ffff80;
+}
+
+.passwordfield {
+  padding-bottom: 15px;
+}
+
+.logincontainer {
+  min-width: 300px; /* Ajusta este valor según tus necesidades */
+  margin: 0 auto; /* Para centrar horizontalmente */
+}
+
+/* Estilos para pantallas más pequeñas, como celulares */
+@media (max-width: 576px) {
+  .logincontainer {
+    max-width: 100%; /* Hace que el contenedor ocupe todo el ancho disponible */
+    padding: 0 10px; /* Añade un poco de espacio a los lados */
+  }
+}
+
+/* Estilos para pantallas medianas */
+@media (min-width: 577px) and (max-width: 991px) {
+  .logincontainer {
+    max-width: 80%; /* Reduce el ancho del contenedor para pantallas medianas */
+  }
+}
+
+/* Estilos para pantallas más pequeñas, como celulares */
+@media (max-width: 576px) {
+  .banner {
+    width: 100%; /* Hace que el banner ocupe todo el ancho disponible */
+    height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
+  }
+}
+
+/* Estilos para pantallas medianas */
+/* verificacionExitosa.css */
+
+.container-verificado {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.title {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #008000;
+}
+
+.message {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+
+.peque {
+  font-size: 2px !important;
+}
+
+.button {
+  text-transform: none;
+  background-color: #008000;
+  border: none;
+  color: white;
+  padding: 10px 50px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: box-shadow 0.3s;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 5px !important;
+}
+
+.button-modal {
+  text-transform: none;
+  background-color: #008000;
+  border: none;
+  color: white;
+  padding: 10px 50px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: box-shadow 0.3s;
+  cursor: pointer;
+  align-items: center;
+  width: 20%;
+  border-radius: 5px !important;
+
+  /* Agrega estas propiedades para centrar el contenido */
+  display: flex;
+  justify-content: center;
+}
+
+.button-modal:hover {
+  color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.button-verificado {
+  text-transform: none;
+  background-color: #008000;
+  border: none;
+  color: white;
+  padding: 10px 2em; /* Ajusta el padding para adaptarse al contenido */
+  text-align: center;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 1em; /* Usa em para permitir que se ajuste */
+  margin-top: 10px;
+  transition: box-shadow 0.3s;
+  cursor: pointer;
+  width: auto; /* Permite que el ancho se ajuste automáticamente */
+  max-width: 200px; /* Opcional: establece un ancho máximo */
+  border-radius: 5px !important;
+}
+
+.button:hover {
+  color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.cambio-contrasena-container {
+  min-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.boton-guardar-inicio {
+  text-transform: none !important;
+  height: 48px !important;
+  background-color: #008000 !important;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px !important;
+  margin-top: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 5px !important;
+}
+.boton-guardar-inicio:hover {
+  color: #fff;
+}
+
+.boton-cancelar {
+  background-color: #808080 !important; /* Puedes ajustar el color según tus preferencias */
+  border: none;
+  color: white;
+  text-transform: none !important;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px !important;
+  margin-top: 10px;
+  height: 48px !important;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px !important;
+  width: 100%;
+}
+
+.boton-cancelar:hover {
+  background-color: #404040; /* Puedes ajustar el color del hover según tus preferencias */
+  color: white; /* Puedes ajustar el color del hover según tus preferencias */
+}
+
+.error-captcha {
+  color: red !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}

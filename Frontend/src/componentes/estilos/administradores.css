@@ -1,0 +1,22 @@
+.container-hola {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  font-family: "Arial", sans-serif; /* Puedes cambiar la fuente según tus preferencias */
+}
+
+.h1-hola {
+  color: #333; /* Puedes cambiar el color según tus preferencias */
+}
+
+.p-hola {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.acceso-denegado-container {
+  text-align: center;
+  margin-top: 50px;
+}

@@ -1,0 +1,13 @@
+.required-asterisk {
+  color: red;
+  margin-left: 4px; /* Puedes ajustar el espacio entre el texto y el asterisco según tus preferencias */
+}
+
+.error-border {
+  border-color: red !important;
+}
+
+.error-text {
+  color: red;
+  font-size: 80%; /* Puedes ajustar el tamaño del texto de error según tus preferencias */
+}

@@ -1,0 +1,58 @@
+.bg-body-tertiary {
+  background-color: #008000 !important;
+
+  /* Cambia el color de fondo de la barra a verde (#008000) */
+}
+
+.bg-body-tertiary .navbar-nav .nav-link.active {
+  background-color: #006400 !important; /* Cambia el color de fondo para la opción activa */
+  color: white !important; /* Cambia el color del texto para la opción activa */
+  /* Añade negrita a la opción activa si lo deseas */
+}
+/* Puedes agregar otros estilos según sea necesario */
+.bg-body-tertiary a {
+  color: white;
+}
+
+.bg-body-tertiary a:hover {
+  color: #fff;
+  font-weight: bold; /* Cambia el color de fondo al pasar el ratón por encima a un tono más oscuro (#006400) */
+}
+
+.bg-body-tertiary a:visited {
+  color: white !important;
+}
+
+.bg-body-tertiary a.active {
+  color: white !important;
+}
+
+.bg-body-tertiary .navbar-brand {
+  color: white !important; /* Cambia el color del texto del Navbar.Brand a blanco */
+}
+
+.bg-body-tertiary .navbar-toggler-icon::before {
+  background-color: white !important; /* Cambia el color del icono del Navbar.Toggler a blanco */
+}
+
+/* Agrega espacio entre las opciones del menú */
+.opc-izq {
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  align-items: center;
+}
+
+.opc-izq:hover {
+  color: #fff;
+  font-weight: bold;
+}
+
+.active {
+  color: white;
+  font-weight: bold;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 2px;
+  text-decoration: none;
+}

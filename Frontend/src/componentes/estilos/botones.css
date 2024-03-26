@@ -1,0 +1,72 @@
+/* Estilo para el botón "Atrás" */
+.boton-atras {
+  background-color: #5086c1 !important;
+  text-decoration: none !important;
+  font-weight: 400 !important;
+  color: #fff !important;
+}
+
+.boton-menos > span {
+  font-size: 45px !important; /* Ajusta el tamaño de fuente según sea necesario */
+  line-height: 21px !important; /* Ajusta el tamaño de fuente según sea necesario */
+}
+
+.boton-mas > span {
+  font-size: 22px !important; /* Ajusta el tamaño de fuente según sea necesario */
+  line-height: 21px !important; /* Ajusta el tamaño de fuente según sea necesario */
+}
+.boton-menos {
+  background-color: #c63637 !important;
+  text-decoration: none !important;
+  font-weight: 400 !important;
+  color: #fff !important;
+  max-height: 48px !important;
+  display: flex;
+  align-items: center; /* Centra verticalmente el contenido del botón */
+}
+
+.boton-mas {
+  background-color: #008000 !important;
+  text-decoration: none !important;
+  font-weight: 400 !important;
+  color: #fff !important;
+  max-height: 48px !important;
+  display: flex;
+  align-items: center; /* Centra verticalmente el contenido del botón */
+}
+
+/* Estilo para el botón "Guardar" */
+.boton-guardar {
+  background-color: #008000 !important;
+  color: white;
+  font-weight: 400 !important;
+}
+
+/* estilos.css */
+.button-style {
+  white-space: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white !important;
+}
+
+.min-width-style {
+  min-width: 200px;
+}
+
+.smaller-button-style {
+  height: 4rem;
+  /* Agrega otros estilos personalizados si es necesario */
+}
+
+.swal2-confirm {
+  background-color: #28a745 !important;
+  color: #fff !important;
+  border: 1px solid #28a745 !important;
+}
+/* Elimina el contorno (focus) al hacer clic en los botones */
+.swal2-confirm:focus,
+.swal2-cancel:focus {
+  box-shadow: none !important;
+}
