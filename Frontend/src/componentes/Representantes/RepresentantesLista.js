@@ -182,7 +182,7 @@ function RepresentantesLista() {
               <ul>
                 <li>
                   Para ingresar un responsable, se deben de completar todos los
-                  campos obligatorios marcados con un * y presionar el botón de
+                  campos obligatorios marcados con un <span style={{ color: "red", fontWeight: "bold" }}>*</span> y presionar el botón de
                   Guardar al final del formulario
                 </li>
                 <li>
@@ -231,7 +231,7 @@ function RepresentantesLista() {
           <ul>
             <li>
               Para ingresar un responsable, se deben de completar todos los
-              campos obligatorios marcados con un * y presionar el botón de
+              campos obligatorios marcados con un <span style={{ color: "red", fontWeight: "bold" }}>*</span> y presionar el botón de
               Guardar al final del formulario
             </li>
             <li>

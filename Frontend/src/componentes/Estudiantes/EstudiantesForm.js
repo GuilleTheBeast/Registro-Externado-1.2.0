@@ -4542,8 +4542,8 @@ const EstudiantesForm = () => {
       <Container className="fondo">
         <h4>Información general de los estudiantes</h4>
         <p>
-          Los campos con el <span style={{ color: "red" }}>* </span>
-          son de caracter <span style={{ color: "red" }}>obligatorio</span> para
+          Los campos con el <span style={{ color: "red", fontWeight: "bold" }}> * </span>
+          son de caracter <span style={{ color: "red", fontWeight: "bold" }}>obligatorio</span> para
           Guardar{" "}
         </p>
         <Form method="post" onSubmit={handleFormSubmit}>
