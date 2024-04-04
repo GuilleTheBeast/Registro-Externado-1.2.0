@@ -7,6 +7,21 @@
   pointer-events: none;
 }
 
+.btn-tour-help{
+  background-color: #008000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 4px 2px;
+  cursor: pointer;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 99;
+  border-radius: 30px;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
