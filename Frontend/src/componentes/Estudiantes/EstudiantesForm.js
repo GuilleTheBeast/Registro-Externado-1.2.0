@@ -113,7 +113,6 @@ const EstudiantesForm = () => {
   };
 
   useEffect(() => {
-    console.log("sdasdas");
     setRun(true);
   }, []);
 
@@ -123,6 +122,29 @@ const EstudiantesForm = () => {
   };
 
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const button = document.getElementById('btn-tour-help');
+      const footer = document.getElementsByClassName('footer-container')[0];  
+      if (button && footer) {
+        const buttonPosition = button.getBoundingClientRect().top + window.scrollY;
+        const footerPosition = footer.getBoundingClientRect().top + window.scrollY;
+  
+        if (buttonPosition >= footerPosition) {
+          button.classList.add('shadow-btn-help');
+        } else {
+          button.classList.remove('shadow-btn-help');
+        }
+      }
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+  
+    // Limpiar el evento al desmontar el componente
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   const { id } = useParams();
   //modal
   const [showModal, setShowModal] = useState(false);
@@ -4662,10 +4684,11 @@ const EstudiantesForm = () => {
             close: 'Cerrar', // Text for the close button
             last: 'Finalizar', // Text for the last button
             next: 'Siguiente', // Text for the next button
-            skip: 'Finalizar guia', // Text for the skip button
+            skip: 'Omitir guia', // Text for the skip button
           }}
         />
          <button 
+          id="btn-tour-help"
           onClick={handleRestartTour} 
           className="btn-tour-help"
         >

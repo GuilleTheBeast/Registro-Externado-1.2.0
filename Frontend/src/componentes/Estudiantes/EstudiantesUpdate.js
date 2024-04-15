@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../estilos/botones.css";
+import Joyride from "react-joyride";
 import { Form, Button, Col, Row, Container, Modal } from "react-bootstrap";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
@@ -41,6 +42,111 @@ import {
 //Crear un formulario 2 columnas para padres y representantes
 const EstudiantesForm = () => {
   const { id } = useParams();
+  const [run, setRun] = useState(false);
+  const [steps, setSteps] = useState([
+    {
+      target: ".step1-estudiantes-lista",
+      disableBeacon: true,
+      content: (
+        <div className="text-justify">
+          <h4 className=" font-weight-bold">Bienvenido al formulario de registro general de estudiantes</h4>
+          <p>Esta es una guía para entender el formulario de registro general de estudiantes. Por favor, completa todos los campos obligatorios marcados con un asterisco <span style={{ color: "red", fontWeight: "bold" }}>*</span>.</p>
+          <p>Al completar todos los campos obligatorios, podrás guardar toda la información para la generacion de PDF de matricula y pasar a la siguiente fase.</p>
+          <p>Si no terminas tu registro en este momento, puedes guardar tu información para continuar más tarde.</p>
+          <p>Este formulario es fundamental para registrar tu información en nuestro sistema.</p>
+        </div>
+      ),
+      placement: 'bottom', // Tooltip will appear to the right of the target
+    },
+    {
+      target: ".step2-estudiantes-lista",
+      content: (
+        <div className="text-justify">
+          <h4 className=" font-weight-bold">Completa tus datos personales y de emergencia</h4>
+          <p>El formulario está dividido en dos secciones. La primera sección se enfoca en tus datos personales, mientras que la segunda sección se centra en los datos de emergencia.</p>
+          <p>Por favor, completa todos los campos obligatorios en ambas secciones para registrar tus datos de manera completa. Estos datos son importantes para asegurar tu matrícula. </p>
+        </div>
+      ),
+    },
+    {
+      target: ".step3-estudiantes-lista",
+      content: (
+        <div className="text-justify">
+          <h4 className=" font-weight-bold">Ingresa tus datos personales</h4>
+          <p>Completa con cuidado todos los campos obligatorios con tus datos personales. </p>
+          <p>Estos datos son esenciales para asegurar tu matrícula y brindarte una experiencia educativa. </p>
+          <p> Todos los campos marcados con un asterisco <span style={{ color: "red", fontWeight: "bold" }}>*</span> son obligatorios. Una vez completados todos los campos, podrás revisar la información y avanzar al siguiente paso.</p>
+        </div>
+      ),
+    },
+    {
+      target: ".step4-estudiantes-lista",
+      content: (
+        <div className="text-justify">
+          <h4 className=" font-weight-bold">Ingresa tus datos de emergencia</h4>
+          <p>Ahora, ingresa tus datos de emergencia. Estos datos son importantes para poder contactarte en casos de emergencia de ser necesario</p>
+          <p>Por favor, completa todos los campos obligatorios con la información requerida. Una vez completados todos los campos, podrás guardar la información y continuar con el proceso de registro.</p>
+
+        </div>
+      ),
+    },
+    {
+      target: ".step5-estudiantes-lista",
+      content: (
+        <div className="text-justify">
+          <h4 className=" font-weight-bold">¡Listo para guardar!</h4>
+          <p> Una vez que estés seguro, haz clic en el botón 'Guardar' para registrar tus datos.</p>
+
+        </div>
+      ),
+    },
+  ]);
+  const handleJoyrideCallback = (data) => {
+    const { status, type } = data;
+
+    if (status === "finished" || status === "skipped") {
+      // When the tour is finished or skipped, set run to false
+      setRun(false);
+    }
+
+    if (type === "step:after" || type === "target:not_found") {
+      // Check if the step is not found, go to the next step
+      data.action = "next";
+    }
+  };
+
+  useEffect(() => {
+    setRun(false);
+  }, []);
+
+  const handleRestartTour = () => {
+    // Restart the tour
+    setRun(true);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const button = document.getElementById('btn-tour-help');
+      const footer = document.getElementsByClassName('footer-container')[0];  
+      if (button && footer) {
+        const buttonPosition = button.getBoundingClientRect().top + window.scrollY;
+        const footerPosition = footer.getBoundingClientRect().top + window.scrollY;
+  
+        if (buttonPosition >= footerPosition) {
+          button.classList.add('shadow-btn-help');
+        } else {
+          button.classList.remove('shadow-btn-help');
+        }
+      }
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+  
+    // Limpiar el evento al desmontar el componente
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   //modal
   const [showModal, setShowModal] = useState(false);
 
@@ -67,8 +173,8 @@ const EstudiantesForm = () => {
     parentesco === "Padre"
       ? "Nombres y apellidos del padre"
       : parentesco === "Madre"
-      ? "Nombres y apellidos de la madre"
-      : "Nombres y apellidos del responsable";
+        ? "Nombres y apellidos de la madre"
+        : "Nombres y apellidos del responsable";
 
   const [documentType, setDocumentType] = useState("DUI");
   const [externado_student_rep_id, setDocumentNumber] = useState("");
@@ -1149,11 +1255,9 @@ const EstudiantesForm = () => {
       let diaEstudiante = fechaEstudiante.getDate();
 
       // Formatear la fecha de nacimiento como una cadena YYYY-MM-DD
-      fechaFormateadaEstudiante = `${
-        mesEstudiante < 10 ? "0" + mesEstudiante : mesEstudiante
-      }-${
-        diaEstudiante < 10 ? "0" + diaEstudiante : diaEstudiante
-      }-${añoEstudiante}`;
+      fechaFormateadaEstudiante = `${mesEstudiante < 10 ? "0" + mesEstudiante : mesEstudiante
+        }-${diaEstudiante < 10 ? "0" + diaEstudiante : diaEstudiante
+        }-${añoEstudiante}`;
 
       // Crear un objeto de fecha para la fecha actual
       const fechaActual = new Date();
@@ -1468,9 +1572,8 @@ const EstudiantesForm = () => {
       const dia = fecha.getDate();
 
       // Formatear la fecha como una cadena YYYY-MM-DD
-      const fechaFormateadaResponsable = `${año}-${
-        mes < 10 ? "0" + mes : mes
-      }-${dia < 10 ? "0" + dia : dia}`;
+      const fechaFormateadaResponsable = `${año}-${mes < 10 ? "0" + mes : mes
+        }-${dia < 10 ? "0" + dia : dia}`;
 
       // Convertir la cadena formateada a un objeto Date
       const fechaNacimiento = new Date(fechaFormateadaResponsable);
@@ -1626,9 +1729,8 @@ const EstudiantesForm = () => {
         dia2 = fecha2.getDate();
 
         // Formatear la fecha como una cadena YYYY-MM-DD
-        fechaFormateadaResponsable2 = `${año2}-${
-          mes2 < 10 ? "0" + mes2 : mes2
-        }-${dia2 < 10 ? "0" + dia2 : dia2}`;
+        fechaFormateadaResponsable2 = `${año2}-${mes2 < 10 ? "0" + mes2 : mes2
+          }-${dia2 < 10 ? "0" + dia2 : dia2}`;
 
         const fechaNacimiento2 = new Date(fechaFormateadaResponsable2);
         const fechaActual2 = new Date();
@@ -1791,9 +1893,8 @@ const EstudiantesForm = () => {
         dia3 = fecha3.getDate();
         // Formatear la fecha como una cadena YYYY-MM-DD
 
-        fechaFormateadaResponsable3 = `${año3}-${
-          mes3 < 10 ? "0" + mes3 : mes3
-        }-${dia3 < 10 ? "0" + dia3 : dia3}`;
+        fechaFormateadaResponsable3 = `${año3}-${mes3 < 10 ? "0" + mes3 : mes3
+          }-${dia3 < 10 ? "0" + dia3 : dia3}`;
 
         // Convertir la cadena formateada a un objeto Date
         const fechaNacimiento3 = new Date(fechaFormateadaResponsable3);
@@ -3740,9 +3841,8 @@ const EstudiantesForm = () => {
       const dia = fecha.getDate();
 
       // Formatear la fecha como una cadena YYYY-MM-DD
-      const fechaFormateada = `${mes < 10 ? "0" + mes : mes}-${
-        dia < 10 ? "0" + dia : dia
-      }-${año}`;
+      const fechaFormateada = `${mes < 10 ? "0" + mes : mes}-${dia < 10 ? "0" + dia : dia
+        }-${año}`;
 
       const nacionalidadEstudiante =
         dataEstudiante.externado_student_nationality;
@@ -6315,7 +6415,7 @@ const EstudiantesForm = () => {
     } else if (
       responsibleTypeIdRef.current.selectedIndex === 4 &&
       validateDocument(duiRef.current.value, duiTypeRef.current.selected) ===
-        false
+      false
     ) {
       setMessageDate("");
       setMessageEmail("");
@@ -6598,8 +6698,8 @@ const EstudiantesForm = () => {
               Number(responsibleTypeIdRef.current.selectedIndex) !== 4
                 ? (emailRepRef.current = null)
                 : emailRepRef.current.value === ""
-                ? null
-                : emailRepRef.current.value,
+                  ? null
+                  : emailRepRef.current.value,
 
             externado_student_rep_mobile_phone:
               Number(responsibleTypeIdRef.current.selectedIndex) !== 4
@@ -6625,7 +6725,7 @@ const EstudiantesForm = () => {
                 : Number(duiTypeRef.current.selected),
             externado_student_church_other:
               isCatholicRef.current.checked &&
-              Number(nonCatholicIdRef.current.selectedIndex) === 9
+                Number(nonCatholicIdRef.current.selectedIndex) === 9
                 ? churchOtherRef.current.value
                 : (churchOtherRef.current = null),
             externado_form_valid,
@@ -6822,7 +6922,7 @@ const EstudiantesForm = () => {
             : Number(duiTypeRef.current.selected),
         externado_student_church_other:
           isCatholicRef.current.checked &&
-          Number(nonCatholicIdRef.current.selectedIndex) === 9
+            Number(nonCatholicIdRef.current.selectedIndex) === 9
             ? churchOtherRef.current.value
             : (churchOtherRef.current = null),
         externado_form_valid,
@@ -6849,13 +6949,60 @@ const EstudiantesForm = () => {
   return (
     <div className="div-principal">
       <Container className="fondo">
-        <h4>Información general de los estudiantes</h4>
+      <Joyride
+          callback={handleJoyrideCallback}
+          continuous
+          hideCloseButton
+          run={run}
+          scrollToFirstStep
+          showProgress
+          disableOverlayClose={true}
+          showSkipButton={true} // Hide the skip button
+          steps={steps}
+          styles={{
+            options: {
+              zIndex: 10000, // existing style
+              width: 900,
+            },
+            tooltip: {},
+            buttonBack: {
+              backgroundColor: '#008000', // change the back button text color
+              color: '#ffffff', // change the back button text color
+            },
+            buttonClose: {
+              backgroundColor: '#008000' // change the close button text color
+            },
+            buttonNext: {
+              backgroundColor: '#008000' // change the next button text color
+            },
+            buttonSkip: {
+              backgroundColor: '#008000' ,// change the skip button text color
+              color: '#ffffff', // change the back button text color
+            },
+          }}
+          locale={{
+            back: 'Atrás', // Text for the back button
+            close: 'Cerrar', // Text for the close button
+            last: 'Finalizar', // Text for the last button
+            next: 'Siguiente', // Text for the next button
+            skip: 'Omitir guia', // Text for the skip button
+          }}
+        />
+         <button 
+           id="btn-tour-help"
+          onClick={handleRestartTour} 
+          className="btn-tour-help"
+        >
+          ?
+        </button>
+        <h4 className="step1-estudiantes-lista">Información general de los estudiantes</h4>
         <p>
           Los campos con el <span style={{ color: "red", fontWeight: "bold" }}> * </span>
           son de caracter <span style={{ color: "red", fontWeight: "bold" }}>obligatorio</span> para
           Guardar{" "}
         </p>
-        <Form method="post" onSubmit={handleFormSubmit}>
+        <Form  className="step2-estudiantes-lista" method="post" onSubmit={handleFormSubmit}>
+        <div className="step3-estudiantes-lista">
           <Row>
             <Col xs={12} sm={12} md={6}>
               <Form.Group controlId="lastSchoolId">
@@ -6925,6 +7072,7 @@ const EstudiantesForm = () => {
               </Form.Group>
             </Col>
           </Row>
+        </div>
           <Form.Label style={{ marginTop: "10px" }}>
             <u>
               <strong>
@@ -7842,6 +7990,8 @@ const EstudiantesForm = () => {
               </Row>
             </div>
           )}
+                    <div className="step4-estudiantes-lista">
+
           <Form.Label style={{ marginTop: "10px" }}>
             <u>
               <strong>
@@ -8288,7 +8438,7 @@ const EstudiantesForm = () => {
               marginRight: "0px",
             }}
             variant="custom"
-            className="boton-guardar"
+            className="boton-guardar step5-estudiantes-lista"
           >
             Guardar
           </Button>
@@ -8311,6 +8461,8 @@ const EstudiantesForm = () => {
               Generar PDF
             </Button>
           )}
+                    </div>
+
         </Form>
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
@@ -8342,7 +8494,7 @@ const EstudiantesForm = () => {
         </Modal>
       </Container>
       <Footer />
-    </div>
+    </div >
   );
 };
 
