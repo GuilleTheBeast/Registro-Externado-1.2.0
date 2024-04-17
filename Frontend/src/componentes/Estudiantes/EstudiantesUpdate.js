@@ -62,9 +62,9 @@ const EstudiantesForm = () => {
       target: ".step2-estudiantes-lista",
       content: (
         <div className="text-justify">
-          <h4 className=" font-weight-bold">Completa tus datos personales y de emergencia</h4>
-          <p>El formulario está dividido en dos secciones. La primera sección se enfoca en tus datos personales, mientras que la segunda sección se centra en los datos de emergencia.</p>
-          <p>Por favor, completa todos los campos obligatorios en ambas secciones para registrar tus datos de manera completa. Estos datos son importantes para asegurar tu matrícula. </p>
+          <h4 className=" font-weight-bold">Completa los datos personales y de emergencia del estudiante</h4>
+          <p>El formulario está dividido en dos secciones. La primera sección se enfoca en los datos personales del estudiante, mientras que la segunda sección se centra en los datos de emergencia del estudiante.</p>
+          <p>Por favor, completa todos los campos obligatorios en ambas secciones para registrar los datos del estudiante de manera completa. Estos datos son importantes para asegurar la matrícula. </p>
         </div>
       ),
     },
@@ -72,9 +72,9 @@ const EstudiantesForm = () => {
       target: ".step3-estudiantes-lista",
       content: (
         <div className="text-justify">
-          <h4 className=" font-weight-bold">Ingresa tus datos personales</h4>
-          <p>Completa con cuidado todos los campos obligatorios con tus datos personales. </p>
-          <p>Estos datos son esenciales para asegurar tu matrícula y brindarte una experiencia educativa. </p>
+          <h4 className=" font-weight-bold">Ingresa los datos personales del estudiante</h4>
+          <p>Completa con cuidado todos los campos obligatorios. </p>
+          <p>Estos datos son esenciales para asegurar el proceso de matricula del estudiante. </p>
           <p> Todos los campos marcados con un asterisco <span style={{ color: "red", fontWeight: "bold" }}>*</span> son obligatorios. Una vez completados todos los campos, podrás revisar la información y avanzar al siguiente paso.</p>
         </div>
       ),
@@ -83,7 +83,7 @@ const EstudiantesForm = () => {
       target: ".step4-estudiantes-lista",
       content: (
         <div className="text-justify">
-          <h4 className=" font-weight-bold">Ingresa tus datos de emergencia</h4>
+          <h4 className=" font-weight-bold">Ingresa los datos de emergencia del estudiante</h4>
           <p>Ahora, ingresa tus datos de emergencia. Estos datos son importantes para poder contactarte en casos de emergencia de ser necesario</p>
           <p>Por favor, completa todos los campos obligatorios con la información requerida. Una vez completados todos los campos, podrás guardar la información y continuar con el proceso de registro.</p>
 
@@ -96,7 +96,6 @@ const EstudiantesForm = () => {
         <div className="text-justify">
           <h4 className=" font-weight-bold">¡Listo para guardar!</h4>
           <p> Una vez que estés seguro, haz clic en el botón 'Guardar' para registrar tus datos.</p>
-
         </div>
       ),
     },
