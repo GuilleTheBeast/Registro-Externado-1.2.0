@@ -2303,9 +2303,7 @@ function RepresentantesForm() {
             >
               <Form.Label style={{ marginTop: "10px" }}>
                 ¿Es exalumno del Externado?
-                {!isFormerStudentSelected && (
                   <span style={{ color: "red" }}>* </span>
-                )}
               </Form.Label>
               <div className="form-group row">
                 <div className="col-sm-2 mt-2">
@@ -2368,9 +2366,7 @@ function RepresentantesForm() {
                 <Form.Label style={{ marginTop: "10px" }}>
                   ¿Es usted actualmente una Persona Políticamente Expuesta
                   (PEP´s)?
-                  {isPepSelected ? null : (
                     <span style={{ color: "red" }}>*</span>
-                  )}
                 </Form.Label>
                 <div className="form-group row">
                   <div className="col-sm-2 mt-2">
@@ -2414,9 +2410,7 @@ function RepresentantesForm() {
                     {" "}
                     Si usted es una Persona Políticamente Expuesta, por favor
                     seleccionar según corresponda
-                    {!isPepOccupationSelected && (
                       <span style={{ color: "red" }}>*</span>
-                    )}
                   </Form.Label>
 
                   <Form.Control
