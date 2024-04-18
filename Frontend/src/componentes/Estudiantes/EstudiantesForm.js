@@ -60,7 +60,7 @@ const EstudiantesForm = () => {
         <div  className="text-justify">
           <h4 className=" font-weight-bold">Completa tus datos personales y de emergencia</h4>
           <p>El formulario está dividido en dos secciones. La primera sección se enfoca en tus datos personales, mientras que la segunda sección se centra en los datos de emergencia.</p>
-          <p>Por favor, completa todos los campos obligatorios en ambas secciones para registrar tus datos de manera completa. Estos datos son importantes para asegurar tu matrícula. </p>
+          <p>Por favor, completa todos los campos obligatorios en ambas secciones para registrar tus datos de manera completa. Estos datos son importantes para asegurar la matrícula. </p>
         </div>
       ),
     },
@@ -4712,7 +4712,6 @@ const EstudiantesForm = () => {
                 <Form.Label>
                   Escuela o colegio en el que estudió en el año escolar
                   anterior:
-                  {isEscuelaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4722,7 +4721,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={120}
@@ -4736,7 +4734,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>
                   Grado que cursará en el siguiente año escolar:
-                  {!isGradoSelected && (
                     <span
                       style={{
                         color: "red",
@@ -4746,7 +4743,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control as="select" onChange={handleCurrentLevelIdChange}>
                   {grado?.map((level) => (
@@ -4775,7 +4771,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>
                   Nombres:{" "}
-                  {isFirstNameRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4785,7 +4780,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={60}
@@ -4799,7 +4793,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>
                   Apellidos:
-                  {isLastNameRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4809,7 +4802,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={60}
@@ -4825,7 +4817,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Dirección de residencia:
-                  {isAddressRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4835,7 +4826,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={120}
@@ -4849,7 +4839,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicPassword">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Departamento:
-                  {!isDepartamentoSelected && (
                     <span
                       style={{
                         color: "red",
@@ -4859,7 +4848,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control as="select" onChange={handleDepertmentIdChange}>
                   {departamentos?.map((departamento) => (
@@ -4878,7 +4866,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicPassword">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Municipio:
-                  {isMunicipioRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4888,7 +4875,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={30}
@@ -4904,7 +4890,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Lugar de nacimiento:
-                  {isLugardeNacimientoRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4914,7 +4899,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={120}
@@ -4928,9 +4912,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicPassword">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Fecha de nacimiento:
-                  {isBirthdateInputFilled ? (
-                    ""
-                  ) : (
                     <span
                       style={{
                         color: "red",
@@ -4940,7 +4921,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <div className="input-group date datepicker">
                   <Form.Control
@@ -4962,7 +4942,6 @@ const EstudiantesForm = () => {
                 <Form.Label style={{ marginTop: "10px" }}>
                   {" "}
                   Nacionalidad:
-                  {isNacionalidadRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4972,7 +4951,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={30}
@@ -5042,7 +5020,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   ¿El estudiante es cristiano católico?:
-                  {!isCatolicoSelected && (
                     <span
                       style={{
                         color: "red",
@@ -5052,7 +5029,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <div className="form-group row">
                   <div className="col-sm-2 mt-2">
@@ -5086,7 +5062,6 @@ const EstudiantesForm = () => {
                   <Form.Label style={{ marginTop: "10px" }}>
                     {" "}
                     Si no es cristiano católico, ¿a qué religión pertenece?:
-                    {!isReligionSelected && (
                       <span
                         style={{
                           color: "red",
@@ -5096,7 +5071,6 @@ const EstudiantesForm = () => {
                       >
                         *
                       </span>
-                    )}
                   </Form.Label>
 
                   <Form.Control
@@ -5148,7 +5122,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   ¿Alguno de sus hermanos estudia en el Externado?:
-                  {!isHermanosSelected && (
                     <span
                       style={{
                         color: "red",
@@ -5158,7 +5131,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <div className="form-group row">
                   <div className="col-sm-2 mt-2">
@@ -5207,7 +5179,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Nombre completo:
-                      {!hermano1InputValue && (
                         <span
                           style={{
                             color: "red",
@@ -5217,7 +5188,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -5285,7 +5255,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Nombre completo:
-                      {!hermano2InputValue && (
                         <span
                           style={{
                             color: "red",
@@ -5295,7 +5264,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -5368,7 +5336,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Nombre completo:
-                      {!hermano3InputValue && (
                         <span
                           style={{
                             color: "red",
@@ -5378,7 +5345,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -5443,7 +5409,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   ¿El estudiante vive con ambos padres?:
-                  {!isAmbosPadresSelected && (
                     <span
                       style={{
                         color: "red",
@@ -5453,7 +5418,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <div className="form-group row">
                   <div className="col-sm-2 mt-2">
@@ -5500,7 +5464,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Nombre completo:
-                      {!ambosInputNombreValue && (
                         <span
                           style={{
                             color: "red",
@@ -5510,7 +5473,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       maxLength={60}
@@ -5562,7 +5524,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Nombre de contacto de emergencia:
-                  {isNombreEmergenciaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -5572,7 +5533,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={60}
@@ -5587,7 +5547,6 @@ const EstudiantesForm = () => {
                 <Form.Label style={{ marginTop: "10px" }}>
                   {" "}
                   Relación de contacto de emergencia con el estudiante:
-                  {isRelacionEmergenciaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -5597,7 +5556,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={45}
@@ -5613,7 +5571,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Dirección de contacto de emergencia:
-                  {isDireccionEmergenciaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -5623,7 +5580,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={120}
@@ -5638,7 +5594,6 @@ const EstudiantesForm = () => {
                 <Form.Label style={{ marginTop: "10px" }}>
                   {" "}
                   Número de teléfono de contacto de emergencia:
-                  {isTelefonoEmergenciaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -5648,7 +5603,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   ref={telEmergencyRef}
@@ -5671,7 +5625,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Seleccione el responsable:
-                  {!isResponsableSelected && (
                     <span
                       style={{
                         color: "red",
@@ -5681,7 +5634,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   as="select"
@@ -5753,7 +5705,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label style={{ marginTop: "5px" }}>
                       Número de documento:
-                      {!representanteInputDUIValue && (
                         <span
                           style={{
                             color: "red",
@@ -5763,7 +5714,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       ref={duiRef}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../estilos/botones.css";
+import Joyride from "react-joyride";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { Form, Button, Col, Row, Container } from "react-bootstrap";
@@ -32,6 +33,101 @@ import {
 
 //Crear un formulario 2 columnas para padres y representantes
 const RepresentantesForm = () => {
+  const [run, setRun] = useState(false);
+  const [steps, setSteps] = useState([
+    {
+      target: ".step1-estudiantes-lista",
+      disableBeacon: true,
+      content: (
+        <div  className="text-justify">
+          <h4 className=" font-weight-bold">Bienvenido al formulario de registro general de padres de familia o apoderado</h4>
+          <p>Esta es una guía para entender el formulario de registro general de padres de familia o apoderado. Por favor, completa todos los campos obligatorios marcados con un asterisco <span style={{ color: "red", fontWeight: "bold" }}>*</span>.</p>
+          <p>Al completar todos los campos obligatorios, podrás guardar toda la información para la generacion de PDF de matricula y pasar a la siguiente fase.</p>
+          <p>Este formulario es fundamental para registrar tu información en nuestro sistema.</p>
+        </div>
+      ),
+      placement: 'bottom', // Tooltip will appear to the right of the target
+    },
+    {
+      target: ".step2-estudiantes-lista",
+      content: (
+        <div  className="text-justify">
+          <h4 className=" font-weight-bold">Completa los datos personales del padre de familia o del apoderado segun documento de identificación</h4>
+          <p>Esta sección se enfoca en los datos personales del padre del familia o del apoderado segun documento de identificación.</p>
+          <p>Por favor, completa todos los campos obligatorios para registrar los datos de manera completa. Estos datos son importantes para asegurar la matrícula. </p>
+        </div>
+      ),
+    },
+    {
+      target: ".step3-estudiantes-lista",
+      content: (
+        <div className="text-justify">
+          <h4 className="font-weight-bold">Ingresa informacion laboral y de educacion del padre de familia o apoderado</h4>
+          <p>Completa con cuidado todos los campos obligatorios con los datos del padre de familia o operado.</p>
+          <p>Todos los campos marcados con un asterisco <span style={{ color: "red", fontWeight: "bold" }}>*</span> son obligatorios. Una vez completados todos los campos, podrás revisar la información y avanzar al siguiente paso.</p>
+          <p>Debes ingresar los datos del padre de familia o tutor, así como información laboral y de estudios del mismo.</p>
+        </div>
+      ),
+    },
+    {
+      target: ".step5-estudiantes-lista",
+      content: (
+        <div  className="text-justify">
+          <h4 className=" font-weight-bold">¡Listo para guardar!</h4>
+          <p> Una vez que estés seguro, haz clic en el botón 'Guardar' para registrar tus datos.</p>
+  
+        </div>
+      ),
+    },
+  ]);
+
+  const handleJoyrideCallback = (data) => {
+    const { status, type } = data;
+
+    if (status === "finished" || status === "skipped") {
+      // When the tour is finished or skipped, set run to false
+      setRun(false);
+    }
+
+    if (type === "step:after" || type === "target:not_found") {
+      // Check if the step is not found, go to the next step
+      data.action = "next";
+    }
+  };
+
+  useEffect(() => {
+    setRun(true);
+  }, []);
+
+  const handleRestartTour = () => {
+    // Restart the tour
+    setRun(true);
+  };
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const button = document.getElementById('btn-tour-help');
+      const footer = document.getElementsByClassName('footer-container')[0];  
+      if (button && footer) {
+        const buttonPosition = button.getBoundingClientRect().top + window.scrollY;
+        const footerPosition = footer.getBoundingClientRect().top + window.scrollY;
+  
+        if (buttonPosition >= footerPosition) {
+          button.classList.add('shadow-btn-help');
+        } else {
+          button.classList.remove('shadow-btn-help');
+        }
+      }
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+  
+    // Limpiar el evento al desmontar el componente
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   const { authToken } = useAuth();
   //console.log("RepresentantesForm se montó");
   const [visible, setVisible] = useState(false);
@@ -769,7 +865,53 @@ const RepresentantesForm = () => {
     <>
       <div className="div-principal">
         <Container className="fondo">
-          <h4>Información general de los padres de familia o apoderado</h4>
+        <Joyride
+          callback={handleJoyrideCallback}
+          continuous
+          hideCloseButton
+          run={run}
+          scrollToFirstStep
+          showProgress
+          disableOverlayClose={true}
+          showSkipButton={true} // Hide the skip button
+          steps={steps}
+          styles={{
+            options: {
+              zIndex: 10000, // existing style
+              width: 900,
+            },
+            tooltip: {},
+            buttonBack: {
+              backgroundColor: '#008000', // change the back button text color
+              color: '#ffffff', // change the back button text color
+            },
+            buttonClose: {
+              backgroundColor: '#008000' // change the close button text color
+            },
+            buttonNext: {
+              backgroundColor: '#008000' // change the next button text color
+            },
+            buttonSkip: {
+              backgroundColor: '#008000' ,// change the skip button text color
+              color: '#ffffff', // change the back button text color
+            },
+          }}
+          locale={{
+            back: 'Atrás', // Text for the back button
+            close: 'Cerrar', // Text for the close button
+            last: 'Finalizar', // Text for the last button
+            next: 'Siguiente', // Text for the next button
+            skip: 'Omitir guia', // Text for the skip button
+          }}
+        />
+         <button 
+          id="btn-tour-help"
+          onClick={handleRestartTour} 
+          className="btn-tour-help"
+        >
+          ?
+        </button>
+        <h4 className="step1-estudiantes-lista">Información general de los padres de familia o apoderado</h4>
           <p>
             Los campos con el <span style={{ color: "red" }}>* </span>
             son de caracter <span style={{ color: "red" }}>
@@ -811,14 +953,13 @@ const RepresentantesForm = () => {
                 </strong>
               </u>
             </Form.Label>
+            <div className="step2-estudiantes-lista">
             <Row>
               <Col xs={12} sm={12} md={6}>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>
                     Nombres
-                    {isFirstNameRequired && (
                       <span style={{ color: "red", marginLeft: "5px" }}>*</span>
-                    )}
                   </Form.Label>
                   <Form.Control
                     maxLength={60}
@@ -834,9 +975,7 @@ const RepresentantesForm = () => {
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label>
                     Apellidos
-                    {isLastNameRequired && (
                       <span style={{ color: "red", marginLeft: "5px" }}>*</span>
-                    )}
                   </Form.Label>
                   <Form.Control
                     maxLength={60}
@@ -879,9 +1018,7 @@ const RepresentantesForm = () => {
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label style={{ marginTop: "10px" }}>
                     Nacionalidad
-                    {isNationRequired && (
                       <span style={{ color: "red", marginLeft: "5px" }}>*</span>
-                    )}
                   </Form.Label>
 
                   <Form.Control
@@ -916,9 +1053,7 @@ const RepresentantesForm = () => {
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label style={{ marginTop: "10px" }}>
                     Número de documento
-                    {isDocumentNumberRequired && (
                       <span style={{ color: "red", marginLeft: "5px" }}>*</span>
-                    )}
                   </Form.Label>
                   <Form.Control
                     maxLength={20}
@@ -938,9 +1073,7 @@ const RepresentantesForm = () => {
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label style={{ marginTop: "10px" }}>
                     Número de NIT
-                    {isNitRequired && (
                       <span style={{ color: "red", marginLeft: "5px" }}>*</span>
-                    )}
                   </Form.Label>
                   <Form.Control
                     maxLength={20}
@@ -958,9 +1091,7 @@ const RepresentantesForm = () => {
                   <Form.Label style={{ marginTop: "10px" }}>
                     {" "}
                     Número de celular
-                    {isCellphoneRequired && (
                       <span style={{ color: "red", marginLeft: "5px" }}>*</span>
-                    )}
                   </Form.Label>
                   <Form.Control
                     ref={telMobileRef}
@@ -977,9 +1108,7 @@ const RepresentantesForm = () => {
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label style={{ marginTop: "10px" }}>
                     Dirección de residencia
-                    {isAddressRequired && (
                       <span style={{ color: "red", marginLeft: "5px" }}>*</span>
-                    )}
                   </Form.Label>
                   <Form.Control
                     maxLength={120}
@@ -1016,9 +1145,7 @@ const RepresentantesForm = () => {
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label style={{ paddingTop: "10px" }}>
                     Municipio
-                    {isMunicipioRequired && (
                       <span style={{ color: "red", marginLeft: "5px" }}>*</span>
-                    )}
                   </Form.Label>
                   <Form.Control
                     maxLength={30}
@@ -1032,9 +1159,7 @@ const RepresentantesForm = () => {
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label style={{ marginTop: "10px" }}>
                     Profesión
-                    {isProfessionRequired && (
                       <span style={{ color: "red", marginLeft: "5px" }}>*</span>
-                    )}
                   </Form.Label>
                   <Form.Control
                     maxLength={120}
@@ -1045,7 +1170,8 @@ const RepresentantesForm = () => {
                 </Form.Group>
               </Col>
             </Row>
-
+            </div>
+            <div className="step3-estudiantes-lista">
             <Row>
               <Col xs={12} sm={12} md={6}>
                 <Form.Group controlId="formBasicPassword">
@@ -1080,9 +1206,7 @@ const RepresentantesForm = () => {
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label style={{ marginTop: "10px" }}>
                     Correo electrónico
-                    {isEmailRequired && (
                       <span style={{ color: "red", marginLeft: "5px" }}>*</span>
-                    )}
                   </Form.Label>
                   <Form.Control
                     maxLength={60}
@@ -1400,6 +1524,7 @@ const RepresentantesForm = () => {
                 <Col></Col>
               </Row>
             )}
+            </div>
 
             <Button
               type="submit"
@@ -1411,7 +1536,7 @@ const RepresentantesForm = () => {
                 marginRight: "0px",
               }}
               variant="custom"
-              className="boton-guardar"
+              className="boton-guardar step5-estudiantes-lista"
             >
               Guardar
             </Button>

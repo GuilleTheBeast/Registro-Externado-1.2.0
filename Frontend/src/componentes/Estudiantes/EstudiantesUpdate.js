@@ -95,7 +95,7 @@ const EstudiantesForm = () => {
       content: (
         <div className="text-justify">
           <h4 className=" font-weight-bold">¡Listo para guardar!</h4>
-          <p> Una vez que estés seguro, haz clic en el botón 'Guardar' para registrar tus datos.</p>
+          <p> Una vez que estés seguro, haz clic en el botón 'Guardar' para registrar los datos.</p>
         </div>
       ),
     },
@@ -7008,7 +7008,6 @@ const EstudiantesForm = () => {
                 <Form.Label>
                   Escuela o colegio en el que estudió en el año escolar
                   anterior:
-                  {isEscuelaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -7018,7 +7017,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   ref={lastSchoolRef}
@@ -7035,7 +7033,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="currentLevelId">
                 <Form.Label>
                   Grado que cursará en el siguiente año escolar:
-                  {!isGradoSelected && (
                     <span
                       style={{
                         color: "red",
@@ -7045,7 +7042,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   as="select"
@@ -7085,7 +7081,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="namesId">
                 <Form.Label>
                   Nombres:{" "}
-                  {isFirstNameRequired && (
                     <span
                       style={{
                         color: "red",
@@ -7095,7 +7090,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
 
                 <Form.Control
@@ -7112,7 +7106,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="lastNamesId">
                 <Form.Label>
                   Apellidos:
-                  {isLastNameRequired && (
                     <span
                       style={{
                         color: "red",
@@ -7122,7 +7115,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   ref={lastNamesRef}
@@ -7140,7 +7132,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="addressId">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Dirección de residencia:
-                  {isAddressRequired && (
                     <span
                       style={{
                         color: "red",
@@ -7150,7 +7141,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   ref={addressRef}
@@ -7166,7 +7156,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="departmentId">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Departamento:
-                  {!isDepartamentoSelected && (
                     <span
                       style={{
                         color: "red",
@@ -7176,7 +7165,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   as="select"
@@ -7205,7 +7193,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="townId">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Municipio:
-                  {isMunicipioRequired && (
                     <span
                       style={{
                         color: "red",
@@ -7215,7 +7202,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   ref={townRef}
@@ -7233,7 +7219,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="birthPlaceId">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Lugar de nacimiento:
-                  {isLugardeNacimientoRequired && (
                     <span
                       style={{
                         color: "red",
@@ -7243,7 +7228,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   ref={birthPlaceRef}
@@ -7259,9 +7243,7 @@ const EstudiantesForm = () => {
               <Form.Group>
                 <Form.Label style={{ marginTop: "10px" }}>
                   Fecha de nacimiento:
-                  {isBirthdateInputFilled ? (
-                    ""
-                  ) : (
+
                     <span
                       style={{
                         color: "red",
@@ -7271,7 +7253,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <div className="input-group date datepicker">
                   <Form.Control
@@ -7296,7 +7277,6 @@ const EstudiantesForm = () => {
                 <Form.Label style={{ marginTop: "10px" }}>
                   {" "}
                   Nacionalidad:
-                  {isNacionalidadRequired && (
                     <span
                       style={{
                         color: "red",
@@ -7306,7 +7286,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   ref={nationalityRef}
@@ -7396,7 +7375,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   ¿El estudiante es cristiano católico?:
-                  {!isCatolicoSelected && (
                     <span
                       style={{
                         color: "red",
@@ -7406,7 +7384,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <div className="form-group row">
                   <div className="col-sm-2 mt-2">
@@ -7523,7 +7500,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   ¿Alguno de sus hermanos estudia en el Externado?:
-                  {!isHermanosSelected && (
                     <span
                       style={{
                         color: "red",
@@ -7533,7 +7509,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <div className="form-group row">
                   <div className="col-sm-2 mt-2">
@@ -7594,7 +7569,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="name1Id">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Nombre completo:
-                      {!isHermano1Required && (
                         <span
                           style={{
                             color: "red",
@@ -7604,7 +7578,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       ref={name1Ref}
@@ -7683,7 +7656,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="name2Id">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Nombre completo:
-                      {!isHermano2Required && (
                         <span
                           style={{
                             color: "red",
@@ -7693,7 +7665,7 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
+                    
                     </Form.Label>
                     <Form.Control
                       ref={name2Ref}
@@ -7777,7 +7749,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="name3Id">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Nombre completo:
-                      {!isHermano3Required && (
                         <span
                           style={{
                             color: "red",
@@ -7787,7 +7758,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       ref={name3Ref}
@@ -7863,7 +7833,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   ¿El estudiante vive con ambos padres?:
-                  {!isAmbosPadresSelected && (
                     <span
                       style={{
                         color: "red",
@@ -7873,7 +7842,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <div className="form-group row">
                   <div className="col-sm-2 mt-2">
@@ -7933,7 +7901,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="livesWithNameId">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Nombre completo:
-                      {!isLivesWithNameRequired && (
                         <spantiene
                           con
                           el
@@ -7946,7 +7913,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </spantiene>
-                      )}
                     </Form.Label>
                     <Form.Control
                       ref={livesWithWhoRef}
@@ -8004,7 +7970,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="eNameId">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Nombre de contacto de emergencia:
-                  {isNombreEmergenciaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -8014,7 +7979,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   ref={eNameRef}
@@ -8031,7 +7995,6 @@ const EstudiantesForm = () => {
                 <Form.Label style={{ marginTop: "10px" }}>
                   {" "}
                   Relación de contacto de emergencia con el estudiante:
-                  {isRelacionEmergenciaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -8041,7 +8004,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   ref={eRelationshipRef}
@@ -8061,7 +8023,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="eAddressId">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Dirección de contacto de emergencia:
-                  {isDireccionEmergenciaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -8071,7 +8032,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   ref={eAddressRef}
@@ -8088,7 +8048,6 @@ const EstudiantesForm = () => {
                 <Form.Label style={{ marginTop: "10px" }}>
                   {" "}
                   Número de teléfono de contacto de emergencia:
-                  {isTelefonoEmergenciaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -8098,7 +8057,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   ref={telEmergencyRef}
@@ -8122,7 +8080,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="responsibleTypeIdId">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Seleccione el responsable:
-                  {!isResponsableSelected && (
                     <span
                       style={{
                         color: "red",
@@ -8132,7 +8089,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   as="select"
@@ -8229,7 +8185,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="documentId">
                     <Form.Label style={{ marginTop: "5px" }}>
                       Número de documento:
-                      {!isDocumentRequired && (
                         <span
                           style={{
                             color: "red",
@@ -8239,7 +8194,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       ref={duiRef}
@@ -8260,7 +8214,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="repAddressId">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Dirección de residencia:
-                      {!isRepAddressRequired && (
                         <span
                           style={{
                             color: "red",
@@ -8270,7 +8223,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       ref={repAddressRef}
@@ -8286,7 +8238,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="telHomeId">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Teléfono de casa:
-                      {!isTelHomeRequired && (
                         <span
                           style={{
                             color: "red",
@@ -8296,7 +8247,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       ref={telHomeRef}
@@ -8314,7 +8264,6 @@ const EstudiantesForm = () => {
                     <Form.Label style={{ marginTop: "10px" }}>
                       {" "}
                       Teléfono de trabajo:
-                      {!isRepWorkTelRequired && (
                         <span
                           style={{
                             color: "red",
@@ -8324,7 +8273,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       ref={telWorkRef}
@@ -8343,7 +8291,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="emailRepId">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Correo electrónico:
-                      {!isEmailRepRequired && (
                         <span
                           style={{
                             color: "red",
@@ -8353,7 +8300,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -8379,7 +8325,6 @@ const EstudiantesForm = () => {
                     <Form.Label style={{ marginTop: "10px" }}>
                       {" "}
                       Número de celular:
-                      {!isTelMobileRepRequired && (
                         <span
                           style={{
                             color: "red",
@@ -8389,7 +8334,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       ref={telMobileRepRef}
