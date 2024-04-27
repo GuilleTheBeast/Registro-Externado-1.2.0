@@ -158,12 +158,12 @@ function EstudiantesLista() {
               <ul>
                 <li>
                   Para ingresar un estudiante, se debe de completar todos los
-                  campos obligatorios marcados con un * y presionar el botón de
+                  campos obligatorios marcados con un <span style={{ color: "red", fontWeight: "bold" }}>*</span> y presionar el botón de
                   Guardar al final del formulario
                 </li>
                 <li>
                   La generación de PDF será habilitada hasta que todos los
-                  campos marcados con un * en el formulario de estudiantes estén
+                  campos marcados con un <span style={{ color: "red", fontWeight: "bold" }}>*</span> en el formulario de estudiantes estén
                   llenos y haya al menos un responsable registrado. Al cumplir
                   con este requisito se habilitará el botón de Generar PDF
                   Matrícula y PDF Registro al entrar al registro de un
@@ -222,12 +222,12 @@ function EstudiantesLista() {
             <ul>
               <li>
                 Para ingresar un estudiante, se debe de completar todos los
-                campos obligatorios marcados con un * y presionar el botón de
+                campos obligatorios marcados con un <span style={{ color: "red", fontWeight: "bold" }}>*</span> y presionar el botón de
                 Guardar al final del formulario
               </li>
               <li>
                 La generación de PDF será habilitada hasta que todos los campos
-                marcados con un * en el formulario de estudiantes estén llenos y
+                marcados con un <span style={{ color: "red", fontWeight: "bold" }}>*</span> en el formulario de estudiantes estén llenos y
                 haya al menos un responsable registrado. Al cumplir con este
                 requisito se habilitará el botón de Generar PDF Matrícula y PDF
                 Registro al entrar al registro de un estudiante a través del

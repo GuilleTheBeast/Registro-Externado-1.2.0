@@ -7,6 +7,30 @@
   pointer-events: none;
 }
 
+.btn-tour-help{
+  background-color: #008000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 4px 2px;
+  cursor: pointer;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 99;
+  border-radius: 30px;
+}
+
+#btn-tour-help {
+  transition: box-shadow 0.3s ease;
+}
+
+.shadow-btn-help {
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

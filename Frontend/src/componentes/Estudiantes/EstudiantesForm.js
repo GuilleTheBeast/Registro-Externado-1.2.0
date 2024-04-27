@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Joyride from "react-joyride";
 import "../estilos/botones.css";
 import { Form, Button, Col, Row, Container, Modal } from "react-bootstrap";
 import { NavLink, useParams } from "react-router-dom";
@@ -37,6 +38,113 @@ import {
 
 //Crear un formulario 2 columnas para padres y representantes
 const EstudiantesForm = () => {
+  const [run, setRun] = useState(false);
+  const [steps, setSteps] = useState([
+    {
+      target: ".step1-estudiantes-lista",
+      disableBeacon: true,
+      content: (
+        <div  className="text-justify">
+          <h4 className=" font-weight-bold">Bienvenido al formulario de registro general de estudiantes</h4>
+          <p>Esta es una guía para entender el formulario de registro general de estudiantes. Por favor, completa todos los campos obligatorios marcados con un asterisco <span style={{ color: "red", fontWeight: "bold" }}>*</span>.</p>
+          <p>Al completar todos los campos obligatorios, podrás guardar toda la información para la generacion de PDF de matricula y pasar a la siguiente fase.</p>
+          <p>Si no terminas tu registro en este momento, puedes guardar tu información para continuar más tarde.</p>
+          <p>Este formulario es fundamental para registrar tu información en nuestro sistema.</p>
+        </div>
+      ),
+      placement: 'bottom', // Tooltip will appear to the right of the target
+    },
+    {
+      target: ".step2-estudiantes-lista",
+      content: (
+        <div  className="text-justify">
+          <h4 className=" font-weight-bold">Completa tus datos personales y de emergencia</h4>
+          <p>El formulario está dividido en dos secciones. La primera sección se enfoca en tus datos personales, mientras que la segunda sección se centra en los datos de emergencia.</p>
+          <p>Por favor, completa todos los campos obligatorios en ambas secciones para registrar tus datos de manera completa. Estos datos son importantes para asegurar la matrícula. </p>
+        </div>
+      ),
+    },
+    {
+      target: ".step3-estudiantes-lista",
+      content: (
+        <div  className="text-justify">
+          <h4 className=" font-weight-bold">Ingresa tus datos personales</h4>
+          <p>Completa con cuidado todos los campos obligatorios con tus datos personales. </p>
+          <p>Estos datos son esenciales para asegurar tu matrícula y brindarte una experiencia educativa. </p>
+          <p> Todos los campos marcados con un asterisco <span style={{ color: "red", fontWeight: "bold" }}>*</span> son obligatorios. Una vez completados todos los campos, podrás revisar la información y avanzar al siguiente paso.</p>
+        </div>
+      ),
+    },
+    {
+      target: ".step4-estudiantes-lista",
+      content: (
+        <div  className="text-justify">
+          <h4 className=" font-weight-bold">Ingresa tus datos de emergencia</h4>
+          <p>Ahora, ingresa tus datos de emergencia. Estos datos son importantes para poder contactarte en casos de emergencia de ser necesario</p>
+          <p>Por favor, completa todos los campos obligatorios con la información requerida. Una vez completados todos los campos, podrás guardar la información y continuar con el proceso de registro.</p>
+      
+        </div>
+      ),
+    },
+    {
+      target: ".step5-estudiantes-lista",
+      content: (
+        <div  className="text-justify">
+          <h4 className=" font-weight-bold">¡Listo para guardar!</h4>
+          <p> Una vez que estés seguro, haz clic en el botón 'Guardar' para registrar tus datos.</p>
+  
+        </div>
+      ),
+    },
+  ]);
+
+  const handleJoyrideCallback = (data) => {
+    const { status, type } = data;
+
+    if (status === "finished" || status === "skipped") {
+      // When the tour is finished or skipped, set run to false
+      setRun(false);
+    }
+
+    if (type === "step:after" || type === "target:not_found") {
+      // Check if the step is not found, go to the next step
+      data.action = "next";
+    }
+  };
+
+  useEffect(() => {
+    setRun(true);
+  }, []);
+
+  const handleRestartTour = () => {
+    // Restart the tour
+    setRun(true);
+  };
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const button = document.getElementById('btn-tour-help');
+      const footer = document.getElementsByClassName('footer-container')[0];  
+      if (button && footer) {
+        const buttonPosition = button.getBoundingClientRect().top + window.scrollY;
+        const footerPosition = footer.getBoundingClientRect().top + window.scrollY;
+  
+        if (buttonPosition >= footerPosition) {
+          button.classList.add('shadow-btn-help');
+        } else {
+          button.classList.remove('shadow-btn-help');
+        }
+      }
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+  
+    // Limpiar el evento al desmontar el componente
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   const { id } = useParams();
   //modal
   const [showModal, setShowModal] = useState(false);
@@ -4540,20 +4648,70 @@ const EstudiantesForm = () => {
   return (
     <div className="div-principal">
       <Container className="fondo">
-        <h4>Información general de los estudiantes</h4>
-        <p>
-          Los campos con el <span style={{ color: "red" }}>* </span>
-          son de caracter <span style={{ color: "red" }}>obligatorio</span> para
-          Guardar{" "}
+        <Joyride
+          callback={handleJoyrideCallback}
+          continuous
+          hideCloseButton
+          run={run}
+          scrollToFirstStep
+          showProgress
+          disableOverlayClose={true}
+          showSkipButton={true} // Hide the skip button
+          steps={steps}
+          styles={{
+            options: {
+              zIndex: 10000, // existing style
+              width: 900,
+            },
+            tooltip: {},
+            buttonBack: {
+              backgroundColor: '#008000', // change the back button text color
+              color: '#ffffff', // change the back button text color
+            },
+            buttonClose: {
+              backgroundColor: '#008000' // change the close button text color
+            },
+            buttonNext: {
+              backgroundColor: '#008000' // change the next button text color
+            },
+            buttonSkip: {
+              backgroundColor: '#008000' ,// change the skip button text color
+              color: '#ffffff', // change the back button text color
+            },
+          }}
+          locale={{
+            back: 'Atrás', // Text for the back button
+            close: 'Cerrar', // Text for the close button
+            last: 'Finalizar', // Text for the last button
+            next: 'Siguiente', // Text for the next button
+            skip: 'Omitir guia', // Text for the skip button
+          }}
+        />
+         <button 
+          id="btn-tour-help"
+          onClick={handleRestartTour} 
+          className="btn-tour-help"
+        >
+          ?
+        </button>
+        <h4 className="step1-estudiantes-lista">Información general de los estudiantes</h4>
+        <p >
+          Los campos con el{" "}
+          <span style={{ color: "red", fontWeight: "bold" }}> * </span>
+          son de caracter{" "}
+          <span style={{ color: "red", fontWeight: "bold" }}>
+            obligatorio
+          </span>{" "}
+          para Guardar{" "}
         </p>
-        <Form method="post" onSubmit={handleFormSubmit}>
+        <Form method="post" onSubmit={handleFormSubmit} className="step2-estudiantes-lista">
+          <div className="step3-estudiantes-lista">
           <Row>
             <Col xs={12} sm={12} md={6}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>
                   Escuela o colegio en el que estudió en el año escolar
                   anterior:
-                  {isEscuelaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4563,7 +4721,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={120}
@@ -4577,7 +4734,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>
                   Grado que cursará en el siguiente año escolar:
-                  {!isGradoSelected && (
                     <span
                       style={{
                         color: "red",
@@ -4587,7 +4743,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control as="select" onChange={handleCurrentLevelIdChange}>
                   {grado?.map((level) => (
@@ -4616,7 +4771,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>
                   Nombres:{" "}
-                  {isFirstNameRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4626,7 +4780,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={60}
@@ -4640,7 +4793,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>
                   Apellidos:
-                  {isLastNameRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4650,7 +4802,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={60}
@@ -4666,7 +4817,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Dirección de residencia:
-                  {isAddressRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4676,7 +4826,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={120}
@@ -4690,7 +4839,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicPassword">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Departamento:
-                  {!isDepartamentoSelected && (
                     <span
                       style={{
                         color: "red",
@@ -4700,7 +4848,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control as="select" onChange={handleDepertmentIdChange}>
                   {departamentos?.map((departamento) => (
@@ -4719,7 +4866,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicPassword">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Municipio:
-                  {isMunicipioRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4729,7 +4875,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={30}
@@ -4745,7 +4890,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Lugar de nacimiento:
-                  {isLugardeNacimientoRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4755,7 +4899,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={120}
@@ -4769,9 +4912,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicPassword">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Fecha de nacimiento:
-                  {isBirthdateInputFilled ? (
-                    ""
-                  ) : (
                     <span
                       style={{
                         color: "red",
@@ -4781,7 +4921,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <div className="input-group date datepicker">
                   <Form.Control
@@ -4803,7 +4942,6 @@ const EstudiantesForm = () => {
                 <Form.Label style={{ marginTop: "10px" }}>
                   {" "}
                   Nacionalidad:
-                  {isNacionalidadRequired && (
                     <span
                       style={{
                         color: "red",
@@ -4813,7 +4951,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={30}
@@ -4883,7 +5020,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   ¿El estudiante es cristiano católico?:
-                  {!isCatolicoSelected && (
                     <span
                       style={{
                         color: "red",
@@ -4893,7 +5029,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <div className="form-group row">
                   <div className="col-sm-2 mt-2">
@@ -4927,7 +5062,6 @@ const EstudiantesForm = () => {
                   <Form.Label style={{ marginTop: "10px" }}>
                     {" "}
                     Si no es cristiano católico, ¿a qué religión pertenece?:
-                    {!isReligionSelected && (
                       <span
                         style={{
                           color: "red",
@@ -4937,7 +5071,6 @@ const EstudiantesForm = () => {
                       >
                         *
                       </span>
-                    )}
                   </Form.Label>
 
                   <Form.Control
@@ -4989,7 +5122,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   ¿Alguno de sus hermanos estudia en el Externado?:
-                  {!isHermanosSelected && (
                     <span
                       style={{
                         color: "red",
@@ -4999,7 +5131,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <div className="form-group row">
                   <div className="col-sm-2 mt-2">
@@ -5048,7 +5179,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Nombre completo:
-                      {!hermano1InputValue && (
                         <span
                           style={{
                             color: "red",
@@ -5058,7 +5188,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -5126,7 +5255,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Nombre completo:
-                      {!hermano2InputValue && (
                         <span
                           style={{
                             color: "red",
@@ -5136,7 +5264,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -5209,7 +5336,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Nombre completo:
-                      {!hermano3InputValue && (
                         <span
                           style={{
                             color: "red",
@@ -5219,7 +5345,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -5284,7 +5409,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   ¿El estudiante vive con ambos padres?:
-                  {!isAmbosPadresSelected && (
                     <span
                       style={{
                         color: "red",
@@ -5294,7 +5418,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <div className="form-group row">
                   <div className="col-sm-2 mt-2">
@@ -5341,7 +5464,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label style={{ marginTop: "10px" }}>
                       Nombre completo:
-                      {!ambosInputNombreValue && (
                         <span
                           style={{
                             color: "red",
@@ -5351,7 +5473,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       maxLength={60}
@@ -5388,6 +5509,8 @@ const EstudiantesForm = () => {
               </Row>
             </div>
           )}
+          </div>
+          <div className="step4-estudiantes-lista">
           <Form.Label style={{ marginTop: "10px" }}>
             <u>
               <strong>
@@ -5401,7 +5524,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Nombre de contacto de emergencia:
-                  {isNombreEmergenciaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -5411,7 +5533,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={60}
@@ -5426,7 +5547,6 @@ const EstudiantesForm = () => {
                 <Form.Label style={{ marginTop: "10px" }}>
                   {" "}
                   Relación de contacto de emergencia con el estudiante:
-                  {isRelacionEmergenciaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -5436,7 +5556,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={45}
@@ -5452,7 +5571,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Dirección de contacto de emergencia:
-                  {isDireccionEmergenciaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -5462,7 +5580,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   maxLength={120}
@@ -5477,7 +5594,6 @@ const EstudiantesForm = () => {
                 <Form.Label style={{ marginTop: "10px" }}>
                   {" "}
                   Número de teléfono de contacto de emergencia:
-                  {isTelefonoEmergenciaRequired && (
                     <span
                       style={{
                         color: "red",
@@ -5487,7 +5603,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   ref={telEmergencyRef}
@@ -5510,7 +5625,6 @@ const EstudiantesForm = () => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label style={{ marginTop: "10px" }}>
                   Seleccione el responsable:
-                  {!isResponsableSelected && (
                     <span
                       style={{
                         color: "red",
@@ -5520,7 +5634,6 @@ const EstudiantesForm = () => {
                     >
                       *
                     </span>
-                  )}
                 </Form.Label>
                 <Form.Control
                   as="select"
@@ -5592,7 +5705,6 @@ const EstudiantesForm = () => {
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label style={{ marginTop: "5px" }}>
                       Número de documento:
-                      {!representanteInputDUIValue && (
                         <span
                           style={{
                             color: "red",
@@ -5602,7 +5714,6 @@ const EstudiantesForm = () => {
                         >
                           *
                         </span>
-                      )}
                     </Form.Label>
                     <Form.Control
                       ref={duiRef}
@@ -5791,7 +5902,7 @@ const EstudiantesForm = () => {
               marginRight: "0px", // Agregado para espacio entre botones
             }}
             variant="custom"
-            className="boton-guardar"
+            className="boton-guardar step5-estudiantes-lista"
           >
             Guardar
           </Button>
@@ -5812,6 +5923,7 @@ const EstudiantesForm = () => {
               Generar PDF
             </Button>
           )}
+          </div>
         </Form>
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>

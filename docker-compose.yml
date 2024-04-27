@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8062:3001"
+    volumes:
+      - ./Backend:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start:prod
+
+  nginx:
+    restart: always
+    container_name: externado-frontend
+    image: nginx:latest
+    ports:
+      - "8061:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+      - ./Frontend/build:/usr/share/nginx/server/
+
+volumes:
+  .:

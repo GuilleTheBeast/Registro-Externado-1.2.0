@@ -69,7 +69,9 @@ const Encabezado = () => {
       </Navbar>
 
       {/* Modal de Indicaciones */}
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal} onHide={handleCloseModal}
+       size="xl"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Indicaciones</Modal.Title>
         </Modal.Header>
