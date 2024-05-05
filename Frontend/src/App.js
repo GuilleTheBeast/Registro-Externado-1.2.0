@@ -29,6 +29,7 @@ import EstudiantesLista from "./componentes/Estudiantes/EstudiantesLista";
 import Verificacion from "./componentes/inicio/Cuentaverificada";
 import { AuthProvider } from "./componentes/AuthContext";
 import Listarepresentantes from "./componentes/Administradores/Listarepresentantes";
+import ExportModule from "./componentes/Administradores/reportes"
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 
 function App() {
@@ -108,8 +109,12 @@ function App() {
             element={<Usuarios setShowNavbar={setShowNavbar} />}
           />
           <Route
-            path="/sistema"
+            path="/sistema" 
             element={<Sistemaadmin setShowNavbar={setShowNavbar} />}
+          />
+          <Route
+            path="/reportes"
+            element={<ExportModule setShowNavbar={setShowNavbar} />}
           />
           <Route
             path="/listarepresentantes"

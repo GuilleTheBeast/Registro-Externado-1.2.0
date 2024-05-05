@@ -1,0 +1,13 @@
+.buttom-download-xlsx {
+    background-color: #4caf50;;
+    font-size: 1rem;
+    padding: 1%;
+    border: none;
+    margin-top: 5rem;
+    color: white;
+    cursor: pointer;
+}
+
+.buttom-download-xlsx:hover {
+    background-color: #3e7f41;
+}

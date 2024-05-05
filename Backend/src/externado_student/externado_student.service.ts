@@ -22,6 +22,11 @@ export class ExternadoStudentService {
     return await this.externadoStudentRepository.find();
   }
 
+  // Para reporteria
+  getStudents(){
+    return this.externadoStudentRepository.find();
+  }
+
   async findAllRelatedWithUser(){
     return await this.externadoStudentRepository.find({
       relations: ["externadoUser"],
