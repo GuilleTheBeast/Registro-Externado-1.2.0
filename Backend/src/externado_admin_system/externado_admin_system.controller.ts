@@ -48,4 +48,9 @@ export class ExternadoAdminSystemController {
   historicalPeriod(@Req() req: RequestWithUuid){
       return this.externadoAdminSystemService.historicalPeriod();
   }
+
+  @Get("historicalPeriod2")
+  historicalPeriod2(){
+    return this.externadoAdminSystemService.historicalPeriod();
+  }
 }

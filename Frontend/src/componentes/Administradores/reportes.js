@@ -4,6 +4,7 @@ import './reportes.css';
 import DownloadButton from './DownloadButton';
 import EncabezadoAdmin from "../layout/navbar/Encabezadoadmin";
 import FilterComponent from './PanelFiltros'
+import FilterComponent2 from './PanelFiltros2';
 //Faltan los estilos de la pagina reportes
 
 
@@ -26,12 +27,12 @@ const ExportModule = ({ setShowNavbar }) => {
         <p style={{ fontSize: '1.1rem', fontWeight: '300' }}> • Puede seleccionar cualquier combinación de filtros</p>
         <div className='FilterPanelContainer'>
         <div className='FilterGeneralContent'>
-        <p className='FilterTitle'> Seleccione Periodo: </p>
+        <p className='FilterTitle'> Seleccione grado: </p>
         <FilterComponent />
       </div>
     <div className='FilterGeneralContent'>
-      <p className='FilterTitle'> Seleccione grado: </p>
-      <FilterComponent />
+      <p className='FilterTitle'> Seleccione Periodo: </p>
+      <FilterComponent2 />
     </div>
   </div>
   <div className='buttomDownload-Content'>

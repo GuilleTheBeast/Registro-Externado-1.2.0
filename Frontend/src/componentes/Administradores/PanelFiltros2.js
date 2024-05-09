@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './FilterComponent.css'; // Importa el archivo CSS para el estilo
 
-const FilterComponent = () => {
+const FilterComponent2 = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
     // Realizar solicitud GET al endpoint proporcionado por el controlador en NestJS
-    axios.get('http://localhost:3001/api/v1/externado-levels/getLevels2')
+    axios.get('http://localhost:3001/api/v1/externado-admin-system/historicalPeriod2')
       .then(response => {
-        setOptions(response.data.map(item => ({ id: item.id, label: item.externado_level })));
+        setOptions(response.data.map(item => ({ id: item.id, label: item.externado_range_period })));
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -35,4 +35,4 @@ const FilterComponent = () => {
   );
 };
 
-export default FilterComponent;
+export default FilterComponent2;

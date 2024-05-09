@@ -8,6 +8,7 @@ import { UpdateExternadoAdminDto } from './dto/update-externado_admin.dto';
 import { UpdateExternadoUserDto } from 'src/externado_users/dto/update-externado_user.dto';
 import { UpdateExternadoStudentDto } from 'src/externado_student/dto/update-externado_student.dto';
 import { UpdateExternadoResponsibleDto } from 'src/externado_responsible/dto/update-externado_responsible.dto';
+
 interface RequestWithUuid extends Request{
   uuid:{
       uuid: string; rol: boolean

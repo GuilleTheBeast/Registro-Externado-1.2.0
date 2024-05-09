@@ -3,8 +3,8 @@ import "./buttomDownload.css";
 
 const DownloadButton = () => {
   const downloadFile = () => {
-    // Construye la URL de descarga
-    const downloadUrl = 'http://localhost:3002/sheetjs/download';
+    // URL de descarga (modificar para hacer un fetch con axios)
+    const downloadUrl = 'http://localhost:3001/api/v1/sheetjs/download';
 
     // Crea un enlace temporal
     const link = document.createElement('a');

@@ -15,6 +15,7 @@ export class ExternadoStudentService {
 
     private readonly externadoUsersService:ExternadoUsersService,
     private readonly externadoSequenceService:ExternadoSequenceService,
+   
   )
   {}
   
@@ -226,5 +227,23 @@ export class ExternadoStudentService {
     .execute();
 
   }
+/*
+   obtenerInformacion(): Promise<any[]> {
+    return this.externadoStudentRepository
+      .createQueryBuilder()
+      .innerJoin('externadoStudentPeriod', 'studentPeriod', 'studentPeriod.id_student = student.id')
+      .innerJoin('externadoAdminSystem', 'adminSystem', 'studentPeriod.id_period = adminSystem.id')
+      .innerJoin('externadoLevel', 'level', 'student.externado_student_current_level_id = level.id')
+      .select([
+        'student.externado_student_firstname AS Nombre',
+        'student.externado_student_lastname AS Apellido',
+        'student.externado_student_address AS Direccion',
+        'student.externado_student_phone AS Telefono',
+        'student.externado_student_email AS Correo',
+        'level.externado_level AS Grado',
+        'adminSystem.externado_range_period AS Periodo',
+      ])
+      .getRawMany();
+  } */
   
 }

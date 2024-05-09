@@ -130,5 +130,9 @@ export class ExternadoAdminSystemService {
   });
 
   }
+//Prueba
+  async historicalPeriod2() {
+    return await this.externadoAdminSystemRepository.find();
+  }
 
 }
