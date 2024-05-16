@@ -1,5 +1,5 @@
 import { Controller, Get, Header, UseGuards,Req } from '@nestjs/common';
-import { ExternadoStudentService } from '../externado_student/externado_student.service';
+import { ExternadoStudentPeriodService } from 'src/externado_student_period/externado_student_period.service';
 import { StreamableFile } from '@nestjs/common';
 //import * as XLSX from 'xlsx'; 
 import * as XLSX from 'xlsx-js-style';
@@ -8,44 +8,22 @@ import * as fs from 'fs';
 
 @Controller('sheetjs')
 export class SheetjsController {
-  constructor(private readonly studentService: ExternadoStudentService) {}
+  constructor(private readonly studentPeriod: ExternadoStudentPeriodService) {}
 
   @Get('download')
   @Header('Content-Disposition', 'attachment; filename="Matricula.xlsx"')
   async downloadStudentsAsXlsx(): Promise<StreamableFile> {
     // Obtener datos de la base de datos
-    const students = await this.studentService.getStudents();
+    const students = await this.studentPeriod.getStudentPeriods();
 
     // Convertir los datos a un formato compatible con xlsx
     const jsonData = students.map(students => ({
-      'Id':students.idexternado_student, 
       'Nombre':students.externado_student_firstname, 
-      'Apellidos':students.externado_student_lastname, 
-      'Lugar de nacimiento':students.externado_student_birthplace, 
-      'Fecha de nacimiento':students.externado_student_birthdate,
-      'Nacionalidad':students.externado_student_nationality,
-      'Género':students.externado_student_gender,
       'Direccion':students.externado_student_address,
-      'Municipio':students.externado_student_town,
-      'Celular de estudiante':students.externado_student_phone,
-      'Correo de estudiante':students.externado_student_email,
-      'Anterior escuela':students.externado_student_last_school,
-      'Grado a cursar':students.externado_student_current_level_id,
-      'Hermanos estudiando en el colegio':students.externado_student_has_siblings,
-      'Nombre de hermano':students.externado_student_siblings,
-      'Vive con padres':students.externado_student_lives_with_parents,
-      'Con quién vive':students.externado_student_lives_with_who,
-      'Parentesco con estudiante':students.externado_student_lives_with_related,
-      'Dirección donde viven':students.externado_student_lives_with_address,
-      'Católico':students.externado_student_catholic,
-      'Otra iglesia':students.externado_student_church_other,
-      'Emergencia llamar a':students.externado_student_emergency_name,
-      'Parentesco emergencia':students.externado_student_emergency_relationship,
-      'Direccion emergencia':students.externado_student_emergency_address,
-      'celular emergencia':students.externado_student_emergency_phone,
-      'Finalizo llenado':students.externado_proccess_finished,
-      'Activo':students.externado_student_active,
-      'Fecha llenado':students.externado_creation_datetime
+      'Telefono':students.externado_student_phone,
+      'Correo':students.externado_student_email,
+      'Grado':students.externado_level,
+      'Periodo':students.externado_range_period
      }));
 
    // Escribir los datos en un archivo JSON
@@ -78,7 +56,6 @@ for (let col = range.s.c; col <= range.e.c; col++) {
   const cellAddress = XLSX.utils.encode_cell({ r: range.s.r, c: col });
   ws[cellAddress].s = headerStyle;
 }
-
 
     // Crear un libro de trabajo y agregar la hoja de cálculo
     const wb = XLSX.utils.book_new();

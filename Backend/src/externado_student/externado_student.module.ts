@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ExternadoStudent } from './entities/externado_student.entity';
 import { ExternadoUsersModule } from 'src/externado_users/externado_users.module';
 import { ExternadoSequenceModule } from 'src/externado_sequence/externado_sequence.module';
-import {SheetjsController } from 'src/sheetjs/sheetjs.controller'
+//import {SheetjsController } from 'src/sheetjs/sheetjs.controller'
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import {SheetjsController } from 'src/sheetjs/sheetjs.controller'
     ExternadoSequenceModule,
     TypeOrmModule.forFeature([ExternadoStudent])
   ],
-  controllers: [ExternadoStudentController, SheetjsController],
+  controllers: [ExternadoStudentController],
   providers: [ExternadoStudentService],
   exports: [ExternadoStudentService],
 })
