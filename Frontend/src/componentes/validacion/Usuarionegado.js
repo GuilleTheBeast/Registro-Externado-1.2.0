@@ -45,6 +45,13 @@ const Usuarionegado = ({ setShowNavbar }) => {
         </Link>
       );
       break;
+      case 4:
+      regresarLink = (
+        <Link to="/consultarinfo" className="button">
+          Regresar
+        </Link>
+      );
+      break;
     default:
       regresarLink = (
         <Link to="/" className="button">

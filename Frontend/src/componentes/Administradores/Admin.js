@@ -36,10 +36,13 @@ const HolaAdmin = ({ setShowNavbar }) => {
       const payloadJson = JSON.parse(payloadDecoded);
       const userRole = parseInt(payloadJson.rol, 10);
       //console.log("El rol es " + payloadJson.rol);
-      if (userRole === 1 || userRole === "1") {
-        // console.log("Entraste al if de rol 1");
+      if (userRole === 4 || userRole === "4") {
+        // console.log("Entraste al if de rol 4");
       } else if (userRole === 3 || userRole === "3") {
         //console.log("Entraste al if de rol 3");
+        navigate("/negado");
+      }else if (userRole === 1 || userRole === "1") {
+        //console.log("Entraste al if de rol 1");
         navigate("/negado");
       } else {
         //console.log("El rol es " + payloadJson.rol);

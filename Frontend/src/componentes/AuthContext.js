@@ -146,6 +146,25 @@ export const fetchAllUsersSup = async (authToken) => {
     throw new Error("Error al obtener usuarios super admin: " + error.message);
   }
 };
+/* 
+export const fetchAllUsersAssistant = async (authToken) => {
+  try {
+    const response = await axios.get(
+      "http://localhost:3001/api/v1/externado-users/allUsersAssistant",
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Error al obtener usuarios asistentes: " + error.message);
+  }
+};
+
+*/
 
 export const fetchAllUsersAdmin = async (authToken) => {
   try {
@@ -394,6 +413,23 @@ export const fetchUsuarios = async (authToken) => {
   try {
     const response = await axios.get(
       "http://localhost:3001/api/v1/externado-users/allUsersSuper",
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Error al obtener estudiantes tabla: " + error.message);
+  }
+};
+
+export const fetchAssistant = async (authToken) => {
+  try {
+    const response = await axios.get(
+      "http://localhost:3001/api/v1/externado-users/allUsersAssistant",
       {
         headers: {
           Authorization: `Bearer ${authToken}`,

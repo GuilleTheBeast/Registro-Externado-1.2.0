@@ -15,18 +15,18 @@ import {
   Col,
 } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css"; // Importar los estilos de los iconos
-//importar EncabezadoAdmin
-import EncabezadoAdmin from "../layout/navbar/Encabezadoadmin";
-import EncabezadoAdmin2 from "../layout/navbar/Encabezadoadmin2";
+//importar EncabezadoAssistant
+import EncabezadoAssistant from "../layout/navbar/Encabezadoassistant";
 import {
   fetchEstudiantes,
   fetchUsuarios,
   fetchGrado,
   fetchUsuariosAdmin,
+  fetchAssistant,
 } from "../AuthContext";
 import { isUndefined } from "util";
 
-const Usuarios = ({ setShowNavbar }) => {
+const Students = ({ setShowNavbar }) => {
   useEffect(() => {
     setShowNavbar(false); // Oculta el navbar en la página de inicio
     return () => {
@@ -34,7 +34,7 @@ const Usuarios = ({ setShowNavbar }) => {
     };
   }, []);
 
-  const [showEditModal, setShowEditModal] = useState(false);
+
   const [estudiantesTabla, setEstudiantesTabla] = useState([]);
   const [usuariosTabla, setUsuariosTabla] = useState([]);
   const [gradosTabla, setGradosTabla] = useState([]);
@@ -43,12 +43,7 @@ const Usuarios = ({ setShowNavbar }) => {
   const itemsPerPage = 6;
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handleEditClick = (estudianteId) => () => {
-    navigate(`/infoestudiantes/${estudianteId}`);
-  };
-  const handleCloseEditModal = () => {
-    setShowEditModal(false);
-  };
+  
 
   const { authToken } = useAuth();
   const navigate = useNavigate();
@@ -109,10 +104,10 @@ const Usuarios = ({ setShowNavbar }) => {
       } else if (userRole === 3 || userRole === "3") {
         //console.log("Entraste al if de rol 3");
         navigate("/negado");
-      }else if (userRole === 4 || userRole === "4") {
+      } else if (userRole === 4 || userRole === "4") {
         const fetchData = async () => {
           try {
-            const usuariosTablaData = await fetchUsuariosAdmin(authToken);
+            const usuariosTablaData = await fetchAssistant(authToken);
             //console.log("Datos de usuarios tabla antes de la actualización:",usuariosTablaData);
             setUsuariosTabla(usuariosTablaData);
             //console.log("Datos de estudiantes tabla después de la actualización:",usuariosTablaData);
@@ -164,8 +159,6 @@ const Usuarios = ({ setShowNavbar }) => {
   }, [authToken]);
 
   //? Barra de búsqueda
-
-  
 
   const filteredEstudiantes = estudiantesTabla?.filter((estudiante) => {
     const nombreMatch = estudiante.externado_student_firstname
@@ -249,7 +242,7 @@ const Usuarios = ({ setShowNavbar }) => {
 
   return (
     <>
-      <EncabezadoAdmin />
+      <EncabezadoAssistant />
       <div className="system-parameters-container">
         <h2>Información de los estudiantes</h2>
         <>
@@ -289,7 +282,6 @@ const Usuarios = ({ setShowNavbar }) => {
                 <th>Apellido estudiante</th>
                 <th>Grado actual </th>
                 <th>Correo responsable</th>
-                <th className="acciones-column">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -302,7 +294,7 @@ const Usuarios = ({ setShowNavbar }) => {
                   <td>
                     {gradosTabla.map((g, i) =>
                       d.externado_student_current_level_id ===
-                      g.idexternado_level
+                        g.idexternado_level
                         ? g.externado_level
                         : null
                     )}
@@ -316,18 +308,7 @@ const Usuarios = ({ setShowNavbar }) => {
                     )}
                   </td>
 
-                  <td
-                    className="acciones-column"
-                    style={{ textAlign: "center" }}
-                  >
-                    <Button
-                      variant="link"
-                      className="p-0"
-                      onClick={handleEditClick(d.idexternado_student)}
-                    >
-                      <i className="bi bi-pencil-square"></i>
-                    </Button>
-                  </td>
+
                 </tr>
               ))}
             </tbody>
@@ -363,58 +344,9 @@ const Usuarios = ({ setShowNavbar }) => {
           </Pagination>
         </div>
       </div>
-      {/* Modal para editar usuario */}
-      <Modal show={showEditModal} onHide={handleCloseEditModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Editar usuario</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="email@address.com"
-                readOnly
-              />
-            </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Estado</Form.Label>
-              <Form.Select>
-                <option>Activo</option>
-                <option>Inactivo</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Tipo de usuario</Form.Label>
-              <Form.Select>
-                <option>Responsable</option>
-                <option>Administrador</option>
-                <option>Asistente</option>
-              </Form.Select>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="custom"
-            className="btn-modal-cancelar"
-            onClick={handleCloseEditModal}
-          >
-            Cancelar
-          </Button>
-          <Button
-            variant="custom"
-            className="btn-modal-guardar"
-            onClick={handleCloseEditModal}
-          >
-            Guardar cambios
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 };
 
-export default Usuarios;
+export default Students;

@@ -504,4 +504,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+/*Adding assitant role to DB */;
+INSERT INTO externado_user_type (idexternado_user_type, externado_user_type)
+VALUES (4, "Assistant");
+
 -- Dump completed on 2024-02-05 19:52:44

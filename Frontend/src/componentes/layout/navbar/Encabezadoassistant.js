@@ -1,4 +1,4 @@
-// EncabezadoAdmin.js
+// EncabezadoAssistant.js
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -9,13 +9,13 @@ import { useAuth } from "../../AuthContext";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const EncabezadoAdmin = () => {
+const EncabezadoAssistant = () => {
   const { authToken, setToken } = useAuth();
+  const [encabezado, setEncabezado] = useState(null);
+
   const navigate = useNavigate();
-  //estado para userrol1
-  const [userRol1, setUserRol1] = useState(false);
   useEffect(() => {
-    //console.log("Valor de authToken:", authToken);
+    console.log("Valor de authToken:", authToken);
 
     if (
       authToken === null ||
@@ -24,7 +24,7 @@ const EncabezadoAdmin = () => {
       authToken === "null"
     ) {
       // Muestra una alerta si el token está vacío, nulo o indefinido
-      //console.log("Token vacío, nulo o indefinido");
+      console.log("Token vacío, nulo o indefinido");
       navigate("/caducado");
       return;
       // Redirige o toma otras acciones según sea necesario
@@ -34,21 +34,18 @@ const EncabezadoAdmin = () => {
       const payloadDecoded = atob(payloadBase64);
       const payloadJson = JSON.parse(payloadDecoded);
       const userRole = parseInt(payloadJson.rol, 10);
-      //console.log("El rol es " + payloadJson.rol);
-
+      console.log("El rol es " + payloadJson.rol);
       if (userRole === 1 || userRole === "1") {
-        //console.log("Entraste al if de rol 1");
-        setUserRol1(true);
+        console.log("Entraste al if de rol 1");
       } else if (userRole === 2 || userRole === "2") {
-        //console.log("Entraste al if de rol 2");
+        console.log("Entraste al if de rol 2");
       } else if (userRole === 3 || userRole === "3") {
-        //console.log("Entraste al if de rol 3");
+        console.log("Entraste al if de rol 3");
         navigate("/negado");
       }else if (userRole === 4 || userRole === "4") {
-        //console.log("Entraste al if de rol 3");
-        navigate("/negado");
+        console.log("Entraste al if de rol 4");
       } else {
-        //console.log("El rol es " + payloadJson.rol);
+        console.log("El rol es " + payloadJson.rol);
       }
     }
   }, [authToken, navigate]);
@@ -78,31 +75,13 @@ const EncabezadoAdmin = () => {
         <img src={logo} alt="Logo" className="logo-admin" />
       </div>
       <nav className="nav-admin">
-        {userRol1 && (
-          <NavLink
-            to="/sistema"
-            className={({ isActive }) =>
-              isActive ? "nav-link-admin active" : "nav-link-admin"
-            }
-          >
-            Sistema
-          </NavLink>
-        )}
         <NavLink
-          to="/usuarios"
+          to="/consultarinfo"
           className={({ isActive }) =>
             isActive ? "nav-link-admin active" : "nav-link-admin"
           }
         >
-          Usuarios
-        </NavLink>
-        <NavLink
-          to="/estudiantessistema"
-          className={({ isActive }) =>
-            isActive ? "nav-link-admin active" : "nav-link-admin"
-          }
-        >
-          Estudiantes
+          Consultar
         </NavLink>
 
         <button onClick={handleLogout} className="nav-link-admin logout-button">
@@ -115,4 +94,4 @@ const EncabezadoAdmin = () => {
   );
 };
 
-export default EncabezadoAdmin;
+export default EncabezadoAssistant;

@@ -92,6 +92,9 @@ const Inicio = ({ setShowNavbar }) => {
       } else if (userRole === 2 || userRole === "2") {
         navigate("/usuarios");
         return;
+      } else if (userRole === 4 || userRole === "4") {
+        navigate("/consultarinfo");
+        return;
       }
 
       if (

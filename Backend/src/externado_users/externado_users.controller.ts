@@ -34,6 +34,13 @@ export class ExternadoUsersController {
         return this.externadoUsersService.userAdminGet(req.uuid.uuid);
     }
 
+    @Get("allUsersAssistant")
+    @Roles(Role.Assistant)
+    @UseGuards(AuthGuard, RolesGuard)
+    allUsersAssistant(@Req() req: RequestWithUuid){
+        return this.externadoUsersService.userAdminGet(req.uuid.uuid);
+    }
+
     @Get("getUserInfoSuper/:id")
     @Roles(Role.Super)
     @UseGuards(AuthGuard, RolesGuard)

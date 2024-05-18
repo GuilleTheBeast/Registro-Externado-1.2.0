@@ -25,7 +25,7 @@ export class RolesGuard implements CanActivate {
 
     let valorExiste = requiredRoles.includes(uuid.rol);
 
-    if(requiredRoles[0] === "all" && (uuid.rol === 1 || uuid.rol === 2 || uuid.rol === 3)){
+    if(requiredRoles[0] === "all" && (uuid.rol === 1 || uuid.rol === 2 || uuid.rol === 3 || uuid.rol === 4)){
       valorExiste = true;
     }
 

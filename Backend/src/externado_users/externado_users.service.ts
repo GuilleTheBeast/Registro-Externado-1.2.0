@@ -117,6 +117,31 @@ export class ExternadoUsersService {
 
   }
 
+  //Metodo traer todos los usuarios padres de familia
+  async userAssistantGet(uuid: string){
+      
+    const externado_user = await this.findOneByUUID(uuid);//Buscamos el externado_user_id de dicho UUID
+
+    let infoResponsibles;
+
+    if(externado_user){//Como doble validacion, verificamos el UUID para ver que sea de un usuario que exista
+      if(externado_user.externado_user_type_id === 4){//Verificamos que este usuario sea Asistente
+
+        infoResponsibles = await this.externadoUserRepository.createQueryBuilder('users')
+        .where('users.externado_user_type_id not in (1, 2, 3)').getMany();
+
+      }else{
+        throw new UnauthorizedException('El usuario que realiza la consulta no posee los permisos necesarios');
+      }
+
+    }else{
+      throw new UnauthorizedException('No existe el usuario con el que realiza la consulta');
+    }
+
+    return infoResponsibles;
+
+  }
+
   async updatePassGenerated(idexternado_user, externado_pass){
     await this.externadoUserRepository.update(idexternado_user, {externado_pass: externado_pass, externado_reset_password: true});
   }

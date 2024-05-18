@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useAuth, fetchAllUsersSup, fetchAllUsersAdmin } from "../AuthContext";
+import { useAuth, fetchAllUsersSup, fetchAllUsersAdmin} from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../estilos/usuarios.css"; // Importa el archivo de estilos
 import {
@@ -76,9 +76,9 @@ const Usuarios = ({ setShowNavbar }) => {
         id: userData.idexternado_user,
         email: userData.externado_email,
         userType:
-          userData.externado_user_type_id === 2
-            ? "Administrador"
-            : "Responsable",
+          userData.externado_user_type_id === 2 ? "Administrador" :
+            userData.externado_user_type_id === 3 ? "Responsable" :
+              "Asistente",
         isActive: userData.externado_active_user === 1 ? "Activo" : "Inactivo",
         firstName: userData.externado_admin_firstname || "",
         lastName: userData.externado_admin_lastname || "",
@@ -95,7 +95,9 @@ const Usuarios = ({ setShowNavbar }) => {
       .toLowerCase()
       .includes(searchTermUsuarios.toLowerCase());
     const tipoUsuarioMatch = (
-      usuario.externado_user_type_id === 2 ? "Administrador" : "Responsable"
+      usuario.externado_user_type_id === 2 ? "Administrador" :
+        usuario.externado_user_type_id === 3 ? "Responsable" :
+          "Asistente"
     )
       .toLowerCase()
       .includes(searchTermUsuarios.toLowerCase());
@@ -162,6 +164,9 @@ const Usuarios = ({ setShowNavbar }) => {
       } else if (userRole === 2 || userRole === "2") {
         //console.log("Entraste al if de rol 2");
         // setEncabezado(<EncabezadoAdmin2 />);
+      } else if (userRole === 4 || userRole === "4") {
+        //console.log("Entraste al if de rol 4");
+        navigate("/negado");
       } else if (userRole === 3 || userRole === "3") {
         //console.log("Entraste al if de rol 3");
         navigate("/negado");
@@ -226,6 +231,11 @@ const Usuarios = ({ setShowNavbar }) => {
         setShowEditModalSuper(true);
         getUserInfo(usuario.idexternado_user, authToken);
         //console.log("Entraste al if de rol 1 y tipo 2");
+      } else if (usuario.externado_user_type_id === 4) {
+        // Asumiendo que aquí pones los datos del usuario seleccionado en algún estado
+        setShowEditModalSuper2(true);
+        getUserInfo(usuario.idexternado_user, authToken);
+        //console.log("Entraste al if de rol 1 y tipo 4");
       }
     } else if (rol === 2) {
       // Guardar el ID del usuario seleccionado
@@ -233,7 +243,9 @@ const Usuarios = ({ setShowNavbar }) => {
       setSelectedUserEmail(usuario.externado_email);
       setSelectedUserActive(usuario.externado_active_user);
       setSelectedUserType(
-        usuario.externado_user_type_id === 2 ? "Administrador" : "Responsable"
+        usuario.externado_user_type_id === 2 ? "Administrador" :
+          usuario.externado_user_type_id === 3 ? "Responsable" :
+            "Asistente"
       );
       // Asumiendo que aquí pones los datos del usuario seleccionado en algún estado
       setShowEditModal(true);
@@ -373,7 +385,8 @@ const Usuarios = ({ setShowNavbar }) => {
         externado_carnet: selectedUser.carnet,
         externado_admin_active: selectedUser.isActive === "Activo",
         externado_user_type_id:
-          selectedUser.userType === "Administrador" ? 2 : 3,
+          selectedUser.userType === "Administrador" ? 2 :
+            selectedUser.userType === "Asistente" ? 4 : 3,
       };
 
       try {
@@ -435,7 +448,8 @@ const Usuarios = ({ setShowNavbar }) => {
         externado_carnet: selectedUser.carnet || "",
         externado_admin_active: selectedUser.isActive === "Activo",
         externado_user_type_id:
-          selectedUser.userType === "Administrador" ? 2 : 3,
+          selectedUser.userType === "Administrador" ? 2 :
+            selectedUser.userType === "Asistente" ? 4 : 3,
       };
 
       try {
@@ -468,7 +482,7 @@ const Usuarios = ({ setShowNavbar }) => {
         //console.error("Error al actualizar el administrador:", error);
         Swal.fire(
           "Error",
-          "No se pudo actualizar la información del administrador.",
+          "No se pudo actualizar la información del responsable.",
           "error"
         );
       }
@@ -477,6 +491,72 @@ const Usuarios = ({ setShowNavbar }) => {
       Swal.fire("Cancelado", "Los cambios no fueron guardados", "error");
     }
   };
+
+  const handleEditarAsistente = async () => {
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¿Quieres guardar los cambios?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Guardar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      const adminData = {
+        externado_user_id: selectedUser.id,
+        externado_admin_firstname: selectedUser.firstName || "",
+        externado_admin_lastname: selectedUser.lastName || "",
+        externado_carnet: selectedUser.carnet || "",
+        externado_admin_active: selectedUser.isActive === "Activo",
+        externado_user_type_id:
+          selectedUser.userType === "Administrador" ? 2 :
+            selectedUser.userType === "Asistente" ? 4 : 3,
+      };
+
+      try {
+        const response = await axios.post(
+          "http://localhost:3001/api/v1/externado-admins/createEditAdmin",
+          adminData,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        // Manejar la respuesta aquí si es necesario
+        //console.log(response.data);
+
+        // Cerrar el modal y recargar los datos
+        handleCloseEditModal();
+        // Aquí deberías llamar a la función que recarga los datos de la tabla
+        // por ejemplo: cargarDatosUsuarios();
+
+        Swal.fire(
+          "¡Éxito!",
+          "El usuario ha sido actualizado correctamente.",
+          "success"
+        );
+        cargarDatosUsuarios();
+      } catch (error) {
+        //console.error("Error al actualizar el administrador:", error);
+        Swal.fire(
+          "Error",
+          "No se pudo actualizar la información del asistente.",
+          "error"
+        );
+      }
+    } else {
+      // El usuario canceló la operación
+      Swal.fire("Cancelado", "Los cambios no fueron guardados", "error");
+    }
+  };
+
+
   useEffect(() => {
     cargarDatosUsuarios(); // Llamada inicial para cargar los datos
   }, [authToken, rol]); // Dependencias del useEffect
@@ -546,9 +626,9 @@ const Usuarios = ({ setShowNavbar }) => {
                   <tr key={index}>
                     <td>{usuario.externado_email}</td>
                     <td>
-                      {usuario.externado_user_type_id === 2
-                        ? "Administrador"
-                        : "Responsable"}
+                      {usuario.externado_user_type_id === 2 ? "Administrador" :
+                        usuario.externado_user_type_id === 3 ? "Responsable" :
+                          "Asistente"}
                     </td>
                     <td>
                       {usuario.externado_active_user ? "Activo" : "Inactivo"}
@@ -640,6 +720,7 @@ const Usuarios = ({ setShowNavbar }) => {
               >
                 <option>Responsable</option>
                 <option>Administrador</option>
+                <option>Asistente</option>
               </Form.Select>
             </Form.Group>
           </Form>
@@ -776,6 +857,7 @@ const Usuarios = ({ setShowNavbar }) => {
                   >
                     <option value="Administrador">Administrador</option>
                     <option value="Responsable">Responsable</option>
+                    <option value="Asistente">Asistente</option>
                     {/* Agregar más opciones según sea necesario */}
                   </Form.Select>
                 </Form.Group>
@@ -914,6 +996,7 @@ const Usuarios = ({ setShowNavbar }) => {
                   >
                     <option value="Administrador">Administrador</option>
                     <option value="Responsable">Responsable</option>
+                    <option value="Asistente">Asistente</option>
                     {/* Agregar más opciones según sea necesario */}
                   </Form.Select>
                 </Form.Group>

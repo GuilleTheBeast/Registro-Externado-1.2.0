@@ -30,6 +30,7 @@ import Verificacion from "./componentes/inicio/Cuentaverificada";
 import { AuthProvider } from "./componentes/AuthContext";
 import Listarepresentantes from "./componentes/Administradores/Listarepresentantes";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import Students from "./componentes/Asistentes/consultarinfo";
 
 function App() {
   const [showNavbar, setShowNavbar] = useState(true);
@@ -110,6 +111,10 @@ function App() {
           <Route
             path="/sistema"
             element={<Sistemaadmin setShowNavbar={setShowNavbar} />}
+          />
+          <Route
+            path="/consultarinfo"
+            element={<Students setShowNavbar={setShowNavbar} />}
           />
           <Route
             path="/listarepresentantes"

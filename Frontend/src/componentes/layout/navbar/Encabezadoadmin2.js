@@ -42,6 +42,8 @@ const EncabezadoAdmin2 = () => {
       } else if (userRole === 3 || userRole === "3") {
         console.log("Entraste al if de rol 3");
         navigate("/negado");
+      }else if (userRole === 4 || userRole === "4") {
+        navigate("/negado");
       } else {
         console.log("El rol es " + payloadJson.rol);
       }

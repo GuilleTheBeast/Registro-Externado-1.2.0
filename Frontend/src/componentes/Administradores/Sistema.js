@@ -207,7 +207,10 @@ const Sistemaadmin = ({ setShowNavbar }) => {
       } else if (userRole === 3 || userRole === "3") {
         //console.log("Entraste al if de rol 3");
         navigate("/negado");
-      } else if (userRole === 2 || userRole === "2") {
+      } else if (userRole === 4 || userRole === "4") {
+        //console.log("Entraste al if de rol 4");
+        navigate("/negado");
+      }else if (userRole === 2 || userRole === "2") {
         //console.log("Entraste al if de rol 2");
         navigate("/negado");
       } else {

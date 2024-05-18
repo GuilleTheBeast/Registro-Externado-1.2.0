@@ -61,6 +61,13 @@ export class ExternadoAdminsService {
           await this.externadoUsersService.updateUserType(externado_admin.externado_user_id, externado_admin.externado_user_type_id, externado_admin.externado_admin_active);
           message = "Responsable actualizado con exito";
           statuscode = 200;
+        }else if(externado_admin.externado_user_type_id === 4){
+          if(externadoadmin){//Verificamos si ya existe informacion del usuario en la tabla de administradores. Si existe, ya que se cambiara a "Asistente", el registro directo de administrador se inactivara
+            await this.externadoAdminRepository.update(externado_admin.externado_user_id, {externado_admin_active: false});
+          }
+          await this.externadoUsersService.updateUserType(externado_admin.externado_user_id, externado_admin.externado_user_type_id, externado_admin.externado_admin_active);
+          message = "Asistente actualizado con exito";
+          statuscode = 200;
         }
       }else{
         throw new UnauthorizedException('El usuario que realiza la consulta no posee los permisos necesarios');
@@ -88,7 +95,7 @@ export class ExternadoAdminsService {
     if(externado_user){//Verificamos si existe el usuario que consulta
       if(externado_user.externado_user_type_id === 2){//Verificamos si el usuario es Admin
         if(externadoadmin){//Verificamos que el usuario a activar/inactivar exista
-          if(externadoadmin.externado_user_type_id === 3){
+          if(externadoadmin.externado_user_type_id === 3 || externadoadmin.externado_user_type_id === 4){
             await this.externadoUsersService.updateActive(externado_admin.idexternado_user, externado_admin.externado_active_user);
 
             message = "Usuario actualizado exitosamente";
