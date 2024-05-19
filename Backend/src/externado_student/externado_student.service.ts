@@ -23,8 +23,8 @@ export class ExternadoStudentService {
   }
 
   async findAllRelatedWithUser(pagination: { page: number, limit: number, paginated: boolean }, nombre?: string){
-    const where = nombre ? { externado_student_firstname: Like(`%${nombre}%`) } : {};    
-    if (pagination.paginated) {
+    const where = nombre ? { externado_student_firstname: Like(`%${nombre}%`) } : {};        
+    if (pagination.paginated === true ) {
         const total = await this.externadoStudentRepository.count({ where });
         const offset = (pagination.page - 1) * pagination.limit;
         const limit = pagination.limit;
