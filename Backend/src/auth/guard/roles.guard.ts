@@ -23,13 +23,13 @@ export class RolesGuard implements CanActivate {
 
     const { uuid } = context.switchToHttp().getRequest();
 
-    let valorExiste = requiredRoles.includes(uuid.rol);
+    let valorExiste = requiredRoles.includes(uuid?.rol);
 
-    if(requiredRoles[0] === "all" && (uuid.rol === 1 || uuid.rol === 2 || uuid.rol === 3 || uuid.rol === 4)){
+    if(requiredRoles[0] === "all" && (uuid.rol === 1 || uuid?.rol === 2 || uuid?.rol === 3 || uuid?.rol === 4)){
       valorExiste = true;
     }
 
-    if(requiredRoles[0] === "allA" && (uuid.rol === 1 || uuid.rol === 2)){
+    if(requiredRoles[0] === "allA" && (uuid?.rol === 1 || uuid?.rol === 2 || uuid?.rol === 4)){
       valorExiste = true;
     }
 

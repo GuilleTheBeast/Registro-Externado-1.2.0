@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { ExternadoAdminsService } from './externado_admins.service';
 import { Role } from 'src/auth/enum/roles.enum';
 import { Roles } from 'src/auth/decorators/roles.decorators';
@@ -40,16 +40,16 @@ export class ExternadoAdminsController {
   @Get("studentList")
   @Roles(Role.AllA)
   @UseGuards(AuthGuard, RolesGuard)
-  studentList(@Req() req: RequestWithUuid){
-      return this.externadoAdminsService.studentList(req.uuid.uuid);
-  }
+    studentList(@Req() req: RequestWithUuid, @Query() query: { nombre: string,  page: number, limit: number, paginated: boolean }){
+        return this.externadoAdminsService.studentList(req.uuid.uuid, query.nombre, query.page, query.limit, query.paginated);
+    }
 
-  @Post("editStudentByAdmins")
-  @Roles(Role.AllA)
-  @UseGuards(AuthGuard, RolesGuard)
-  editStudentByAdmins(@Body() updateExternadoStudentDto: UpdateExternadoStudentDto, @Req() req: RequestWithUuid){
-      return this.externadoAdminsService.editStudentByAdmins(updateExternadoStudentDto, req.uuid.uuid);
-  }
+@Post("editStudentByAdmins")
+@Roles(Role.AllA)
+@UseGuards(AuthGuard, RolesGuard)
+editStudentByAdmins(@Body() updateExternadoStudentDto: UpdateExternadoStudentDto, @Req() req: RequestWithUuid){
+        return this.externadoAdminsService.editStudentByAdmins(updateExternadoStudentDto, req.uuid.uuid);
+}
 
   @Get("studentGet/:id")
   @Roles(Role.AllA)

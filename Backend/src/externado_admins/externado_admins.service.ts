@@ -120,15 +120,17 @@ export class ExternadoAdminsService {
   }
 
   //Metodo que extrae la informacion de todos los estudiantes en el sistema
-  async studentList(uuid: string){
+  async studentList(uuid: string, nombre?: string, page: number = 1, limit: number = 10, paginated: boolean = false){
     const externado_user = await this.externadoUsersService.findOneByUUID(uuid);//Buscamos el externado_user_id de dicho UUID
     let studentsList;
-
-    if(externado_user){//Verificamos si existe el usuario que consulta
-      if((externado_user.externado_user_type_id === 1 || externado_user.externado_user_type_id === 2)){//Verificamos si el usuario es Admin
-
-        studentsList = await this.externadoStudentService.findAllRelatedWithUser();
-
+    const pagination = {
+      page: page,
+      limit: limit,
+      paginated: paginated
+    }    
+    if(externado_user){
+      if((externado_user.externado_user_type_id === 1 || externado_user.externado_user_type_id === 2  || externado_user.externado_user_type_id === 4)){
+          studentsList = await this.externadoStudentService.findAllRelatedWithUser(pagination, nombre);
       }else{
         throw new UnauthorizedException('El usuario que realiza la consulta no posee los permisos necesarios');
       }

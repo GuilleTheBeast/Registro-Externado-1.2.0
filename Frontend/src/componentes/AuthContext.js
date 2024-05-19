@@ -451,7 +451,7 @@ export const fetchUsuariosAdmin = async (authToken) => {
         headers: {
           Authorization: `Bearer ${authToken}`,
           "Content-Type": "application/json",
-        },
+        }
       }
     );
     return response.data;
@@ -500,7 +500,7 @@ export const fetchResponsableInfo =  async (authToken, responsibleId) =>{
   }
 };
 
-export const fetchEstudiantes = async (authToken) => {
+export const fetchEstudiantes = async (authToken, pagination = { page: 1, limit: 10, paginated: false}, nombres = null) => {
   try {
     const response = await axios.get(
       "http://localhost:3001/api/v1/externado-admins/studentList",
@@ -508,6 +508,13 @@ export const fetchEstudiantes = async (authToken) => {
         headers: {
           Authorization: `Bearer ${authToken}`,
           "Content-Type": "application/json",
+        },
+        params: {
+          nombre: nombres,
+          page: pagination.page,
+          limit: pagination.limit,
+          paginated: pagination.paginated
+        
         },
       }
     );

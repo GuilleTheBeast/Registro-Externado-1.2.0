@@ -27,6 +27,7 @@ export class ExternadoUsersService {
     return await this.externadoUserRepository.findOneBy({idexternado_user});
   }
 
+
   async findOneByUUID(externado_uuid: string) {
     return await this.externadoUserRepository.findOneBy({externado_uuid});
   }
@@ -100,7 +101,7 @@ export class ExternadoUsersService {
     let infoResponsibles;
 
     if(externado_user){//Como doble validacion, verificamos el UUID para ver que sea de un usuario que exista
-      if(externado_user.externado_user_type_id === 2){//Verificamos que este usuario sea Admin
+      if(externado_user.externado_user_type_id === 2 || externado_user.externado_user_type_id === 4){//Verificamos que este usuario sea Admin
 
         infoResponsibles = await this.externadoUserRepository.createQueryBuilder('users')
         .where('users.externado_user_type_id not in (1, 2)').getMany();

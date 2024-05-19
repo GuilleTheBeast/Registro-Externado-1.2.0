@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { UpdateExternadoStudentDto } from './dto/update-externado_student.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { ExternadoStudent } from './entities/externado_student.entity';
 import { ExternadoUsersService } from 'src/externado_users/externado_users.service';
 import { ExternadoSequenceService } from 'src/externado_sequence/externado_sequence.service';
@@ -22,11 +22,41 @@ export class ExternadoStudentService {
     return await this.externadoStudentRepository.find();
   }
 
-  async findAllRelatedWithUser(){
-    return await this.externadoStudentRepository.find({
-      relations: ["externadoUser"],
-  });
-  }
+  async findAllRelatedWithUser(pagination: { page: number, limit: number, paginated: boolean }, nombre?: string){
+    const where = nombre ? { externado_student_firstname: Like(`%${nombre}%`) } : {};    
+    if (pagination.paginated) {
+        const total = await this.externadoStudentRepository.count({ where });
+        const offset = (pagination.page - 1) * pagination.limit;
+        const limit = pagination.limit;
+        let data = []
+        if(nombre){
+          data = await this.externadoStudentRepository.find({
+            relations: ["externadoUser"],
+            where,
+          });
+          pagination.page = 1
+        } else {
+          data = await this.externadoStudentRepository.find({
+            relations: ["externadoUser"],
+            where,
+            take: limit,
+            skip: offset,
+        });
+        }
+        const totalPages = Math.ceil(total / limit);
+        return {
+            data,
+            totalPages: Number(totalPages),
+            currentPage: Number(pagination.page),
+            perPage: Number(pagination.limit),
+        };
+    } else {
+      return await this.externadoStudentRepository.find({
+        relations: ["externadoUser"],
+        where
+    });
+    }
+}
   
   //Se ocupa el UPDATE DTO para esta entidad ya que las validaciones de cuales son los campos son mandatorios dependera de las validaciones
   //del frontend
@@ -222,4 +252,11 @@ export class ExternadoStudentService {
 
   }
   
+
+  async findAllRelatedWithUserFilteredByName(nombre: string) {
+    
+    return await this.externadoStudentRepository.createQueryBuilder('estudiante')
+    .where('estudiante.externado_student_firstname like :nombre', {nombre: '%' + nombre + '%'})
+    .getMany();
+  }
 }
