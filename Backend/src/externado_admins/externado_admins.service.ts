@@ -120,7 +120,7 @@ export class ExternadoAdminsService {
   }
 
   //Metodo que extrae la informacion de todos los estudiantes en el sistema
-  async studentList(uuid: string, nombre?: string, page: number = 1, limit: number = 10, paginated: boolean = false){
+  async studentList(uuid: string, nombre?: string, page: number = 1, limit: number = 10, paginated: string = 'false'){
     const externado_user = await this.externadoUsersService.findOneByUUID(uuid);//Buscamos el externado_user_id de dicho UUID
     let studentsList;
     const pagination = {

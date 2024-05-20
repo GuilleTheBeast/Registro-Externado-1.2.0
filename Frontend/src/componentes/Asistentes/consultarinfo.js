@@ -205,12 +205,12 @@ const Students = ({ setShowNavbar }) => {
             <tbody>
              {/* Ejemplo de datos de usuarios */}
 
-                {estudiantesTabla.map((d, index) => (
+             {estudiantesTabla && estudiantesTabla.map((d, index) => (
                 <tr key={index}>
                   <td>{d.externado_student_firstname}</td>
                   <td>{d.externado_student_lastname}</td>
                   <td>
-                    {gradosTabla.map((g, i) =>
+                  {gradosTabla && gradosTabla.map((g, i) =>
                       d.externado_student_current_level_id ===
                         g.idexternado_level
                         ? g.externado_level
@@ -219,7 +219,7 @@ const Students = ({ setShowNavbar }) => {
                   </td>
 
                   <td>
-                    {usuariosTabla.map((u, i) =>
+                  {usuariosTabla && usuariosTabla.map((u, i) =>
                       d.externado_user_id === u.idexternado_user
                         ? u.externado_email
                         : null

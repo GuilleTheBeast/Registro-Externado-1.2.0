@@ -40,7 +40,7 @@ export class ExternadoAdminsController {
   @Get("studentList")
   @Roles(Role.AllA)
   @UseGuards(AuthGuard, RolesGuard)
-    studentList(@Req() req: RequestWithUuid, @Query() query: { nombre: string,  page: number, limit: number, paginated: boolean }){
+    studentList(@Req() req: RequestWithUuid, @Query() query: { nombre: string,  page: number, limit: number, paginated: string }){
         return this.externadoAdminsService.studentList(req.uuid.uuid, query.nombre, query.page, query.limit, query.paginated);
     }
 
