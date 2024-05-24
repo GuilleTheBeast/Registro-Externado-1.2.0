@@ -110,18 +110,8 @@ const Usuarios = ({ setShowNavbar }) => {
         //console.log("Entraste al if de rol 3");
         navigate("/negado");
       }else if (userRole === 4 || userRole === "4") {
-        const fetchData = async () => {
-          try {
-            const usuariosTablaData = await fetchUsuariosAdmin(authToken);
-            //console.log("Datos de usuarios tabla antes de la actualización:",usuariosTablaData);
-            setUsuariosTabla(usuariosTablaData);
-            //console.log("Datos de estudiantes tabla después de la actualización:",usuariosTablaData);
-          } catch (error) {
-            //console.error(error.message);
-          }
-        };
-        //console.log("Token actual en Representantes Lista:", authToken);
-        fetchData();
+        //console.log("Entraste al if de rol 4");
+        navigate("/negado");
       } else {
         //console.log("El rol es " + payloadJson.rol);
       }

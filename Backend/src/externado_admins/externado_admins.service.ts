@@ -38,7 +38,7 @@ export class ExternadoAdminsService {
     let statuscode = 0;
 
     if(externado_user){//Verificamos si existe el usuario que consulta
-      if(externado_user.externado_user_type_id === 1){//Verificamos si el usuario es Super Admin
+      if(externado_user.externado_user_type_id === 1 ){//Verificamos si el usuario es Super Admin
         if(externado_admin.externado_user_type_id === 2){
           if(externadoadmin){//Verificamos si ya existe informacion del usuario que se volvera administrador, si existe, se actualizara, caso contrario, se creara
             
@@ -184,7 +184,7 @@ export class ExternadoAdminsService {
     let externado_student;
 
     if(externado_user){//Verificamos si existe el usuario que consulta
-      if((externado_user.externado_user_type_id === 1 || externado_user.externado_user_type_id === 2)){//Verificamos si el usuario es Admin
+      if((externado_user.externado_user_type_id === 1 || externado_user.externado_user_type_id === 2 || externado_user.externado_user_type_id === 4)){//Verificamos si el usuario es Admin
         
         externado_student = await this.externadoStudentService.findByStudentIDEncript(id);//Buscamos el estudiante especifico
 
@@ -209,7 +209,7 @@ export class ExternadoAdminsService {
     let externado_responsible;
 
     if(externado_user){//Verificamos si existe el usuario que consulta
-      if((externado_user.externado_user_type_id === 1 || externado_user.externado_user_type_id === 2)){//Verificamos si el usuario es Admin
+      if((externado_user.externado_user_type_id === 1 || externado_user.externado_user_type_id === 2 || externado_user.externado_user_type_id === 4)){//Verificamos si el usuario es Admin
         
         externado_responsible = await this.externadoResponsibleService.findByResponsibleIDEncript(id);//Buscamos el estudiante especifico
 
@@ -234,7 +234,7 @@ export class ExternadoAdminsService {
     let responsibleList;
 
     if(externado_user){//Verificamos si existe el usuario que consulta
-      if((externado_user.externado_user_type_id === 1 || externado_user.externado_user_type_id === 2)){//Verificamos si el usuario es Admin
+      if((externado_user.externado_user_type_id === 1 || externado_user.externado_user_type_id === 2 || externado_user.externado_user_type_id === 4)){//Verificamos si el usuario es Admin
 
         responsibleList = await this.externadoResponsibleService.findByUserID(updateExternadoResponsibleDto.externado_user_id);
 

@@ -1,13 +1,19 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useAuth } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
+import ojo from "../imagenes/icons/ojo.png";
+import axios from "axios";
+import ReactDOM from "react-dom";
 import "../estilos/estudiantes.css"; // Importa el archivo de estilos
 import {
-
+  Modal,
+  Button,
   Table,
   Form,
   Pagination,
+  Row,
+  Col,
 } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css"; // Importar los estilos de los iconos
 //importar EncabezadoAssistant
@@ -19,15 +25,16 @@ import {
   fetchUsuariosAdmin,
   fetchAssistant,
 } from "../AuthContext";
+import { isUndefined } from "util";
 
-const Students = ({ setShowNavbar }) => {
+const Verusuarios = ({ setShowNavbar }) => {
   useEffect(() => {
     setShowNavbar(false); // Oculta el navbar en la página de inicio
     return () => {
       setShowNavbar(true); // Muestra el navbar en las demás páginas
     };
   }, []);
-
+  const [showEditModal, setShowEditModal] = useState(false);
   const [estudiantesTabla, setEstudiantesTabla] = useState([]);
   const [usuariosTabla, setUsuariosTabla] = useState([]);
   const [gradosTabla, setGradosTabla] = useState([]);
@@ -38,10 +45,19 @@ const Students = ({ setShowNavbar }) => {
     totalPages: 1,
   });
 
+
+  const handleShowClick = (estudianteId) => () => {
+    navigate(`/verinfoestudiantes/${estudianteId}`);
+  };
+ 
+  const handleShowCloseEditModal = () => {
+    setShowEditModal(false);
+  };
+
   const { authToken } = useAuth();
   const navigate = useNavigate();
 
-  
+
   useEffect(() => {
     if (
       authToken === null ||
@@ -116,6 +132,9 @@ const Students = ({ setShowNavbar }) => {
       }
     }
   }, [authToken, navigate]);
+  const handleCancelar = () => { 
+    navigate("/verinfoestudiantes");
+  };
 
   //? Obteniendo ESTUDIANTES
   useEffect(() => {
@@ -161,7 +180,7 @@ const Students = ({ setShowNavbar }) => {
     <>
       <EncabezadoAssistant />
       <div className="system-parameters-container">
-        <h2>Información de los estudiantes</h2>
+        <h2>Lista de Estudiantes</h2>
         <>
           <h4>Indicaciones:</h4> {/* Subtítulo agregado aquí */}
           <ul>
@@ -171,8 +190,7 @@ const Students = ({ setShowNavbar }) => {
             </li>
 
             <li>
-              Al presionar editar, se brinda la información del estudiante con
-              la opción de modificar el estado de su proceso de matrícula.
+              Al presionar <b>mostrar</b>, se visualiza toda la información del estudiante.
             </li>
           </ul>
         </>
@@ -199,18 +217,18 @@ const Students = ({ setShowNavbar }) => {
                 <th>Apellido estudiante</th>
                 <th>Grado actual </th>
                 <th>Correo responsable</th>
+                <th className="show-column">Mostar</th>
               </tr>
             </thead>
-            
             <tbody>
-             {/* Ejemplo de datos de usuarios */}
+              {/* Ejemplo de datos de usuarios */}
 
-             {estudiantesTabla && estudiantesTabla.map((d, index) => (
+              {estudiantesTabla && estudiantesTabla.map((d, index) => (
                 <tr key={index}>
                   <td>{d.externado_student_firstname}</td>
                   <td>{d.externado_student_lastname}</td>
                   <td>
-                  {gradosTabla && gradosTabla.map((g, i) =>
+                    {gradosTabla && gradosTabla.map((g, i) =>
                       d.externado_student_current_level_id ===
                         g.idexternado_level
                         ? g.externado_level
@@ -219,16 +237,37 @@ const Students = ({ setShowNavbar }) => {
                   </td>
 
                   <td>
-                  {usuariosTabla && usuariosTabla.map((u, i) =>
+                    {usuariosTabla && usuariosTabla.map((u, i) =>
                       d.externado_user_id === u.idexternado_user
                         ? u.externado_email
                         : null
                     )}
                   </td>
-
+                  <td
+                    className="show-column"
+                    style={{ textAlign: "center" }}
+                  >
+                    <Button
+                    ssrc={ojo}
+                      variant="link"
+                      className="p-0"
+                      onClick={handleShowClick(d.idexternado_student)}
+                    >
+                      <i><img
+                      src={ojo}
+                      alt="Icono Mostrar"
+                      width="20px"
+                      height="20px"
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        handleShowClick(d.idexternado_student)
+                      }
+                    /></i>
+                    </Button>
+                  </td>
 
                 </tr>
-              ))} 
+              ))}
             </tbody>
           </Table>
           <Pagination>
@@ -262,9 +301,58 @@ const Students = ({ setShowNavbar }) => {
           </Pagination>
         </div>
       </div>
+        {/* Modal para editar usuario */}
+      <Modal show={showEditModal} onHide={handleShowCloseEditModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Editar usuario</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="email@address.com"
+                readOnly
+              />
+            </Form.Group>
 
+            <Form.Group className="mb-3">
+              <Form.Label>Estado</Form.Label>
+              <Form.Select>
+                <option>Activo</option>
+                <option>Inactivo</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Tipo de usuario</Form.Label>
+              <Form.Select>
+                <option>Responsable</option>
+                <option>Administrador</option>
+                <option>Asistente</option>
+              </Form.Select>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="custom"
+            className="btn-modal-cancelar"
+            onClick={handleShowCloseEditModal}
+          >
+            Cancelar
+          </Button>
+          <Button
+            variant="custom"
+            className="btn-modal-guardar"
+            onClick={handleShowCloseEditModal}
+          >
+            Guardar cambios
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
 
-export default Students;
+export default Verusuarios;
