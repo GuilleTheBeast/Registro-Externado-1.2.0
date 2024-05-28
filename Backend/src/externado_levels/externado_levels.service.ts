@@ -30,5 +30,9 @@ export class ExternadoLevelsService {
     },
   });
   }
+// Prueba
+  async getLevels2 (){
+    return await this.externadoAdminRepository.find();
+  }
 
 }

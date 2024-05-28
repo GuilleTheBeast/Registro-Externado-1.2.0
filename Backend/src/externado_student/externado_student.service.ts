@@ -15,11 +15,17 @@ export class ExternadoStudentService {
 
     private readonly externadoUsersService:ExternadoUsersService,
     private readonly externadoSequenceService:ExternadoSequenceService,
+   
   )
   {}
   
   async findAll(){
     return await this.externadoStudentRepository.find();
+  }
+
+  // Para reporteria
+  getStudents(){
+    return this.externadoStudentRepository.find();
   }
 
   async findAllRelatedWithUser(){
@@ -221,5 +227,6 @@ export class ExternadoStudentService {
     .execute();
 
   }
+
   
 }

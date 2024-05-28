@@ -101,6 +101,14 @@ const EncabezadoAdmin = () => {
         >
           Estudiantes
         </NavLink>
+        <NavLink
+          to="/reportes"
+          className={({ isActive }) =>
+            isActive ? "nav-link-admin active" : "nav-link-admin"
+          }
+        >
+          Reportes
+        </NavLink>
 
         <button onClick={handleLogout} className="nav-link-admin logout-button">
           Cerrar Sesión
