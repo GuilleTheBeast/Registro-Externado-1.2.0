@@ -12,52 +12,88 @@ export class ExternadoStudentService {
   constructor(
     @InjectRepository(ExternadoStudent)
     private readonly externadoStudentRepository: Repository<ExternadoStudent>,
+    private readonly externadoUsersService: ExternadoUsersService,
+    private readonly externadoSequenceService: ExternadoSequenceService,
+  ) { }
 
-    private readonly externadoUsersService:ExternadoUsersService,
-    private readonly externadoSequenceService:ExternadoSequenceService,
-  )
-  {}
-  
-  async findAll(){
+  async findAll() {
     return await this.externadoStudentRepository.find();
   }
 
-  async findAllRelatedWithUser(pagination: { page: number, limit: number, paginated: string }, nombre?: string){
-    const where = nombre ? { externado_student_firstname: Like(`%${nombre}%`) } : {};     
-    const isPaginated = pagination.paginated === 'true' ? true : false;    
-    if (isPaginated ) {
-        const total = await this.externadoStudentRepository.count({ where });
-        const offset = (pagination.page - 1) * pagination.limit;
-        const limit = pagination.limit;
-        let data = []
-        if(nombre){
-          data = await this.externadoStudentRepository.find({
-            relations: ["externadoUser"],
-            where,
-          });
-          pagination.page = 1
-        } else {
-          data = await this.externadoStudentRepository.find({
-            relations: ["externadoUser"],
-            where,
-            take: limit,
-            skip: offset,
+
+  async findAllRelatedWithUser(pagination: { page: number, limit: number, paginated: string }, nombre?: string) {
+    const where = nombre ? { externado_student_firstname: Like(`%${nombre}%`) } : {};
+    const isPaginated = pagination.paginated === 'true' ? true : false;
+    if (isPaginated) {
+      const total = await this.externadoStudentRepository.count({ where });
+      const offset = (pagination.page - 1) * pagination.limit;
+      const limit = pagination.limit;
+      let data = []
+      if (nombre) {
+        data = await this.externadoStudentRepository.find({
+          relations: ["externadoUser"],
+          where,
         });
-        }
-        const totalPages = Math.ceil(total / limit);
-        return {
-            data,
-            totalPages: Number(totalPages),
-            currentPage: Number(pagination.page),
-            perPage: Number(pagination.limit),
-        };
+        pagination.page = 1
+      } else {
+        data = await this.externadoStudentRepository.find({
+          relations: ["externadoUser"],
+          where,
+          take: limit,
+          skip: offset,
+        });
+      }
+      const totalPages = Math.ceil(total / limit);
+      return {
+        data,
+        totalPages: Number(totalPages),
+        currentPage: Number(pagination.page),
+        perPage: Number(pagination.limit),
+      };
     } else {
       return await this.externadoStudentRepository.find({
         relations: ["externadoUser"],
         where
-    });
+      });
     }
-}
+  }
+
+  async findAllRelatedWithUserA(pagination: { page: number, limit: number, paginated: string }, apellido?: string) {
+    const where = apellido ? { externado_student_lastname: Like(`%${apellido}%`) } : {};
+    const isPaginated = pagination.paginated === 'true' ? true : false;
+    if (isPaginated) {
+      const total = await this.externadoStudentRepository.count({ where });
+      const offset = (pagination.page - 1) * pagination.limit;
+      const limit = pagination.limit;
+      let data = []
+      if (apellido) {
+        data = await this.externadoStudentRepository.find({
+          relations: ["externadoUser"],
+          where,
+        });
+        pagination.page = 1
+      } else {
+        data = await this.externadoStudentRepository.find({
+          relations: ["externadoUser"],
+          where,
+          take: limit,
+          skip: offset,
+        });
+      }
+      const totalPages = Math.ceil(total / limit);
+      return {
+        data,
+        totalPages: Number(totalPages),
+        currentPage: Number(pagination.page),
+        perPage: Number(pagination.limit),
+      };
+    } else {
+      return await this.externadoStudentRepository.find({
+        relations: ["externadoUser"],
+        where
+      });
+    }
+  }
   
   //Se ocupa el UPDATE DTO para esta entidad ya que las validaciones de cuales son los campos son mandatorios dependera de las validaciones
   //del frontend
@@ -102,14 +138,14 @@ export class ExternadoStudentService {
     const externado_user = await this.externadoUsersService.findOneByUUID(uuid);//Encontramos el usuario al que se le actualizara el Estudiante
     const idexternado_student = updateExternadoStudentDto.idexternado_student;//Identificamos el ID del Estudiante que se debe actualizar
 
-    if(!externado_user){//Si no existe el usuario mediante UUID, tirara error
+    if (!externado_user) {//Si no existe el usuario mediante UUID, tirara error
       throw new NotFoundException("No se ha encontrado el usuario a actualizar");
     }
 
     const externado_user_id = externado_user.idexternado_user;//Sacamos el ID del usuario que encontramos por medio del UUID
-    const studentExist = await this.externadoStudentRepository.findOneBy({idexternado_student, externado_user_id});//Vemos si existe el registro a actualizarse
+    const studentExist = await this.externadoStudentRepository.findOneBy({ idexternado_student, externado_user_id });//Vemos si existe el registro a actualizarse
 
-    if(!studentExist){//Si no existe el registro, tirara error
+    if (!studentExist) {//Si no existe el registro, tirara error
       throw new NotFoundException("No se ha encontrado el usuario a actualizar");
     }
 
@@ -143,14 +179,14 @@ export class ExternadoStudentService {
     const externado_user = await this.externadoUsersService.findOneByUUID(uuid);//Encontramos el usuario al que se le actualizara el Estudiante
     const idexternado_student = updateExternadoStudentDto.idexternado_student;//Identificamos el ID del Estudiante que se debe actualizar
 
-    if(!externado_user){//Si no existe el usuario mediante UUID, tirara error
+    if (!externado_user) {//Si no existe el usuario mediante UUID, tirara error
       throw new NotFoundException("No se ha encontrado el usuario a actualizar");
     }
 
     const externado_user_id = externado_user.idexternado_user;//Sacamos el ID del usuario que encontramos por medio del UUID
-    const studentExist = await this.externadoStudentRepository.findOneBy({idexternado_student, externado_user_id});//Vemos si existe el registro a actualizarse
+    const studentExist = await this.externadoStudentRepository.findOneBy({ idexternado_student, externado_user_id });//Vemos si existe el registro a actualizarse
 
-    if(!studentExist){//Si no existe el registro, tirara error
+    if (!studentExist) {//Si no existe el registro, tirara error
       throw new NotFoundException("No se ha encontrado el usuario a actualizar");
     }
 
@@ -177,18 +213,18 @@ export class ExternadoStudentService {
   }
 
   async findByUserID(externado_user_id: number) {
-    return await this.externadoStudentRepository.findBy({externado_user_id});
+    return await this.externadoStudentRepository.findBy({ externado_user_id });
   }
 
   async findByStudentID(externado_user_id: number, idexternado_student: number) {
-    return await this.externadoStudentRepository.findOneBy({idexternado_student, externado_user_id});
+    return await this.externadoStudentRepository.findOneBy({ idexternado_student, externado_user_id });
   }
 
   async findByStudentIDEncript(idexternado_student: number) {
-    return await this.externadoStudentRepository.findOneBy({idexternado_student});
+    return await this.externadoStudentRepository.findOneBy({ idexternado_student });
   }
 
-  async updateStudentEncript(id: number, updateExternadoStudentDto: UpdateExternadoStudentDto){
+  async updateStudentEncript(id: number, updateExternadoStudentDto: UpdateExternadoStudentDto) {
     return await this.externadoStudentRepository.update(id, {
       externado_student_address: updateExternadoStudentDto.externado_student_address,
       externado_student_phone: updateExternadoStudentDto.externado_student_phone,
@@ -204,26 +240,26 @@ export class ExternadoStudentService {
     const externado_user = await this.externadoUsersService.findOneByUUID(uuid);//Encontramos el usuario con el que esta relacionado el Estudiante
     const idexternado_student = updateExternadoStudentDto.idexternado_student;//Sacamos el id del estudiante al que se le generara el pdf
 
-    if(!externado_user){//Si no existe el usuario mediante UUID, tirara error
+    if (!externado_user) {//Si no existe el usuario mediante UUID, tirara error
       throw new NotFoundException("No se ha encontrado el usuario a actualizar");
     }
 
     const externado_user_id = externado_user.idexternado_user;//Sacamos el ID del usuario que encontramos por medio del UUID
-    const studentExist = await this.externadoStudentRepository.findOneBy({idexternado_student, externado_user_id});//Vemos si existe el registro a relacion user-student
+    const studentExist = await this.externadoStudentRepository.findOneBy({ idexternado_student, externado_user_id });//Vemos si existe el registro a relacion user-student
 
-    if(!studentExist){//Si no existe el registro, tirara error
+    if (!studentExist) {//Si no existe el registro, tirara error
       throw new NotFoundException("No se ha encontrado el usuario a actualizar");
     }
 
     try {
       //Se sacara el estudiante relacionado al usuario que esta logueado en el sistema
       const infoStudent = await this.externadoStudentRepository.createQueryBuilder('estudiante')
-      .leftJoinAndSelect('estudiante.externadoDepartment', 'externadoDepartment')
-      .leftJoinAndSelect('estudiante.externadoLevel', 'externadoLevel')
-      .leftJoinAndSelect('estudiante.externadoChurch', 'externadoChurch')
-      .leftJoinAndSelect('estudiante.externadoStudRespType', 'externadoStudRespType')
-      .where('estudiante.idexternado_student = ' + studentExist.idexternado_student)
-      .getOne();
+        .leftJoinAndSelect('estudiante.externadoDepartment', 'externadoDepartment')
+        .leftJoinAndSelect('estudiante.externadoLevel', 'externadoLevel')
+        .leftJoinAndSelect('estudiante.externadoChurch', 'externadoChurch')
+        .leftJoinAndSelect('estudiante.externadoStudRespType', 'externadoStudRespType')
+        .where('estudiante.idexternado_student = ' + studentExist.idexternado_student)
+        .getOne();
 
 
       return infoStudent;
@@ -247,17 +283,25 @@ export class ExternadoStudentService {
   async updateStudentsNewPeriod() {
 
     return await this.externadoStudentRepository.createQueryBuilder()
-    .update(ExternadoStudent)
-    .set({ externado_proccess_finished: false })
-    .execute();
+      .update(ExternadoStudent)
+      .set({ externado_proccess_finished: false })
+      .execute();
 
   }
-  
+
 
   async findAllRelatedWithUserFilteredByName(nombre: string) {
-    
+
     return await this.externadoStudentRepository.createQueryBuilder('estudiante')
-    .where('estudiante.externado_student_firstname like :nombre', {nombre: '%' + nombre + '%'})
-    .getMany();
+      .where('estudiante.externado_student_firstname like :nombre', { nombre: '%' + nombre + '%' })
+      .getMany();
   }
+
+  async findAllRelatedWithUserFilteredByLastName(apellido: string) {
+
+    return await this.externadoStudentRepository.createQueryBuilder('estudiante')
+      .where('estudiante.externado_student_lastname like :apellido', { apellido: '%' + apellido + '%' })
+      .getMany();
+  }
+
 }

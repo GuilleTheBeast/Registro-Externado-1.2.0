@@ -20,6 +20,7 @@ import "bootstrap-icons/font/bootstrap-icons.css"; // Importar los estilos de lo
 import EncabezadoAssistant from "../layout/navbar/Encabezadoassistant";
 import {
   fetchEstudiantes,
+  fetchEstudiantesA,
   fetchUsuarios,
   fetchGrado,
   fetchUsuariosAdmin,
@@ -39,6 +40,7 @@ const Verusuarios = ({ setShowNavbar }) => {
   const [usuariosTabla, setUsuariosTabla] = useState([]);
   const [gradosTabla, setGradosTabla] = useState([]);
   const [searchTermEstudiantes, setSearchTermEstudiantes] = useState("");
+  const [searchTermEstudiantesA, setSearchTermEstudiantesA] = useState("");
   const [currentPage, setCurrentPage] = useState({
     currentPage: 1,
     perPage: 10,
@@ -161,6 +163,31 @@ const Verusuarios = ({ setShowNavbar }) => {
     fetchData();
   }, [authToken, currentPage.currentPage, currentPage.perPage, searchTermEstudiantes]);
 
+  //? Obteniendo ESTUDIANTESA
+  useEffect(() => {
+    const fetchData = async () => {
+      let pagination = {
+        page: currentPage.currentPage,
+        limit: currentPage.perPage,
+        paginated: true
+      };
+
+      try {
+        const estudiantesTablaData = await fetchEstudiantesA(authToken, pagination, searchTermEstudiantesA);
+        setEstudiantesTabla(estudiantesTablaData.data);
+        setCurrentPage({
+          currentPage: estudiantesTablaData.currentPage,
+          perPage: estudiantesTablaData.perPage,
+          totalPages: estudiantesTablaData.totalPages,
+        });
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    //console.log("Token actual en Representantes Lista:", authToken);
+    fetchData();
+  }, [authToken, currentPage.currentPage, currentPage.perPage, searchTermEstudiantesA]);
+
   //? Obteniendo GRADOS
   useEffect(() => {
     const fetchData = async () => {
@@ -202,10 +229,26 @@ const Verusuarios = ({ setShowNavbar }) => {
             >
               <Form.Control
                 type="text"
-                placeholder="Buscar"
+                placeholder="Buscar por nombre"
                 className="search-input-user"
                 value={searchTermEstudiantes}
                 onChange={(e) => setSearchTermEstudiantes(e.target.value)}
+              />
+              <i className="bi bi-search icon-search-user"></i>
+            </Form.Group>
+          </Form>
+
+          <Form className="mb-3">
+            <Form.Group
+              controlId="searchEstudiantes"
+              className="position-relative search-group"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Buscar por apellido"
+                className="search-input-user"
+                value={searchTermEstudiantesA}
+                onChange={(e) => setSearchTermEstudiantesA(e.target.value)}
               />
               <i className="bi bi-search icon-search-user"></i>
             </Form.Group>
