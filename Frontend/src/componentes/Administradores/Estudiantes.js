@@ -19,7 +19,7 @@ import "bootstrap-icons/font/bootstrap-icons.css"; // Importar los estilos de lo
 import EncabezadoAdmin from "../layout/navbar/Encabezadoadmin";
 import EncabezadoAdmin2 from "../layout/navbar/Encabezadoadmin2";
 import {
-  fetchEstudiantes,
+  fetchEstudiantes, 
   fetchUsuarios,
   fetchGrado,
   fetchUsuariosAdmin,

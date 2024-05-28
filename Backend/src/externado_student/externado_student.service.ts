@@ -15,6 +15,7 @@ export class ExternadoStudentService {
 
     private readonly externadoUsersService:ExternadoUsersService,
     private readonly externadoSequenceService:ExternadoSequenceService,
+   
   )
   {}
   
@@ -58,6 +59,12 @@ export class ExternadoStudentService {
     });
     }
 }
+  // Para reporteria
+  getStudents(){
+    return this.externadoStudentRepository.find();
+  }
+
+ 
   
   //Se ocupa el UPDATE DTO para esta entidad ya que las validaciones de cuales son los campos son mandatorios dependera de las validaciones
   //del frontend
@@ -252,6 +259,7 @@ export class ExternadoStudentService {
     .execute();
 
   }
+
   
 
   async findAllRelatedWithUserFilteredByName(nombre: string) {

@@ -17,6 +17,7 @@ import { ExternadoIncomingsModule } from './externado_incomings/externado_incomi
 import { ExternadoChurchsModule } from './externado_churchs/externado_churchs.module';
 import { ExternadoUserTypesModule } from './externado_user_types/externado_user_types.module';
 import { EmailSenderModule } from './email_sender/email_sender.module';
+import { ExternadoStudentPeriodModule } from './externado_student_period/externado_student_period.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { EmailSenderModule } from './email_sender/email_sender.module';
     ExternadoChurchsModule,
     ExternadoUserTypesModule,
     EmailSenderModule,
+    ExternadoStudentPeriodModule
   ],
   controllers: [],
   providers: [],

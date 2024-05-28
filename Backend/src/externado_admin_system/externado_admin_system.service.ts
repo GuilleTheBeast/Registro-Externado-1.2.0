@@ -122,7 +122,6 @@ export class ExternadoAdminSystemService {
 
   //Metodo para visualizar todos los periodos de matricula anteriores incluido el actual
   async historicalPeriod() {
-
     return await this.externadoAdminSystemRepository.find({
       order: {
       idexternado_admin_system: 'ASC',

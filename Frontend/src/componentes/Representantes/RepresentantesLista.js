@@ -165,7 +165,7 @@ function RepresentantesLista() {
       } catch (error) {
         //console.error(error.message);
       }
-    };
+    }; 
     //console.log("Token actual en Representantes Lista:", authToken);
     fetchData();
   }, [authToken]);

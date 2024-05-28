@@ -198,7 +198,7 @@ export const fetchActualPeriod = async (authToken) => {
   } catch (error) {
     throw new Error("Error al obtener el periodo actual: " + error.message);
   }
-};
+}; 
 
 export const fetchHistorico = async (authToken) => {
   try {
