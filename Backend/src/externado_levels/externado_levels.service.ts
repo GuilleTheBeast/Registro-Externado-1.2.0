@@ -11,8 +11,7 @@ export class ExternadoLevelsService {
   constructor(
     @InjectRepository(ExternadoLevel)
     private readonly externadoAdminRepository: Repository<ExternadoLevel>,
-
-    private readonly externadoUsersService:ExternadoUsersService
+    private readonly externadoUsersService:ExternadoUsersService,
   )
   {}
 

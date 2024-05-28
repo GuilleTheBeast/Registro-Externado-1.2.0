@@ -524,3 +524,26 @@ export const fetchEstudiantes = async (authToken, pagination = { page: 1, limit:
   }
 }
 
+export const fetchEstudiantesA = async (authToken, pagination = { page: 1, limit: 10, paginated: false}, apellidos = null) => {
+  try {
+    const response = await axios.get(
+      "http://localhost:3001/api/v1/externado-admins/studentListA",
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          apellido: apellidos,
+          page: pagination.page,
+          limit: pagination.limit,
+          paginated: pagination.paginated
+        
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Error al obtener estudiantes tabla: " + error.message);
+  }
+}

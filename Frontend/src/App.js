@@ -31,7 +31,10 @@ import { AuthProvider } from "./componentes/AuthContext";
 import Listarepresentantes from "./componentes/Administradores/Listarepresentantes";
 import ExportModule from "./componentes/Administradores/reportes"
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import Students from "./componentes/Asistentes/consultarinfo";
+import Students from "./componentes/Asistentes/Verestudiantes";
+import Infostudents from "./componentes/Asistentes/Verinformacionestudiantes";
+import Listresponsible from "./componentes/Asistentes/Verlistarepresentantes";
+import Inforesponsible from "./componentes/Asistentes/Verinformacionresponsables";
 
 function App() {
   const [showNavbar, setShowNavbar] = useState(true);
@@ -122,16 +125,28 @@ function App() {
             element={<ExportModule setShowNavbar={setShowNavbar} />}
           />
           <Route
+            path="/verinfoestudiantes/:id"
+            element={<Infostudents setShowNavbar={setShowNavbar} />}
+          />
+          <Route
+            path="/verlistarepresentantes"
+            element={<Listresponsible setShowNavbar={setShowNavbar} />}
+          />
+          <Route
+            path="/verlistarepresentantes/:id"
+            element={<Listresponsible setShowNavbar={setShowNavbar} />}
+          />
+          <Route
+            path="/verinforesponsables/:id"
+            element={<Inforesponsible setShowNavbar={setShowNavbar} />}
+          />
+          <Route
             path="/listarepresentantes"
             element={<Listarepresentantesadmin setShowNavbar={setShowNavbar} />}
           />
           <Route
             path="/estudiantessistema"
             element={<Estudiantessistema setShowNavbar={setShowNavbar} />}
-          />
-          <Route
-            path="/infoestudiantes"
-            element={<Informacionestudiantes setShowNavbar={setShowNavbar} />}
           />
           <Route
             path="/inforesponsables/:id"
@@ -141,7 +156,6 @@ function App() {
             path="/negado"
             element={<Negado setShowNavbar={setShowNavbar} />}
           />
-
           <Route
             path="/representantesUpdate/:id"
             element={<RepresentantesUpdate setShowNavbar={setShowNavbar} />}

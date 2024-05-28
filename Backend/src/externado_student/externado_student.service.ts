@@ -64,8 +64,7 @@ export class ExternadoStudentService {
     return this.externadoStudentRepository.find();
   }
 
- 
-  
+
   //Se ocupa el UPDATE DTO para esta entidad ya que las validaciones de cuales son los campos son mandatorios dependera de las validaciones
   //del frontend
   async registerStudent(uuid: string, updateExternadoStudentDto: UpdateExternadoStudentDto) {

@@ -16,9 +16,8 @@ import {
   Row,
 } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css"; // Importar los estilos de los iconos
-//importar EncabezadoAdmin
-import EncabezadoAdmin from "../layout/navbar/Encabezadoadmin";
-import EncabezadoAdmin2 from "../layout/navbar/Encabezadoadmin2";
+//importar EncabezadoAssistant
+import EncabezadoAssistant from "../layout/navbar/Encabezadoassistant";
 import {
   fetchEstudianteInfo,
   fetchGrado,
@@ -27,7 +26,7 @@ import {
   fetchResponsableTipo,
 } from "../AuthContext";
 
-const Informacionestudiantes = ({ setShowNavbar }) => {
+const Verinformacionestudiantes = ({ setShowNavbar }) => {
   useEffect(() => {
     setShowNavbar(false); // Oculta el navbar en la página de inicio
     return () => {
@@ -70,7 +69,7 @@ const Informacionestudiantes = ({ setShowNavbar }) => {
   const grade3Ref = useRef();
 
   const processRef = useRef();
-
+  
   useEffect(() => {
     //console.log("Valor de authToken:", authToken);
 
@@ -103,7 +102,6 @@ const Informacionestudiantes = ({ setShowNavbar }) => {
         navigate("/negado");
       }else if (userRole === 4 || userRole === "4") {
         //console.log("Entraste al if de rol 4");
-        navigate("/negado");
         
       } else {
         //console.log("El rol es " + payloadJson.rol);
@@ -117,7 +115,7 @@ const Informacionestudiantes = ({ setShowNavbar }) => {
   const tieneHermanos = "Si";
   const ambosPadres = "Si";
   const handleCancelar = () => {
-    navigate("/estudiantessistema");
+    navigate("/consultarinfo");
   };
 
   //?Obteniendo grados
@@ -196,8 +194,8 @@ const Informacionestudiantes = ({ setShowNavbar }) => {
     fetchData();
   }, [authToken, id]);
 
-  const handleVerRepresentantes = () => {
-    navigate(`/listarepresentantes/${estudiante.externado_user_id}`);
+  const handleShowRepresentantes = () => {
+    navigate(`/verlistarepresentantes/${estudiante.externado_user_id}`);
   };
 
   useEffect(() => {
@@ -293,32 +291,6 @@ const Informacionestudiantes = ({ setShowNavbar }) => {
     document.getElementById("emailMobileRowID").hidden = true;
   }
 
-  const handleUpdateProcess = () => {
-    const dataToSubmit = {
-      idexternado_student: estudiante.idexternado_student,
-      externado_proccess_finished: !processRef.current.checked,
-      externado_student_active: true,
-    };
-    const token = localStorage.getItem("token");
-    fetch("http://localhost:3001/api/v1/externado-admins/editStudentByAdmins", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-type": "application/json ; charset=UTF-8",
-      },
-      body: JSON.stringify(dataToSubmit),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        Swal.fire({
-          icon: "success",
-          title: "Datos enviados",
-          text: "Se ha actualizado el estado de proceso de matrácula del estudiante exitosamente",
-        }).then(function () {
-          navigate(-1);
-        });
-      });
-  };
 
   /*const dataToSubmit = {
   idexternado_student: estudiante.idexternado_student,
@@ -341,16 +313,14 @@ fetch("http://localhost:3001/api/v1/externado-admins/editStudentByAdmins", {
 
   return (
     <>
-      <EncabezadoAdmin />
+      <EncabezadoAssistant />
       <div className="system-parameters-container">
         <h2>Información de los estudiantes</h2>
         <>
           <h4>Indicaciones:</h4> {/* Subtítulo agregado aquí */}
           <ul>
             <li>
-              Si el estado del proceso de matrícula del estudiante es
-              finalizado, la información del estudiante ya no podrá ser
-              modificada por su responsable.
+              Se puede visualizar toda la información referente al alumno.
             </li>
             <li>
               Al presionar "Ver responsables", se brinda el listado de los
@@ -1091,55 +1061,9 @@ fetch("http://localhost:3001/api/v1/externado-admins/editStudentByAdmins", {
                 style={{
                   marginTop: "30px",
                   paddingTop: "10px",
-                  backgroundColor: "#e7f5ff",
-                  border: "1px solid #bee3f8",
                   borderRadius: "5px",
-                  margin: "10px 0",
                 }}
               >
-                <Form.Group>
-                  <Form.Label
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: "1.1em",
-                      color: "#000",
-                    }}
-                  >
-                    ¿El proceso del estudiante está finalizado?:
-                  </Form.Label>
-                  <div key={`inline-radio`} className="mb-3">
-                    <Form.Check
-                      ref={processRef}
-                      checked={
-                        estudiante.externado_proccess_finished === true
-                          ? true
-                          : null
-                      }
-                      inline
-                      label="Sí"
-                      name="viveconAmbos"
-                      type="radio"
-                      id={`inline-radio-1`}
-                      value="1"
-                      // onChange={handleProcessStatus}
-                    />
-                    <Form.Check
-                      ref={processRef}
-                      checked={
-                        estudiante.externado_proccess_finished === false
-                          ? true
-                          : null
-                      }
-                      inline
-                      label="No"
-                      name="viveconAmbos"
-                      type="radio"
-                      id={`inline-radio-2`}
-                      value="0"
-                      //onChange={handleProcessStatus}
-                    />
-                  </div>
-                </Form.Group>
               </Col>
             </Row>
 
@@ -1158,18 +1082,9 @@ fetch("http://localhost:3001/api/v1/externado-admins/editStudentByAdmins", {
                 <Button
                   variant="custom"
                   className="btn-modal-guardar"
-                  onClick={handleVerRepresentantes}
+                  onClick={handleShowRepresentantes}
                 >
                   Ver responsables
-                </Button>
-              </Col>
-              <Col md={2}>
-                <Button
-                  variant="custom"
-                  className="btn-modal-guardar"
-                  onClick={handleUpdateProcess}
-                >
-                  Guardar
                 </Button>
               </Col>
             </Row>
@@ -1180,4 +1095,4 @@ fetch("http://localhost:3001/api/v1/externado-admins/editStudentByAdmins", {
   );
 };
 
-export default Informacionestudiantes;
+export default Verinformacionestudiantes;
