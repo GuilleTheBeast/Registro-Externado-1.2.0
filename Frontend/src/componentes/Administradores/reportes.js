@@ -1,10 +1,8 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import './reportes.css';
-import DownloadButton from './DownloadButton';
+import '../estilos/reportes.css';
 import EncabezadoAdmin from "../layout/navbar/Encabezadoadmin";
 import FilterComponent from './PanelFiltros'
-import FilterComponent2 from './PanelFiltros2';
 //Faltan los estilos de la pagina reportes
 
 
@@ -21,24 +19,23 @@ const ExportModule = ({ setShowNavbar }) => {
     <>
       <EncabezadoAdmin />
       <div className="app-container">
-        <h1 style={{ textAlign: 'center', fontWeight: '300' }}>Reporte de matrícula de estudiantes</h1>
-        <p style={{ fontSize: '1.5rem', fontWeight: '300' }}>Indicaciones:</p>
-        <p style={{ fontSize: '1.1rem', fontWeight: '300' }}> • Sino selecciona ningún filtro, se descargarán todos los registros hasta el momento</p>
-        <p style={{ fontSize: '1.1rem', fontWeight: '300' }}> • Puede seleccionar cualquier combinación de filtros</p>
+        <h2>Reporte de matrícula de estudiantes</h2>
+        <h4>Indicaciones:</h4> {/* Subtítulo agregado aquí */}
+        <ul>
+            <li>
+              Descargue en formato xlsx la información de matricula de estudiantes
+            </li>
+            <li>
+              Solo de click 1 vez al botón y espere la descarga automática
+            </li>
+          </ul>
         <div className='FilterPanelContainer'>
-        <div className='FilterGeneralContent'>
-        <p className='FilterTitle'> Seleccione grado: </p>
-        <FilterComponent />
+           <div className='FilterGeneralContent'>
+             <FilterComponent />
+           </div>
+        </div>
+
       </div>
-    <div className='FilterGeneralContent'>
-      <p className='FilterTitle'> Seleccione Periodo: </p>
-      <FilterComponent2 />
-    </div>
-  </div>
-  <div className='buttomDownload-Content'>
-    <DownloadButton />
-  </div>
-</div>
     </>
   );
 };

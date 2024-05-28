@@ -1,4 +1,4 @@
-import { Controller, Get, Header, UseGuards,Req } from '@nestjs/common';
+import { Controller, Get, Header,  HttpException, HttpStatus, Query } from '@nestjs/common';
 import { ExternadoStudentPeriodService } from 'src/externado_student_period/externado_student_period.service';
 import { StreamableFile } from '@nestjs/common';
 //import * as XLSX from 'xlsx'; 
@@ -9,21 +9,37 @@ import * as fs from 'fs';
 @Controller('sheetjs')
 export class SheetjsController {
   constructor(private readonly studentPeriod: ExternadoStudentPeriodService) {}
-
+ 
   @Get('download')
   @Header('Content-Disposition', 'attachment; filename="Matricula.xlsx"')
-  async downloadStudentsAsXlsx(): Promise<StreamableFile> {
+  async downloadStudentsAsXlsx(@Query('level') level?: string, @Query('period') period?: string): Promise<StreamableFile> {
     // Obtener datos de la base de datos
-    const students = await this.studentPeriod.getStudentPeriods();
-
+    const students = await this.studentPeriod.getStudentPeriods(level, period);
+  // Verificar si hay registros
+  if (!students || students.length === 0) {
+    throw new HttpException('No se encontraron registros', HttpStatus.NOT_FOUND);
+  }
     // Convertir los datos a un formato compatible con xlsx
     const jsonData = students.map(students => ({
-      'Nombre':students.externado_student_firstname, 
-      'Direccion':students.externado_student_address,
+      'Nombres':students.externado_student_firstname, 
+      'Apellidos':students.externado_student_lastname,
+      'Grado':students.externado_level,
+      'Periodo matricula':students.externado_range_period,
       'Telefono':students.externado_student_phone,
       'Correo':students.externado_student_email,
-      'Grado':students.externado_level,
-      'Periodo':students.externado_range_period
+      'Lugar nacimiento':students.externado_student_birthplace,
+      'Fecha nacimiento':students.externado_student_birthdate,
+      'Nacionalidad':students.externado_student_nationality,
+      'Genero':students.externado_student_gender,
+      'Departamento':students.externado_department, 
+      'Direccion':students.externado_student_address,
+      'Anterior escuela':students.externado_student_last_school,
+      'Hermanos externado':students.externado_student_has_siblings,
+      'Vive con padres':students.externado_student_lives_with_parents,
+      'Emergencia nombre':students.externado_student_emergency_name,
+      'Emergencia parentesco':students.externado_student_emergency_relationship,
+      'Emergencia dirección':students.externado_student_emergency_address,
+      'Emergencia telefono':students.externado_student_emergency_phone,
      }));
 
    // Escribir los datos en un archivo JSON

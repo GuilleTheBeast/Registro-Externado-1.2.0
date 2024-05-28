@@ -8,19 +8,66 @@ export class ExternadoStudentPeriodService {
     constructor (@InjectRepository(ExternadoStudentPeriod)
     private readonly externadoStudentRepository: Repository<ExternadoStudentPeriod>) {}
 
-     getStudentPeriods (){
-        return this.externadoStudentRepository.query(`
-        select externado_student.externado_student_firstname, 
-          externado_student.externado_student_lastname, 
-          externado_student.externado_student_address,
+    getStudentPeriods(level?: string, period?: string) {
+      let query = `
+        SELECT 
+          externado_student.externado_student_firstname, 
+          externado_student.externado_student_lastname,
+          externado_level.externado_level,
+          externado_admin_system.externado_range_period,
           externado_student.externado_student_phone,
           externado_student.externado_student_email,
-          externado_level.externado_level,
-          externado_admin_system.externado_range_period
-        from externado_student, externado_admin_system, externado_student_period, externado_level
-        where  externado_student_period.id_period = externado_admin_system.idexternado_admin_system
-        AND externado_student_period.id_student = externado_student.idexternado_student
-        AND externado_student.externado_student_current_level_id = externado_level.idexternado_level;
-        `);
+          externado_student.externado_student_birthplace, 
+          externado_student.externado_student_birthdate,
+          externado_student.externado_student_nationality,
+          externado_student.externado_student_gender,
+          externado_department.externado_department,
+          externado_student.externado_student_address,
+          externado_student.externado_student_last_school,
+          externado_student.externado_student_has_siblings,
+          externado_student.externado_student_lives_with_parents,
+          externado_student.externado_student_emergency_name,
+          externado_student.externado_student_emergency_relationship,
+          externado_student.externado_student_emergency_address,
+          externado_student.externado_student_emergency_phone
+        FROM 
+          externado_student
+        JOIN 
+          externado_student_period ON externado_student_period.id_student = externado_student.idexternado_student
+        JOIN 
+          externado_admin_system ON externado_student_period.id_period = externado_admin_system.idexternado_admin_system
+        JOIN 
+          externado_level ON externado_student_period.id_level = externado_level.idexternado_level
+        JOIN 
+          externado_department ON externado_department.idexternado_departments = externado_student.externado_student_department_id
+      `;
+    
+      // Conditions array
+      const conditions = [];
+      const params = [];
+    
+      if (level =='Favor seleccionar un valor'){ } else {
+        if(level && level !='Favor seleccionar un valor') {
+          conditions.push('externado_level.externado_level LIKE ?');
+          params.push(`%${level}%`);
+        }
       }
+    
+      if (period == 'Todos') {} else {
+        if(period && period != 'Todos'){
+          conditions.push('externado_admin_system.externado_range_period LIKE ?');
+          params.push(`%${period}%`);
+        }
+      }
+      // Append conditions to the base query if there are any
+      if (conditions.length > 0) {
+        query += ' WHERE ' + conditions.join(' AND ');
+      }
+    
+      return this.externadoStudentRepository.query(query, params);
+    }
+    
+    
+
+      
 }

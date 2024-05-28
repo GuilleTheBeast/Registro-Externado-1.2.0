@@ -20,8 +20,5 @@ export class ExternadoLevelsController {
   getDepartments(@Req() req: RequestWithUuid){
       return this.externadoLevelsService.getLevels(req.uuid.uuid);
   }
-  @Get("getLevels2")
-  getLevels2(){
-    return this.externadoLevelsService.getLevels2();
-}
+
 }

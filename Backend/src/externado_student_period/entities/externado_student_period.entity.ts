@@ -10,4 +10,7 @@ export class ExternadoStudentPeriod {
 
     @Column()
     id_period: number;
+
+    @Column()
+    id_level: number;
 }
