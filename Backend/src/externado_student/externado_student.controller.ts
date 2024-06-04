@@ -44,6 +44,7 @@ export class ExternadoStudentController {
   }
 
   @Get("pdfMatricual")
+  @Roles(Role.User, Role.Admin)
   pdfMatricual(@Query('level') level?: string, @Query('period') period?: string){
   return this.externadoStudentService.getStudentPDF(level, period);
   } 

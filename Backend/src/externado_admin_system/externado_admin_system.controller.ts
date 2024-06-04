@@ -43,7 +43,7 @@ export class ExternadoAdminSystemController {
   }
 
   @Get("historicalPeriod")
-  @Roles(Role.Super)
+  @Roles(Role.Super, Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
   historicalPeriod(@Req() req: RequestWithUuid){
       return this.externadoAdminSystemService.historicalPeriod();

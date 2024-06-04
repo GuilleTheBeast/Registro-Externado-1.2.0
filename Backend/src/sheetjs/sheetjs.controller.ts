@@ -21,8 +21,8 @@ export class SheetjsController {
   }
     // Convertir los datos a un formato compatible con xlsx
     const jsonData = students.map(students => ({
-      'Nombres':students.externado_student_firstname, 
       'Apellidos':students.externado_student_lastname,
+      'Nombres':students.externado_student_firstname, 
       'Grado':students.externado_level,
       'Periodo matricula':students.externado_range_period,
       'Telefono':students.externado_student_phone,
@@ -30,12 +30,10 @@ export class SheetjsController {
       'Lugar nacimiento':students.externado_student_birthplace,
       'Fecha nacimiento':students.externado_student_birthdate,
       'Nacionalidad':students.externado_student_nationality,
-      'Genero':students.externado_student_gender,
-      'Departamento':students.externado_department, 
+      'Departamento':students.externado_department,
+      'Ciudad':students.externado_student_town,  
       'Direccion':students.externado_student_address,
       'Anterior escuela':students.externado_student_last_school,
-      'Hermanos externado':students.externado_student_has_siblings,
-      'Vive con padres':students.externado_student_lives_with_parents,
       'Emergencia nombre':students.externado_student_emergency_name,
       'Emergencia parentesco':students.externado_student_emergency_relationship,
       'Emergencia dirección':students.externado_student_emergency_address,

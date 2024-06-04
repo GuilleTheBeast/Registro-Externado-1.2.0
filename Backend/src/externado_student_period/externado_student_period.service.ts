@@ -11,8 +11,8 @@ export class ExternadoStudentPeriodService {
     getStudentPeriods(level?: string, period?: string) {
       let query = `
         SELECT 
+        externado_student.externado_student_lastname,
           externado_student.externado_student_firstname, 
-          externado_student.externado_student_lastname,
           externado_level.externado_level,
           externado_admin_system.externado_range_period,
           externado_student.externado_student_phone,
@@ -20,12 +20,10 @@ export class ExternadoStudentPeriodService {
           externado_student.externado_student_birthplace, 
           externado_student.externado_student_birthdate,
           externado_student.externado_student_nationality,
-          externado_student.externado_student_gender,
           externado_department.externado_department,
+          externado_student.externado_student_town,
           externado_student.externado_student_address,
           externado_student.externado_student_last_school,
-          externado_student.externado_student_has_siblings,
-          externado_student.externado_student_lives_with_parents,
           externado_student.externado_student_emergency_name,
           externado_student.externado_student_emergency_relationship,
           externado_student.externado_student_emergency_address,
@@ -50,7 +48,7 @@ export class ExternadoStudentPeriodService {
         if(level && level !='Favor seleccionar un valor') {
           conditions.push('externado_level.externado_level LIKE ?');
           params.push(`%${level}%`);
-        }
+        } 
       }
     
       if (period == 'Todos') {} else {
@@ -63,7 +61,10 @@ export class ExternadoStudentPeriodService {
       if (conditions.length > 0) {
         query += ' WHERE ' + conditions.join(' AND ');
       }
-    
+
+       //Ordenar por Apellido
+       query += ' ORDER BY externado_student.externado_student_lastname';
+
       return this.externadoStudentRepository.query(query, params);
     }
       
