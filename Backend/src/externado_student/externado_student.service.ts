@@ -58,6 +58,42 @@ export class ExternadoStudentService {
         where
     });
     }
+ }
+ async findAllRelatedWithUserA(pagination: { page: number, limit: number, paginated: string }, apellido?: string){
+  const where = apellido ? { externado_student_lastname: Like(`%${apellido}%`) } : {};     
+  const isPaginated = pagination.paginated === 'true' ? true : false;    
+  if (isPaginated ) {
+      const total = await this.externadoStudentRepository.count({ where });
+      const offset = (pagination.page - 1) * pagination.limit;
+      const limit = pagination.limit;
+      let data = []
+      if(apellido){
+        data = await this.externadoStudentRepository.find({
+          relations: ["externadoUser"],
+          where,
+        });
+        pagination.page = 1
+      } else {
+        data = await this.externadoStudentRepository.find({
+          relations: ["externadoUser"],
+          where,
+          take: limit,
+          skip: offset,
+      });
+      }
+      const totalPages = Math.ceil(total / limit);
+      return {
+          data,
+          totalPages: Number(totalPages),
+          currentPage: Number(pagination.page),
+          perPage: Number(pagination.limit),
+      };
+  } else {
+    return await this.externadoStudentRepository.find({
+      relations: ["externadoUser"],
+      where
+  });
+  }
 }
   // Para reporteria
   getStudents(){
@@ -315,4 +351,10 @@ export class ExternadoStudentService {
     return this.externadoStudentRepository.query(query, params);
   }
 
+  async findAllRelatedWithUserFilteredByNameA(apellido: string) {
+    
+    return await this.externadoStudentRepository.createQueryBuilder('estudiante')
+    .where('estudiante.externado_student_lastname like :apellido', {apellido: '%' + apellido + '%'})
+    .getMany();
+  }
 }
