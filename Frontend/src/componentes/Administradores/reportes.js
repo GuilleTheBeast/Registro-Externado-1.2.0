@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import '../estilos/reportes.css';
 import EncabezadoAdmin from "../layout/navbar/Encabezadoadmin";
 import FilterComponent from './PanelFiltros'
+
 //Faltan los estilos de la pagina reportes
 
 
@@ -23,7 +24,7 @@ const ExportModule = ({ setShowNavbar }) => {
         <h4>Indicaciones:</h4> {/* Subtítulo agregado aquí */}
         <ul>
             <li>
-              Descargue en formato xlsx la información de matricula de estudiantes
+              Descargue en formato xlsx y pdf la información de matricula de estudiantes
             </li>
             <li>
               Solo de click 1 vez al botón y espere la descarga automática
@@ -34,7 +35,6 @@ const ExportModule = ({ setShowNavbar }) => {
              <FilterComponent />
            </div>
         </div>
-
       </div>
     </>
   );

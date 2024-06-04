@@ -4,6 +4,10 @@ import { useAuth } from '../AuthContext'; // Asegúrate de tener el contexto de 
 import { fetchHistorico, fetchGrado } from '../AuthContext'; // Asegúrate de tener estas funciones importadas correctamente
 import '../estilos/FilterComponent.css';
 import Swal from "sweetalert2";
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+
+
 
 const FilterComponent = () => {
   const [error, setError] = useState(null);
@@ -46,7 +50,7 @@ const FilterComponent = () => {
     setSelectedPeriod(event.target.value);
   };
 
-  const  handleDownload = async () => {
+  const  DownloadXLSX = async () => {
     const params = new URLSearchParams();
     if (selectedOption) params.append('level', selectedOption);
     if (selectedPeriod) params.append('period', selectedPeriod);
@@ -75,7 +79,7 @@ const FilterComponent = () => {
               const url = window.URL.createObjectURL(new Blob([response.data]));
               const link = document.createElement('a');
               link.href = url;
-              link.setAttribute('download', 'data.xlsx');
+              link.setAttribute('download', 'MatriculaExternado.xlsx');
               document.body.appendChild(link);
               link.click();
               link.remove();
@@ -115,6 +119,64 @@ const FilterComponent = () => {
    }
   };
 
+  const DownloadPdf = async () => {
+    const params = new URLSearchParams();
+    if (selectedOption) params.append('level', selectedOption);
+    if (selectedPeriod) params.append('period', selectedPeriod);
+    try {
+      const response = await axios.get(`http://localhost:3001/api/v1/externado-student/pdfMatricual?${params.toString()}`, {
+        headers: {
+          'Authorization': `Bearer ${authToken}`, // Incluye el token de autenticación
+          'Content-Type': 'application/json'
+        },
+      });
+      const students = response.data;
+
+      const doc = new jsPDF();  
+      // Agrega un título al PDF
+      const title = `Hoja de estudiantes inscritos ${selectedOption || 'Todos los grados'}   ${selectedPeriod || 'Todos los periodos'}`;
+      doc.setFontSize(16);
+      doc.setFont('times', 'normal'); // Establecer la fuente a Times New Roman
+      doc.text(title, 105, 20, null, null, 'center');
+
+      // Configuración para la tabla
+      const tableColumn = ["No.", "Apellidos", "Nombres"];
+      const tableRows = [];
+
+      students.forEach((student, index) => {
+        const studentData = [
+          index + 1, // Número correlativo
+          student.externado_student_lastname,
+          student.externado_student_firstname
+        ];
+        tableRows.push(studentData);
+      });
+
+      // Añadir la tabla al PDF
+      doc.autoTable({
+        startY: 30, // Ajustar según sea necesario para dejar espacio para el título
+        head: [tableColumn],
+        body: tableRows,
+        styles: {
+          font: 'times', // Establecer la fuente a Times New Roman
+        },
+        headStyles: {
+          fontStyle: 'bold', // Encabezados en negrita
+        },
+      });
+
+      doc.save('MatriculaExternado.pdf');
+      setError(null);
+
+    } catch (err) {
+      if (err.response && err.response.data) {
+        setError(err.response.data.message); // Mensaje de error del backend
+      } else {
+        setError('Error. Intente de nuevo');
+      }
+    }
+  };
+
   return (
     <div className='filter-section'>
     <div className="filter-container">
@@ -137,9 +199,12 @@ const FilterComponent = () => {
         </select>
       </div>
     </div>
-    <button className='buttom-download-xlsx' onClick={handleDownload}>Descargar .XLSX</button>
-    {error && <div style={{ color: 'red' }}>{error}</div>}
+    <div className='buttoms-container'>
+      <button className='buttom-download-xlsx' onClick={DownloadXLSX}>Descargar .XLSX</button>
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+      <button className='buttom-download-pdf' onClick={DownloadPdf}>Descargar .PDF</button>
     </div>
+   </div>
   );
 };
 

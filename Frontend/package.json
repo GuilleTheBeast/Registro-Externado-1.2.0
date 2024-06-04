@@ -23,6 +23,7 @@
     "html2pdf.js": "^0.10.1",
     "jquery": "^3.7.1",
     "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "jszip": "^3.10.1",
     "mammoth": "^1.6.0",
     "mdb-react-ui-kit": "^6.2.0",

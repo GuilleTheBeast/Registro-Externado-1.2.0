@@ -66,8 +66,5 @@ export class ExternadoStudentPeriodService {
     
       return this.externadoStudentRepository.query(query, params);
     }
-    
-    
-
       
 }

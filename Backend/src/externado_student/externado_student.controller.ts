@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req, Get, Query } from '@nestjs/common';
 import { ExternadoStudentService } from './externado_student.service';
 import { UpdateExternadoStudentDto } from './dto/update-externado_student.dto';
 import { Roles } from 'src/auth/decorators/roles.decorators';
@@ -42,6 +42,11 @@ export class ExternadoStudentController {
   pdfStudent(@Req() req: RequestWithUuid, @Body() updateExternadoStudentDto: UpdateExternadoStudentDto){
       return this.externadoStudentService.pdfStudent(req.uuid.uuid, updateExternadoStudentDto);
   }
+
+  @Get("pdfMatricual")
+  pdfMatricual(@Query('level') level?: string, @Query('period') period?: string){
+  return this.externadoStudentService.getStudentPDF(level, period);
+  } 
 
   
 }

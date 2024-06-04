@@ -1,8 +1,8 @@
-.filter-section {
+  .filter-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+   }
   
   .filter-container {
       width: 90%;
@@ -36,6 +36,10 @@
     .FilterTitle {
       text-align: center;
     }
+
+    .buttoms-container {
+      display: flex;
+    }
   
     .buttom-download-xlsx {
       background-color: #4caf50;;
@@ -51,11 +55,41 @@
   .buttom-download-xlsx:hover {
       background-color: #3e7f41;
   }
+
+  .buttom-download-pdf {
+    background-color: #4caf50;;
+    font-size: 1rem;
+    padding: 3%;
+    border: none;
+    margin-top: 5rem;
+    margin-left: 1.2rem;
+    color: white;
+    cursor: pointer;
+    width: 170px;
+}
+
+.buttom-download-pdf:hover {
+    background-color: #3e7f41;
+}
   
   @media (max-width: 860px) {
     .filter-container {
       margin: 0 5rem;
       display: block;
+    }
+    .buttoms-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .buttom-download-pdf {
+      margin-left: 0;
+      margin-top: 10px;
+      padding: 5%;
+    }
+    .buttom-download-xlsx {
+      margin-top: 8px;
+      padding: 5%;
     }
 
   }
