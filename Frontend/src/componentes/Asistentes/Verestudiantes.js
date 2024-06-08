@@ -4,13 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ojo from "../imagenes/icons/ojo.png";
 import axios from "axios";
 import "../estilos/estudiantes.css"; // Importa el archivo de estilos
-import {
-  Modal,
-  Button,
-  Table,
-  Form,
-  Pagination,
-} from "react-bootstrap";
+import { Modal, Button, Table, Form, Pagination } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css"; // Importar los estilos de los iconos
 //importar EncabezadoAssistant
 import EncabezadoAssistant from "../layout/navbar/Encabezadoassistant";
@@ -151,6 +145,36 @@ const Verusuarios = ({ setShowNavbar }) => {
 
     fetchData();
   }, [authToken]);
+
+  useEffect(() => {
+    setSearchTermEstudiantes("");
+    setSearchTermEstudiantesA("");
+    setCurrentPage({ ...currentPage, currentPage: 1 });
+    // Se actualiza la lista de estudiantes cuando cambia el tipo de búsqueda
+    const fetchData = async () => {
+      let pagination = {
+        page: 1,
+        limit: currentPage.perPage,
+        paginated: true,
+      };
+
+      try {
+        const estudiantesTablaData = searchType === 'name' 
+          ? await fetchEstudiantes(authToken, pagination, "") 
+          : await fetchEstudiantesA(authToken, pagination, "");
+        setEstudiantesTabla(estudiantesTablaData.data);
+        setCurrentPage({
+          currentPage: estudiantesTablaData.currentPage,
+          perPage: estudiantesTablaData.perPage,
+          totalPages: estudiantesTablaData.totalPages,
+        });
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchData();
+  }, [searchType, authToken]);
 
   return (
     <>
