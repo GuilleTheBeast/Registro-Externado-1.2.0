@@ -10,34 +10,48 @@ export class ExternadoStudentPeriodService {
 
     getStudentPeriods(level?: string, period?: string) {
       let query = `
-        SELECT 
-        externado_student.externado_student_lastname,
-          externado_student.externado_student_firstname, 
-          externado_level.externado_level,
-          externado_admin_system.externado_range_period,
-          externado_student.externado_student_phone,
-          externado_student.externado_student_email,
-          externado_student.externado_student_birthplace, 
-          externado_student.externado_student_birthdate,
-          externado_student.externado_student_nationality,
-          externado_department.externado_department,
-          externado_student.externado_student_town,
-          externado_student.externado_student_address,
-          externado_student.externado_student_last_school,
-          externado_student.externado_student_emergency_name,
-          externado_student.externado_student_emergency_relationship,
-          externado_student.externado_student_emergency_address,
-          externado_student.externado_student_emergency_phone
-        FROM 
-          externado_student
-        JOIN 
-          externado_student_period ON externado_student_period.id_student = externado_student.idexternado_student
-        JOIN 
-          externado_admin_system ON externado_student_period.id_period = externado_admin_system.idexternado_admin_system
-        JOIN 
-          externado_level ON externado_student_period.id_level = externado_level.idexternado_level
-        JOIN 
-          externado_department ON externado_department.idexternado_departments = externado_student.externado_student_department_id
+      SELECT 
+		    externado_student.externado_student_lastname,
+        externado_student.externado_student_firstname,
+        TIMESTAMPDIFF(YEAR, externado_student.externado_student_birthdate, CURDATE()) AS student_age,
+        externado_level.externado_level,
+        externado_admin_system.externado_range_period,
+        externado_student.externado_student_phone,
+        externado_student.externado_student_email,
+        externado_student.externado_student_birthdate,
+        externado_student.externado_student_birthplace,
+        externado_student.externado_student_nationality,
+        externado_student.externado_student_address,
+        externado_student.externado_student_town,
+        externado_department.externado_department,
+        externado_student.externado_student_last_school,
+        CASE 
+			      WHEN externado_student.externado_student_lives_with_parents = 1 THEN 'SI'
+			      WHEN externado_student.externado_student_lives_with_parents = 0 THEN 'NO'
+			  ELSE '-'
+        END AS lives_with_parents,
+        externado_student.externado_student_lives_with_who,
+        externado_student.externado_student_lives_with_related,
+        externado_student.externado_student_lives_with_address,
+		    CASE 
+			     WHEN externado_student.externado_student_catholic = 1 THEN 'SI'
+			     WHEN externado_student.externado_student_catholic = 0 THEN 'NO'
+			  ELSE '-' --
+        END AS externado_student_catholic,
+		    externado_student.externado_student_emergency_name,
+        externado_student.externado_student_emergency_relationship,
+        externado_student.externado_student_emergency_phone,
+        externado_student.externado_student_emergency_address
+      FROM 
+        externado_student
+      JOIN 
+        externado_student_period ON externado_student_period.id_student = externado_student.idexternado_student
+      JOIN 
+        externado_admin_system ON externado_student_period.id_period = externado_admin_system.idexternado_admin_system
+      JOIN 
+        externado_level ON externado_student_period.id_level = externado_level.idexternado_level
+      JOIN 
+        externado_department ON externado_department.idexternado_departments = externado_student.externado_student_department_id
       `;
     
       // Conditions array

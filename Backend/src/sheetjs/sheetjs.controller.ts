@@ -1,6 +1,8 @@
 import { Controller, Get, Header,  HttpException, HttpStatus, Query } from '@nestjs/common';
 import { ExternadoStudentPeriodService } from 'src/externado_student_period/externado_student_period.service';
 import { StreamableFile } from '@nestjs/common';
+import { Roles } from 'src/auth/decorators/roles.decorators';
+import { Role } from 'src/auth/enum/roles.enum';
 //import * as XLSX from 'xlsx'; 
 import * as XLSX from 'xlsx-js-style';
 import * as fs from 'fs';
@@ -11,29 +13,35 @@ export class SheetjsController {
   constructor(private readonly studentPeriod: ExternadoStudentPeriodService) {}
  
   @Get('download')
+  @Roles(Role.Super, Role.Admin)
   @Header('Content-Disposition', 'attachment; filename="Matricula.xlsx"')
   async downloadStudentsAsXlsx(@Query('level') level?: string, @Query('period') period?: string): Promise<StreamableFile> {
-    // Obtener datos de la base de datos
     const students = await this.studentPeriod.getStudentPeriods(level, period);
-  // Verificar si hay registros
-  if (!students || students.length === 0) {
-    throw new HttpException('No se encontraron registros', HttpStatus.NOT_FOUND);
-  }
+    
+    if (students.length === 0) {
+      throw new HttpException('No students found for the specified criteria', HttpStatus.NOT_FOUND);
+    }
     // Convertir los datos a un formato compatible con xlsx
     const jsonData = students.map(students => ({
       'Apellidos':students.externado_student_lastname,
       'Nombres':students.externado_student_firstname, 
+      'Edad':students.student_age, 
       'Grado':students.externado_level,
       'Periodo matricula':students.externado_range_period,
       'Telefono':students.externado_student_phone,
       'Correo':students.externado_student_email,
-      'Lugar nacimiento':students.externado_student_birthplace,
       'Fecha nacimiento':students.externado_student_birthdate,
+      'Lugar nacimiento':students.externado_student_birthplace,
       'Nacionalidad':students.externado_student_nationality,
-      'Departamento':students.externado_department,
-      'Ciudad':students.externado_student_town,  
       'Direccion':students.externado_student_address,
-      'Anterior escuela':students.externado_student_last_school,
+      'Ciudad':students.externado_student_town,  
+      'Departamento':students.externado_department,
+      'Anterior escuela':students.externado_student_last_school, 
+      'Estudiante catolico':students.externado_student_catholic,
+      'Vive con padres':students.lives_with_parents,
+      'Con quién vive':students.externado_student_lives_with_who,
+      'Parentesco con quien vive':students.externado_student_lives_with_related,
+      'Dirección donde viven':students.externado_student_lives_with_address, 
       'Emergencia nombre':students.externado_student_emergency_name,
       'Emergencia parentesco':students.externado_student_emergency_relationship,
       'Emergencia dirección':students.externado_student_emergency_address,
