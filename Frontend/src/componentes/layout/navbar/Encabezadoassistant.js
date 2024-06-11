@@ -15,7 +15,6 @@ const EncabezadoAssistant = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
-    console.log("Valor de authToken:", authToken);
 
     if (
       authToken === null ||
@@ -24,7 +23,6 @@ const EncabezadoAssistant = () => {
       authToken === "null"
     ) {
       // Muestra una alerta si el token está vacío, nulo o indefinido
-      console.log("Token vacío, nulo o indefinido");
       navigate("/caducado");
       return;
       // Redirige o toma otras acciones según sea necesario
@@ -34,18 +32,12 @@ const EncabezadoAssistant = () => {
       const payloadDecoded = atob(payloadBase64);
       const payloadJson = JSON.parse(payloadDecoded);
       const userRole = parseInt(payloadJson.rol, 10);
-      console.log("El rol es " + payloadJson.rol);
       if (userRole === 1 || userRole === "1") {
-        console.log("Entraste al if de rol 1");
       } else if (userRole === 2 || userRole === "2") {
-        console.log("Entraste al if de rol 2");
       } else if (userRole === 3 || userRole === "3") {
-        console.log("Entraste al if de rol 3");
         navigate("/negado");
       }else if (userRole === 4 || userRole === "4") {
-        console.log("Entraste al if de rol 4");
       } else {
-        console.log("El rol es " + payloadJson.rol);
       }
     }
   }, [authToken, navigate]);

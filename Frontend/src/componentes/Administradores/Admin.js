@@ -16,7 +16,6 @@ const HolaAdmin = ({ setShowNavbar }) => {
   const { authToken } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    //console.log("Valor de authToken:", authToken);
 
     if (
       authToken === null ||
@@ -25,7 +24,6 @@ const HolaAdmin = ({ setShowNavbar }) => {
       authToken === "null"
     ) {
       // Muestra una alerta si el token está vacío, nulo o indefinido
-      //console.log("Token vacío, nulo o indefinido");
       navigate("/caducado");
       return;
       // Redirige o toma otras acciones según sea necesario
@@ -35,9 +33,7 @@ const HolaAdmin = ({ setShowNavbar }) => {
       const payloadDecoded = atob(payloadBase64);
       const payloadJson = JSON.parse(payloadDecoded);
       const userRole = parseInt(payloadJson.rol, 10);
-      //console.log("El rol es " + payloadJson.rol);
       if (userRole === 4 || userRole === "4") {
-        // console.log("Entraste al if de rol 4");
       } else if (userRole === 3 || userRole === "3") {
         //console.log("Entraste al if de rol 3");
         navigate("/negado");

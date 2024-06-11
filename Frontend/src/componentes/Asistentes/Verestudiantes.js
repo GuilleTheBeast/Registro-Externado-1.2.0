@@ -4,13 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ojo from "../imagenes/icons/ojo.png";
 import axios from "axios";
 import "../estilos/estudiantes.css"; // Importa el archivo de estilos
-import {
-  Modal,
-  Button,
-  Table,
-  Form,
-  Pagination,
-} from "react-bootstrap";
+import { Modal, Button, Table, Form, Pagination } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css"; // Importar los estilos de los iconos
 //importar EncabezadoAssistant
 import EncabezadoAssistant from "../layout/navbar/Encabezadoassistant";
@@ -31,7 +25,7 @@ const Verusuarios = ({ setShowNavbar }) => {
     };
   }, [setShowNavbar]);
 
-  const [searchType, setSearchType] = useState('name');
+  const [searchType, setSearchType] = useState("name");
   const [showEditModal, setShowEditModal] = useState(false);
   const [estudiantesTabla, setEstudiantesTabla] = useState([]);
   const [usuariosTabla, setUsuariosTabla] = useState([]);
@@ -43,7 +37,10 @@ const Verusuarios = ({ setShowNavbar }) => {
     perPage: 10,
     totalPages: 1,
   });
-
+  const [selectedGrade, setSelectedGrade] = useState("");
+  const handleGradeChange = (e) => {
+    setSelectedGrade(e.target.value);
+  };
   const { authToken } = useAuth();
   const navigate = useNavigate();
 
@@ -86,11 +83,12 @@ const Verusuarios = ({ setShowNavbar }) => {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
     }
   };
 
+  
   useEffect(() => {
     const fetchData = async () => {
       let pagination = {
@@ -100,7 +98,12 @@ const Verusuarios = ({ setShowNavbar }) => {
       };
 
       try {
-        const estudiantesTablaData = await fetchEstudiantes(authToken, pagination, searchTermEstudiantes);
+        const estudiantesTablaData = await fetchEstudiantes(
+          authToken,
+          pagination,
+          searchTermEstudiantes,
+          selectedGrade,
+        );
         setEstudiantesTabla(estudiantesTablaData.data);
         setCurrentPage({
           currentPage: estudiantesTablaData.currentPage,
@@ -113,7 +116,13 @@ const Verusuarios = ({ setShowNavbar }) => {
     };
 
     fetchData();
-  }, [authToken, currentPage.currentPage, currentPage.perPage, searchTermEstudiantes]);
+  }, [
+    authToken,
+    currentPage.currentPage,
+    currentPage.perPage,
+    selectedGrade,
+  ]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -124,7 +133,11 @@ const Verusuarios = ({ setShowNavbar }) => {
       };
 
       try {
-        const estudiantesTablaData = await fetchEstudiantesA(authToken, pagination, searchTermEstudiantesA);
+        const estudiantesTablaData = await fetchEstudiantes(
+          authToken,
+          pagination,
+          searchTermEstudiantes,
+        );
         setEstudiantesTabla(estudiantesTablaData.data);
         setCurrentPage({
           currentPage: estudiantesTablaData.currentPage,
@@ -137,7 +150,45 @@ const Verusuarios = ({ setShowNavbar }) => {
     };
 
     fetchData();
-  }, [authToken, currentPage.currentPage, currentPage.perPage, searchTermEstudiantesA]);
+  }, [
+    authToken,
+    currentPage.currentPage,
+    currentPage.perPage,
+    searchTermEstudiantes,
+  ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let pagination = {
+        page: currentPage.currentPage,
+        limit: currentPage.perPage,
+        paginated: true,
+      };
+
+      try {
+        const estudiantesTablaData = await fetchEstudiantesA(
+          authToken,
+          pagination,
+          searchTermEstudiantesA
+        );
+        setEstudiantesTabla(estudiantesTablaData.data);
+        setCurrentPage({
+          currentPage: estudiantesTablaData.currentPage,
+          perPage: estudiantesTablaData.perPage,
+          totalPages: estudiantesTablaData.totalPages,
+        });
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchData();
+  }, [
+    authToken,
+    currentPage.currentPage,
+    currentPage.perPage,
+    searchTermEstudiantesA,
+  ]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -159,18 +210,24 @@ const Verusuarios = ({ setShowNavbar }) => {
         <h2>Lista de Estudiantes</h2>
         <h4>Indicaciones:</h4>
         <ul>
-          <li>El buscador funciona para filtrar por nombre, apellido, grado actual o correo electrónico del responsable.</li>
-          <li>Al presionar <b>mostrar</b>, se visualiza toda la información del estudiante.</li>
+          <li>
+            El buscador funciona para filtrar por nombre, apellido, grado actual
+            o correo electrónico del responsable.
+          </li>
+          <li>
+            Al presionar <b>mostrar</b>, se visualiza toda la información del
+            estudiante.
+          </li>
         </ul>
         <div className="parameters-form">
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             <label>
               <input
                 type="radio"
                 value="name"
-                checked={searchType === 'name'}
+                checked={searchType === "name"}
                 onChange={handleSearchTypeChange}
-                style={{ marginRight: '5px' }}
+                style={{ marginRight: "5px" }}
               />
               Buscar por <b>nombre</b>
             </label>
@@ -178,17 +235,20 @@ const Verusuarios = ({ setShowNavbar }) => {
               <input
                 type="radio"
                 value="surname"
-                checked={searchType === 'surname'}
+                checked={searchType === "surname"}
                 onChange={handleSearchTypeChange}
-                style={{ marginRight: '5px' }}
+                style={{ marginRight: "5px" }}
               />
               Buscar por <b>apellido</b>
             </label>
           </div>
 
-          {searchType === 'name' && (
+          {searchType === "name" && (
             <Form className="mb-3" onKeyDown={handleKeyDown}>
-              <Form.Group controlId="searchEstudiantes" className="position-relative search-group">
+              <Form.Group
+                controlId="searchEstudiantes"
+                className="position-relative search-group"
+              >
                 <Form.Control
                   type="text"
                   placeholder="Buscar por nombre"
@@ -201,9 +261,12 @@ const Verusuarios = ({ setShowNavbar }) => {
             </Form>
           )}
 
-          {searchType === 'surname' && (
+          {searchType === "surname" && (
             <Form className="mb-3" onKeyDown={handleKeyDown}>
-              <Form.Group controlId="searchEstudiantes" className="position-relative search-group">
+              <Form.Group
+                controlId="searchEstudiantes"
+                className="position-relative search-group"
+              >
                 <Form.Control
                   type="text"
                   placeholder="Buscar por apellido"
@@ -215,7 +278,21 @@ const Verusuarios = ({ setShowNavbar }) => {
               </Form.Group>
             </Form>
           )}
-
+          <Form.Group controlId="gradeSelect">
+            <Form.Label>Buscar por grado academico</Form.Label>
+            <Form.Control
+              as="select"
+              value={selectedGrade}
+              onChange={handleGradeChange}
+            >
+              <option value="">Seleccione un grado</option>
+              {gradosTabla.map((g, i) => (
+                <option key={i} value={g.idexternado_level}>
+                  {g.externado_level}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -233,16 +310,27 @@ const Verusuarios = ({ setShowNavbar }) => {
                   <td>{d.externado_student_lastname}</td>
                   <td>
                     {gradosTabla.map((g, i) =>
-                      d.externado_student_current_level_id === g.idexternado_level ? g.externado_level : null
+                      d.externado_student_current_level_id ===
+                      g.idexternado_level
+                        ? g.externado_level
+                        : null
                     )}
                   </td>
                   <td>
                     {usuariosTabla.map((u, i) =>
-                      d.externado_user_id === u.idexternado_user ? u.externado_email : null
+                      d.externado_user_id === u.idexternado_user
+                        ? u.externado_email
+                        : null
                     )}
                   </td>
                   <td className="show-column" style={{ textAlign: "center" }}>
-                    <Button variant="link" className="p-0" onClick={() => navigate(`/verinfoestudiantes/${d.idexternado_student}`)}>
+                    <Button
+                      variant="link"
+                      className="p-0"
+                      onClick={() =>
+                        navigate(`/verinfoestudiantes/${d.idexternado_student}`)
+                      }
+                    >
                       <i>
                         <img
                           src={ojo}
@@ -265,7 +353,12 @@ const Verusuarios = ({ setShowNavbar }) => {
               disabled={currentPage.currentPage === 1}
             />
             <Pagination.Prev
-              onClick={() => setCurrentPage({ ...currentPage, currentPage: currentPage.currentPage - 1 })}
+              onClick={() =>
+                setCurrentPage({
+                  ...currentPage,
+                  currentPage: currentPage.currentPage - 1,
+                })
+              }
               disabled={currentPage.currentPage === 1}
             />
 
@@ -273,18 +366,30 @@ const Verusuarios = ({ setShowNavbar }) => {
               <Pagination.Item
                 key={number + 1}
                 active={number + 1 === currentPage.currentPage}
-                onClick={() => setCurrentPage({ ...currentPage, currentPage: number + 1 })}
+                onClick={() =>
+                  setCurrentPage({ ...currentPage, currentPage: number + 1 })
+                }
               >
                 {number + 1}
               </Pagination.Item>
             ))}
 
             <Pagination.Next
-              onClick={() => setCurrentPage({ ...currentPage, currentPage: currentPage.currentPage + 1 })}
+              onClick={() =>
+                setCurrentPage({
+                  ...currentPage,
+                  currentPage: currentPage.currentPage + 1,
+                })
+              }
               disabled={currentPage.currentPage === currentPage.totalPages}
             />
             <Pagination.Last
-              onClick={() => setCurrentPage({ ...currentPage, currentPage: currentPage.totalPages })}
+              onClick={() =>
+                setCurrentPage({
+                  ...currentPage,
+                  currentPage: currentPage.totalPages,
+                })
+              }
               disabled={currentPage.currentPage === currentPage.totalPages}
             />
           </Pagination>
@@ -298,7 +403,11 @@ const Verusuarios = ({ setShowNavbar }) => {
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="email@address.com" readOnly />
+              <Form.Control
+                type="email"
+                placeholder="email@address.com"
+                readOnly
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -319,10 +428,18 @@ const Verusuarios = ({ setShowNavbar }) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="custom" className="btn-modal-cancelar" onClick={() => setShowEditModal(false)}>
+          <Button
+            variant="custom"
+            className="btn-modal-cancelar"
+            onClick={() => setShowEditModal(false)}
+          >
             Cancelar
           </Button>
-          <Button variant="custom" className="btn-modal-guardar" onClick={() => setShowEditModal(false)}>
+          <Button
+            variant="custom"
+            className="btn-modal-guardar"
+            onClick={() => setShowEditModal(false)}
+          >
             Guardar cambios
           </Button>
         </Modal.Footer>

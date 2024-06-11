@@ -40,15 +40,15 @@ export class ExternadoAdminsController {
   @Get("studentList")
   @Roles(Role.AllA)
   @UseGuards(AuthGuard, RolesGuard)
-  studentList(@Req() req: RequestWithUuid, @Query() query: { nombre: string, page: number, limit: number, paginated: string }) {
-    return this.externadoAdminsService.studentList(req.uuid.uuid, query.nombre, query.page, query.limit, query.paginated);
+  studentList(@Req() req: RequestWithUuid, @Query() query: { nombre: string, page: number, limit: number, paginated: string, currentLevelId: number }) {
+    return this.externadoAdminsService.studentList(req.uuid.uuid, query.nombre, query.page, query.limit, query.paginated, query.currentLevelId);
   }
 
   @Get("studentListA")
   @Roles(Role.AllA)
   @UseGuards(AuthGuard, RolesGuard)
-  studentListA(@Req() req: RequestWithUuid, @Query() query: { apellido: string, page: number, limit: number, paginated: string }) {
-    return this.externadoAdminsService.studentListA(req.uuid.uuid, query.apellido, query.page, query.limit, query.paginated);
+  studentListA(@Req() req: RequestWithUuid, @Query() query: { apellido: string, page: number, limit: number, paginated: string,  currentLevelId: number }) {
+    return this.externadoAdminsService.studentListA(req.uuid.uuid, query.apellido, query.page, query.limit, query.paginated, query.currentLevelId);
   }
 
   @Post("editStudentByAdmins")

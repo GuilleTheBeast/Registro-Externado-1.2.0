@@ -500,7 +500,7 @@ export const fetchResponsableInfo =  async (authToken, responsibleId) =>{
   }
 };
 
-export const fetchEstudiantes = async (authToken, pagination = { page: 1, limit: 10, paginated: false}, nombres = null) => {
+export const fetchEstudiantes = async (authToken, pagination = { page: 1, limit: 10, paginated: false}, nombres = null,  currentLevelId = null) => {
   try {
     const response = await axios.get(
       "http://localhost:3001/api/v1/externado-admins/studentList",
@@ -511,6 +511,7 @@ export const fetchEstudiantes = async (authToken, pagination = { page: 1, limit:
         },
         params: {
           nombre: nombres,
+          currentLevelId: currentLevelId,
           page: pagination.page,
           limit: pagination.limit,
           paginated: pagination.paginated
@@ -524,7 +525,7 @@ export const fetchEstudiantes = async (authToken, pagination = { page: 1, limit:
   }
 }
 
-export const fetchEstudiantesA = async (authToken, pagination = { page: 1, limit: 10, paginated: false}, apellidos = null) => {
+export const fetchEstudiantesA = async (authToken, pagination = { page: 1, limit: 10, paginated: false}, apellidos = null, currentLevelId = null) => {
   try {
     const response = await axios.get(
       "http://localhost:3001/api/v1/externado-admins/studentListA",
@@ -535,6 +536,7 @@ export const fetchEstudiantesA = async (authToken, pagination = { page: 1, limit
         },
         params: {
           apellido: apellidos,
+          currentLevelId: currentLevelId,
           page: pagination.page,
           limit: pagination.limit,
           paginated: pagination.paginated

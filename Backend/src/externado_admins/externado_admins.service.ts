@@ -120,7 +120,7 @@ export class ExternadoAdminsService {
   }
 
   //Metodo que extrae la informacion de todos los estudiantes en el sistema
-  async studentList(uuid: string, nombre?: string, page: number = 1, limit: number = 10, paginated: string = 'false') {
+  async studentList(uuid: string, nombre?: string, page: number = 1, limit: number = 10, paginated: string = 'false', currentLevelId?: number) {
     const externado_user = await this.externadoUsersService.findOneByUUID(uuid);//Buscamos el externado_user_id de dicho UUID
     let studentsList;
     const pagination = {
@@ -130,7 +130,7 @@ export class ExternadoAdminsService {
     }
     if (externado_user) {
       if ((externado_user.externado_user_type_id === 1 || externado_user.externado_user_type_id === 2 || externado_user.externado_user_type_id === 4)) {
-        studentsList = await this.externadoStudentService.findAllRelatedWithUser(pagination, nombre);
+        studentsList = await this.externadoStudentService.findAllRelatedWithUser(pagination, nombre, currentLevelId);
       } else {
         throw new UnauthorizedException('El usuario que realiza la consulta no posee los permisos necesarios');
       }
@@ -142,7 +142,7 @@ export class ExternadoAdminsService {
     return studentsList;
   }
 
-  async studentListA(uuid: string, apellido?: string, page: number = 1, limit: number = 10, paginated: string = 'false') {
+  async studentListA(uuid: string, apellido?: string, page: number = 1, limit: number = 10, paginated: string = 'false', currentLevelId?: number) {
     const externado_user = await this.externadoUsersService.findOneByUUID(uuid);//Buscamos el externado_user_id de dicho UUID
     let studentsListA;
     const pagination = {
@@ -152,7 +152,7 @@ export class ExternadoAdminsService {
     }
     if (externado_user) {
       if ((externado_user.externado_user_type_id === 1 || externado_user.externado_user_type_id === 2 || externado_user.externado_user_type_id === 4)) {
-        studentsListA = await this.externadoStudentService.findAllRelatedWithUser(pagination, apellido);
+        studentsListA = await this.externadoStudentService.findAllRelatedWithUser(pagination, apellido, currentLevelId);
       } else {
         throw new UnauthorizedException('El usuario que realiza la consulta no posee los permisos necesarios');
       }
