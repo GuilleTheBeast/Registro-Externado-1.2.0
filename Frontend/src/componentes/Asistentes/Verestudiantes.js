@@ -206,6 +206,7 @@ const Verusuarios = ({ setShowNavbar }) => {
   useEffect(() => {
     setSearchTermEstudiantes("");
     setSearchTermEstudiantesA("");
+    setSelectedGrade("");
     setCurrentPage({ ...currentPage, currentPage: 1 });
     // Se actualiza la lista de estudiantes cuando cambia el tipo de búsqueda
     const fetchData = async () => {
@@ -218,7 +219,9 @@ const Verusuarios = ({ setShowNavbar }) => {
       try {
         const estudiantesTablaData = searchType === 'name' 
           ? await fetchEstudiantes(authToken, pagination, "") 
-          : await fetchEstudiantesA(authToken, pagination, "");
+          : searchType === 'surname'
+          ? await fetchEstudiantesA(authToken, pagination, "")
+          : await fetchEstudiantes(authToken, pagination, "", selectedGrade);
         setEstudiantesTabla(estudiantesTablaData.data);
         setCurrentPage({
           currentPage: estudiantesTablaData.currentPage,
@@ -271,6 +274,16 @@ const Verusuarios = ({ setShowNavbar }) => {
               />
               Buscar por <b>apellido</b>
             </label>
+            <label>
+              <input
+                type="radio"
+                value="grade"
+                checked={searchType === "grade"}
+                onChange={handleSearchTypeChange}
+                style={{ marginRight: "5px" }}
+              />
+              Buscar por <b>grado</b>
+            </label>
           </div>
 
           {searchType === "name" && (
@@ -308,21 +321,26 @@ const Verusuarios = ({ setShowNavbar }) => {
               </Form.Group>
             </Form>
           )}
-          <Form.Group controlId="gradeSelect">
-            <Form.Label>Buscar por grado academico</Form.Label>
-            <Form.Control
-              as="select"
-              value={selectedGrade}
-              onChange={handleGradeChange}
-            >
-              <option value="">Seleccione un grado</option>
-              {gradosTabla.map((g, i) => (
-                <option key={i} value={g.idexternado_level}>
-                  {g.externado_level}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
+
+          {searchType === "grade" && (
+            <Form.Group controlId="gradeSelect" className="mb-3">
+              <Form.Label>Buscar por grado académico</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedGrade}
+                onChange={handleGradeChange}
+                className="grade-dropdown"
+              >
+                <option value="">Seleccione un grado</option>
+                {gradosTabla.map((g, i) => (
+                  <option key={i} value={g.idexternado_level}>
+                    {g.externado_level}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+          )}
+
           <Table striped bordered hover>
             <thead>
               <tr>

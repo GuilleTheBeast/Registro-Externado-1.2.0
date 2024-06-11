@@ -252,6 +252,12 @@ const Usuarios = ({ setShowNavbar }) => {
       //console.log("Abriste el modal del rol 2");
     }
   };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  };
   // Suponiendo que tienes una función para hacer la llamada a la API
   const updateStatus = async (authToken, userId, isActive) => {
     // Pregunta si realmente quiere guardar los cambios
@@ -594,7 +600,7 @@ const Usuarios = ({ setShowNavbar }) => {
           </ul>
         </>
         <div className="parameters-form">
-          <Form className="mb-3">
+          <Form className="mb-3" onKeyDown={handleKeyDown}>
             <Form.Group
               controlId="searchUsuarios"
               className="position-relative search-group"

@@ -12,6 +12,10 @@
   width: 100%; /* Se ajustará al ancho de su contenedor .search-group */
 }
 
+.grade-dropdown {
+  width: 300px !important;
+}
+
 /* Estilos para la tabla */
 .table {
   margin-top: 20px;

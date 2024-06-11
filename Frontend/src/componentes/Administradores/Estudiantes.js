@@ -121,6 +121,12 @@ const Usuarios = ({ setShowNavbar }) => {
     navigate("/infoestudiantes");
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  };
+
   //? Obteniendo ESTUDIANTES
   useEffect(() => {
     const fetchData = async () => {
@@ -257,7 +263,7 @@ const Usuarios = ({ setShowNavbar }) => {
           </ul>
         </>
         <div className="parameters-form">
-          <Form className="mb-3">
+          <Form className="mb-3" onKeyDown={handleKeyDown}>
             <Form.Group
               controlId="searchEstudiantes"
               className="position-relative search-group"
