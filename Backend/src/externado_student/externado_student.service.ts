@@ -63,8 +63,11 @@ export class ExternadoStudentService {
     }
  }
 
- async findAllRelatedWithUserA(pagination: { page: number, limit: number, paginated: string }, apellido?: string){
-  const where = apellido ? { externado_student_lastname: Like(`%${apellido}%`) } : {};     
+ async findAllRelatedWithUserA(pagination: { page: number, limit: number, paginated: string }, apellido?: string, currentLevelId?: number){
+  const where = {
+    ...(apellido && { externado_student_lastname: Like(`%${apellido}%`) }),
+    ...(currentLevelId && { externado_student_current_level_id: currentLevelId })
+};   
   const isPaginated = pagination.paginated === 'true' ? true : false;    
   if (isPaginated ) {
       const total = await this.externadoStudentRepository.count({ where });

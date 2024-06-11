@@ -152,7 +152,7 @@ export class ExternadoAdminsService {
     }
     if (externado_user) {
       if ((externado_user.externado_user_type_id === 1 || externado_user.externado_user_type_id === 2 || externado_user.externado_user_type_id === 4)) {
-        studentsListA = await this.externadoStudentService.findAllRelatedWithUser(pagination, apellido, currentLevelId);
+        studentsListA = await this.externadoStudentService.findAllRelatedWithUserA(pagination, apellido, currentLevelId);
       } else {
         throw new UnauthorizedException('El usuario que realiza la consulta no posee los permisos necesarios');
       }

@@ -203,6 +203,36 @@ const Verusuarios = ({ setShowNavbar }) => {
     fetchData();
   }, [authToken]);
 
+  useEffect(() => {
+    setSearchTermEstudiantes("");
+    setSearchTermEstudiantesA("");
+    setCurrentPage({ ...currentPage, currentPage: 1 });
+    // Se actualiza la lista de estudiantes cuando cambia el tipo de búsqueda
+    const fetchData = async () => {
+      let pagination = {
+        page: 1,
+        limit: currentPage.perPage,
+        paginated: true,
+      };
+
+      try {
+        const estudiantesTablaData = searchType === 'name' 
+          ? await fetchEstudiantes(authToken, pagination, "") 
+          : await fetchEstudiantesA(authToken, pagination, "");
+        setEstudiantesTabla(estudiantesTablaData.data);
+        setCurrentPage({
+          currentPage: estudiantesTablaData.currentPage,
+          perPage: estudiantesTablaData.perPage,
+          totalPages: estudiantesTablaData.totalPages,
+        });
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchData();
+  }, [searchType, authToken]);
+
   return (
     <>
       <EncabezadoAssistant />
