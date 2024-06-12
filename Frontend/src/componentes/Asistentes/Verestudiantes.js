@@ -324,7 +324,6 @@ const Verusuarios = ({ setShowNavbar }) => {
 
           {searchType === "grade" && (
             <Form.Group controlId="gradeSelect" className="mb-3">
-              <Form.Label>Buscar por grado académico</Form.Label>
               <Form.Control
                 as="select"
                 value={selectedGrade}
