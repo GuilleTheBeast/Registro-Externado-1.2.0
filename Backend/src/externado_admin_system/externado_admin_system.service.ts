@@ -124,7 +124,7 @@ export class ExternadoAdminSystemService {
   async historicalPeriod() {
     return await this.externadoAdminSystemRepository.find({
       order: {
-      idexternado_admin_system: 'ASC',
+      idexternado_admin_system: 'DESC',
     },
   });
 
